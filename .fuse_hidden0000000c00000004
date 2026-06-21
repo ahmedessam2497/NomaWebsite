@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NŌMA Stays — Authentic stays from the heart of Egypt</title>
+<meta name="description" content="Two brands of Egyptian hospitality. NŌMA serviced buildings and BEIT boutique stays — run end-to-end by HAAM Management. Book direct for the best rate.">
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+  .home-hero { min-height: 660px; display: grid; place-items: center; text-align: center; color: var(--eggshell-100); padding: 90px var(--gutter) 70px; }
+  .home-hero .hero-veil { background: linear-gradient(180deg, rgba(38,10,9,.55), rgba(74,21,20,.80)); }
+  .home-hero .eyebrow { color: var(--eggshell-200); opacity: .85; margin-bottom: 26px; }
+  .home-hero img.wordmark { width: min(560px, 76vw); display: block; margin: 0 auto 20px; }
+  .home-hero .tagline { font-family: var(--font-serif); font-style: italic; font-size: var(--text-lg); color: var(--eggshell-200); margin: 0 0 10px; }
+  .home-hero .tagline-ar { font-family: var(--font-arabic); direction: rtl; font-size: var(--text-md); color: var(--eggshell-300); margin: 0 0 42px; opacity: .85; }
+  .home-hero .searchbar { max-width: 940px; margin: 0 auto; width: 100%; }
+
+  .diptych { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--line); transition: grid-template-columns .55s var(--ease-out); }
+  /* hover takeover — hovered brand expands, the other dims */
+  .diptych:has(.bpanel.noma:hover) { grid-template-columns: 1.55fr 1fr; }
+  .diptych:has(.bpanel.beit:hover) { grid-template-columns: 1fr 1.55fr; }
+  .diptych:hover .bpanel:not(:hover) { filter: brightness(.72) saturate(.9); }
+  .bpanel { transition: filter .45s var(--ease-out); }
+  .bpanel { position: relative; min-height: 540px; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(34px, 4vw, 56px); color: var(--eggshell-100); text-decoration: none; }
+  .bpanel img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); z-index: -2; transition: transform var(--dur-slow) var(--ease-out); }
+  .bpanel:hover img.bg { transform: scale(1.04); }
+  .bpanel:hover { text-decoration: none; }
+  .bpanel.noma::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(35,40,55,.30), rgba(20,28,45,.86)); }
+  .bpanel.beit::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(111,51,32,.25), rgba(50,18,11,.88)); }
+  .bpanel .k { font-size: var(--text-2xs); letter-spacing: var(--tracking-widest); text-transform: uppercase; opacity: .8; margin-bottom: 12px; }
+  .bpanel .ar { font-family: var(--font-arabic); direction: rtl; font-size: var(--text-lg); opacity: .7; margin-bottom: 6px; }
+  .bpanel h2 { font-family: var(--font-display); font-size: clamp(2.6rem, 4.6vw, 4rem); font-weight: var(--fw-light); margin: 0 0 14px; letter-spacing: var(--tracking-wide); color: var(--eggshell-100); }
+  .bpanel.beit h2 { font-family: var(--font-serif); letter-spacing: var(--tracking-normal); font-style: italic; }
+  .bpanel p { max-width: 36ch; line-height: var(--leading-relaxed); color: var(--eggshell-200); opacity: .92; margin: 0 0 22px; }
+  .bpanel .more { display: inline-flex; align-items: center; gap: 9px; font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; border-bottom: 1px solid currentColor; padding-bottom: 3px; align-self: flex-start; }
+  .bpanel .accentbar { width: 44px; height: 4px; margin-bottom: 18px; }
+  .bpanel.noma .accentbar { background: var(--sky-500); }
+  .bpanel.beit .accentbar { background: var(--terracotta-400); }
+
+  .story-band { text-align: center; padding: clamp(70px, 9vw, 120px) var(--gutter); }
+  .story-band .ar-display { margin-bottom: 18px; }
+  .story-band .band-quote { max-width: 30ch; margin: 0 auto 30px; }
+
+  .partner-strip { display: grid; grid-template-columns: 1.3fr .7fr; gap: 40px; align-items: center; }
+
+  /* Ō cursor styles now live in site.css and are injected site-wide by chrome.js */
+
+  /* Ō scroll dial — ring fills as you scroll */
+  #o-dial { position: fixed; left: 22px; bottom: 22px; z-index: 90; width: 44px; height: 50px; opacity: .85; pointer-events: none; }
+  #o-dial svg { display: block; }
+  #o-dial .track { stroke: rgba(74,21,20,.22); }
+  #o-dial .fill { stroke: var(--maroon-700); stroke-linecap: round; transition: stroke-dashoffset .15s linear; }
+  #o-dial .bar { fill: var(--maroon-700); }
+  @media (max-width: 980px) { #o-dial { display: none; } }
+
+  @media (max-width: 980px) { .diptych, .partner-strip { grid-template-columns: 1fr; } .bpanel { min-height: 420px; } }
+</style>
+</head>
+<body data-page="group">
+
+  <!-- HERO -->
+  <section class="hero home-hero">
+    <div class="hero-photo">
+      <!-- to use a Higgsfield hero video: add <video autoplay muted loop playsinline src="assets/hero-loop.mp4"></video> as the first child -->
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3EmBO4qzLAXqz48k54aCQjAKrQU/hf_20260612_183537_0da8e2ef-5edb-4570-ae8a-29c47889bad8.png" alt="" />
+      <img src="assets/photo-balcony.jpg" alt="" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3EmBO4qzLAXqz48k54aCQjAKrQU/hf_20260612_183553_b89b4ae4-e75b-43d2-a940-dd6a38beda09.png" alt="" />
+      <img src="assets/photo-phones.jpg" alt="" />
+    </div>
+    <div class="hero-veil noma-grain"></div>
+    <div>
+      <span class="eyebrow">All-Egyptian hospitality · القاهرة</span>
+      <img class="wordmark" src="assets/noma-wordmark-lower-cream.png" alt="nōma Stays" />
+      <p class="tagline" style="margin-bottom:42px">Authentic stays from the heart of Egypt.</p>
+      <form class="searchbar" onsubmit="return findStay(event)">
+        <div class="field"><label>Where</label><input value="Cairo, Egypt" readonly /></div>
+        <div class="field"><label>Brand</label>
+          <select id="search-brand">
+            <option value="">NŌMA &amp; BEIT</option>
+            <option value="arabella">NŌMA — serviced</option>
+            <option value="beit-hend">BEIT — boutique</option>
+          </select>
+        </div>
+        <div class="field"><label>Guests</label>
+          <select id="search-guests"><option>1 guest</option><option selected>2 guests</option><option>3 guests</option><option>4 guests</option></select>
+        </div>
+        <button class="go" type="submit"><i data-lucide="search"></i> Find a stay</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- TWO BRANDS -->
+  <section class="section tight">
+    <div class="wrap">
+      <div class="sec-head row" style="margin-bottom:36px">
+        <div>
+          <span class="eyebrow">Choose your way to stay</span>
+          <h2 class="title-xl" style="margin-top:14px">Two brands. One standard of Egyptian hospitality.</h2>
+        </div>
+        <p class="lede" style="max-width:38ch">Different properties, price points and services — run by the same team, to the same uncompromising standard.</p>
+      </div>
+    </div>
+    <div class="diptych">
+      <a class="bpanel noma" href="noma.html">
+        <img class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3EmBO4qzLAXqz48k54aCQjAKrQU/hf_20260612_183602_29efdc77-5554-4973-a15e-a639280716f0.png" alt="" />
+        <span class="accentbar"></span>
+        <span class="k">Smart serviced buildings · 25+ rooms</span>
+        <h2>NŌMA</h2>
+        <p>Spacious studios and one-bedrooms with hotel-grade housekeeping, 24/7 security and the freedom of a home — at honest prices.</p>
+        <span class="more">Enter NŌMA <i data-lucide="arrow-right"></i></span>
+      </a>
+      <a class="bpanel beit" href="beit.html">
+        <img class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3EmBO4qzLAXqz48k54aCQjAKrQU/hf_20260612_183551_3823e683-638f-4dd6-9b7e-62bcdcd037e6.png" alt="" />
+        <span class="accentbar"></span>
+        <span class="k">Boutique properties · 5–12 rooms</span>
+        <h2>Beit <span style="font-family:var(--font-arabic);font-style:normal;font-size:.55em;opacity:.75">بيت</span></h2>
+        <p>Intimate boutique stays where character beats scale — curated experiences, upgraded service and a deep sense of place.</p>
+        <span class="more">Enter BEIT <i data-lucide="arrow-right"></i></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- STORY TEASER (full story lives in About) -->
+  <section class="band noma-grain story-band">
+    <span class="eyebrow on-dark">The NŌMA Stays promise</span>
+    <p class="band-quote" style="margin:24px auto 30px;max-width:24ch">Come as a guest, leave as a local.</p>
+    <a class="btn btn-ghost on-dark" href="about.html">Our story, values &amp; team <i data-lucide="arrow-right"></i></a>
+  </section>
+
+  <!-- PARTNER TEASER -->
+  <section class="section">
+    <div class="wrap partner-strip">
+      <div>
+        <span class="eyebrow">For property owners</span>
+        <h2 class="title-lg" style="margin:14px 0 14px">Own a building or a villa with potential?</h2>
+        <p class="lede">HAAM turns underused real estate into professionally operated hospitality — feasibility, refurbishment, FF&amp;E, operations and revenue, end-to-end.</p>
+      </div>
+      <div style="text-align:right">
+        <a class="btn btn-primary btn-lg" href="partner.html">Partner with us <i data-lucide="arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ō scroll dial (cursor is injected site-wide by chrome.js) -->
+  <div id="o-dial" aria-hidden="true">
+    <svg width="44" height="50" viewBox="0 0 44 50">
+      <rect class="bar" x="14" y="0" width="16" height="3.4"></rect>
+      <circle class="track" cx="22" cy="29" r="17" fill="none" stroke-width="2"></circle>
+      <circle class="fill" cx="22" cy="29" r="17" fill="none" stroke-width="2"
+              stroke-dasharray="106.8" stroke-dashoffset="106.8" transform="rotate(-90 22 29)"></circle>
+    </svg>
+  </div>
+
+  <div class="toast" id="toast"><span class="dot"></span><span id="toast-msg"></span></div>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="chrome.js"></script>
+  <script>
+    /* ---- Ō scroll dial ---- */
+    (function () {
+      var fill = document.querySelector('#o-dial .fill');
+      if (!fill) return;
+      var LEN = 106.8;
+      function upd() {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        var p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+        fill.style.strokeDashoffset = String(LEN * (1 - p));
+      }
+      window.addEventListener('scroll', upd, { passive: true });
+      upd();
+    })();
+
+    function findStay(e) {
+      e.preventDefault();
+      var brand = document.getElementById('search-brand').value;
+      var guests = (document.getElementById('search-guests').value || '2').charAt(0);
+      var p = new URLSearchParams();
+      if (brand) p.set('property', brand);
+      p.set('guests', guests);
+      window.location.href = 'book.html?' + p.toString();
+      return false;
+    }
+  </script>
+</body>
+</html>

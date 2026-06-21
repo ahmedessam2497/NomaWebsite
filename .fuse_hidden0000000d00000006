@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book your stay — nōma Stays</title>
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+  .book-wrap { max-width: 1000px; margin: 0 auto; padding: 0 var(--gutter); }
+  .bookbar { background: var(--surface-raised); border: 1px solid var(--line-soft); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); display: grid; grid-template-columns: 1.4fr 1fr 1fr .8fr auto; margin-bottom: 30px; }
+  .bookbar .field { padding: 14px 18px; border-right: 1px solid var(--line-soft); }
+  .bookbar .field label { display: block; font-size: var(--text-2xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--text-muted); margin-bottom: 5px; }
+  .bookbar .field input, .bookbar .field select { border: 0; background: transparent; font-family: var(--font-sans); font-size: var(--text-sm); color: var(--text-strong); width: 100%; }
+  .bookbar .field input:focus, .bookbar .field select:focus { outline: none; }
+  .bookbar .go { margin: 9px; border: 0; background: var(--maroon-700); color: var(--eggshell-100); border-radius: var(--radius-sm); padding: 0 24px; cursor: pointer; font-family: var(--font-sans); font-size: var(--text-xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; }
+  .confirm { text-align: center; padding: 50px 0; }
+  .confirm .tick { font-size: 3rem; color: var(--pistachio-700); }
+  @media (max-width: 980px) { .bookbar { grid-template-columns: 1fr 1fr; } .bookbar .go { grid-column: 1/-1; padding: 14px; } }
+</style>
+</head>
+<body data-page="book">
+
+  <section class="section" style="padding-top:48px">
+    <div class="book-wrap">
+      <div class="demo-banner">Prototype booking flow — demo only. Production embeds the <b>Cloudbeds</b> booking engine (live availability &amp; rates, synced with OTAs) with payments by <b>Stripe</b>. No payment is processed here.</div>
+
+      <span class="eyebrow">Book direct · best rate guaranteed</span>
+      <h1 class="title-xl" style="margin:14px 0 30px">Book your stay.</h1>
+
+      <div class="steps">
+        <div class="step active" id="s1">1 — Stay &amp; room</div>
+        <div class="step" id="s2">2 — Guest details</div>
+        <div class="step" id="s3">3 — Payment</div>
+        <div class="step" id="s4">Confirmed</div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div id="step1">
+        <form class="bookbar" onsubmit="return refreshRooms(event)">
+          <div class="field">
+            <label>Property</label>
+            <select id="prop" onchange="refreshRooms()">
+              <optgroup label="nōma — serviced buildings">
+                <option value="arabella">nōma Arabella — New Cairo</option>
+                <option value="district9">nōma District 9 — Sheikh Zayed</option>
+              </optgroup>
+              <optgroup label="BEIT — boutique">
+                <option value="beit-hend">Beit Hend — Garrana</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="field"><label>Check-in</label><input type="date" id="checkin" onchange="refreshRooms()" /></div>
+          <div class="field"><label>Check-out</label><input type="date" id="checkout" onchange="refreshRooms()" /></div>
+          <div class="field">
+            <label>Guests</label>
+            <select id="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select>
+          </div>
+          <button class="go" type="submit">Update</button>
+        </form>
+        <div id="rooms"></div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div id="step2" style="display:none">
+        <div class="two-col">
+          <form class="form-grid" onsubmit="return goStep3(event)">
+            <div class="field-group"><label>First name</label><input required id="fname" /></div>
+            <div class="field-group"><label>Last name</label><input required id="lname" /></div>
+            <div class="field-group"><label>Email</label><input required type="email" id="email" /></div>
+            <div class="field-group"><label>Phone / WhatsApp</label><input required id="phone" placeholder="+20 ..." /></div>
+            <div class="field-group full"><label>Special requests (optional)</label><textarea id="requests" rows="3"></textarea></div>
+            <div class="full"><button class="btn btn-primary btn-lg" type="submit">Continue to payment</button></div>
+          </form>
+          <div class="summary-box" id="sum2"></div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div id="step3" style="display:none">
+        <div class="two-col">
+          <div>
+            <span class="eyebrow" style="margin-bottom:12px">Payment method</span>
+            <div class="pay-methods">
+              <button class="pay-chip sel" onclick="selPay(event,this)">Card — Visa / Mastercard / Meeza</button>
+              <button class="pay-chip" onclick="selPay(event,this)">Apple Pay</button>
+              <button class="pay-chip" onclick="selPay(event,this)">Pay at property</button>
+            </div>
+            <form class="form-grid" onsubmit="return confirmBooking(event)">
+              <div class="field-group full"><label>Name on card</label><input placeholder="As printed on card" /></div>
+              <div class="field-group full"><label>Card number</label><input placeholder="•••• •••• •••• ••••" inputmode="numeric" /></div>
+              <div class="field-group"><label>Expiry</label><input placeholder="MM / YY" /></div>
+              <div class="field-group"><label>CVC</label><input placeholder="•••" /></div>
+              <div class="full">
+                <button class="btn btn-primary btn-lg" type="submit">Confirm &amp; pay (demo)</button>
+                <p class="note" style="margin-top:12px">Payment is processed securely by Stripe — card details never touch our servers. Rates payable in EGP or USD.</p>
+              </div>
+            </form>
+          </div>
+          <div class="summary-box" id="sum3"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div id="step4" style="display:none" class="confirm">
+        <div class="tick">✓</div>
+        <h2 class="title-lg" style="margin:10px 0 14px">Your stay is confirmed.</h2>
+        <p class="lede" style="margin:0 auto 18px;max-width:52ch" id="confText"></p>
+        <p class="noma-serif" style="font-style:italic;font-size:var(--text-lg);color:var(--text-strong);margin:0 0 28px">Come as a guest, leave as a local.</p>
+        <a href="index.html" class="btn btn-ghost">Back to home</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="chrome.js"></script>
+  <script>
+    /* ---- demo booking flow (rates in EGP; display via NOMA.fmt) ---- */
+    var PROPS = {
+      'arabella': { name: 'nōma Arabella', loc: 'New Cairo', open: true, rooms: [
+        { id: 'studio', name: 'nōma Studio', det: '28–35 m² · sleeps 2 · kitchenette · workspace', egp: 2400, img: 'assets/photo-woman-reading.jpg' },
+        { id: '1br', name: 'One-Bedroom Apartment', det: '45–55 m² · sleeps 3 · kitchenette · living room', egp: 3600, img: 'assets/photo-portrait.jpg' }
+      ]},
+      'district9': { name: 'nōma District 9', loc: 'Sheikh Zayed', open: false, when: 'Q1 2027', rooms: [] },
+      'beit-hend': { name: 'Beit Hend', loc: 'Garrana, Giza', open: false, when: 'September 2026', rooms: [] }
+    };
+    var sel = { prop: 'arabella', room: null, nights: 3 };
+
+    function nights() {
+      var a = new Date(document.getElementById('checkin').value);
+      var b = new Date(document.getElementById('checkout').value);
+      var n = Math.round((b - a) / 86400000);
+      return (isNaN(n) || n < 1) ? 1 : n;
+    }
+
+    function refreshRooms(e) {
+      if (e) e.preventDefault();
+      var key = document.getElementById('prop').value;
+      sel.prop = key; sel.nights = nights();
+      var p = PROPS[key];
+      var el = document.getElementById('rooms');
+      if (!p.open) {
+        el.innerHTML = '<div class="summary-box" style="text-align:center;padding:48px">' +
+          '<span class="eyebrow">Opening ' + p.when + '</span>' +
+          '<h3 class="title-lg" style="margin:14px 0 10px">' + p.name + ' isn\'t taking bookings yet.</h3>' +
+          '<p class="lede" style="margin:0 auto 22px;max-width:46ch">Leave your email and we\'ll send opening rates and priority booking before anyone else.</p>' +
+          '<form onsubmit="event.preventDefault();this.innerHTML=\'<strong>✓ You\\\'re on the list.</strong>\'" style="display:flex;gap:10px;max-width:430px;margin:0 auto">' +
+          '<input class="input" type="email" required placeholder="you@email.com" style="flex:1">' +
+          '<button class="btn btn-primary">Join waitlist</button></form></div>';
+        return false;
+      }
+      el.innerHTML = p.rooms.map(function (r) {
+        return '<div class="room-option">' +
+          '<div class="ph"><img src="' + r.img + '" alt=""></div>' +
+          '<div><h3>' + r.name + '</h3><p class="det">' + r.det + '</p>' +
+          '<p class="det" style="margin-top:6px">Free cancellation up to 48h before check-in · Best rate guaranteed</p></div>' +
+          '<div class="pr"><div class="n">' + NOMA.fmt(r.egp) + '</div><div class="det">per night*</div>' +
+          '<button class="btn btn-primary" style="margin-top:10px" onclick="pickRoom(\'' + r.id + '\')">Select</button></div></div>';
+      }).join('') +
+      '<p class="note">*Indicative demo rates. Production rates come live from Cloudbeds.</p>';
+      return false;
+    }
+
+    function summary() {
+      var p = PROPS[sel.prop], r = sel.room, n = sel.nights;
+      var sub = r.egp * n, fees = Math.round(sub * 0.14);
+      return '<span class="eyebrow" style="margin-bottom:12px">Your stay</span>' +
+        '<div class="row"><span>' + p.name + ' — ' + p.loc + '</span><span></span></div>' +
+        '<div class="row"><span>' + r.name + '</span><span></span></div>' +
+        '<div class="row"><span>' + document.getElementById('checkin').value + ' → ' + document.getElementById('checkout').value + '</span><span>' + n + ' night' + (n > 1 ? 's' : '') + '</span></div>' +
+        '<div class="row"><span>' + NOMA.fmt(r.egp) + ' × ' + n + ' nights</span><span>' + NOMA.fmt(sub) + '</span></div>' +
+        '<div class="row"><span>Taxes &amp; service (est.)</span><span>' + NOMA.fmt(fees) + '</span></div>' +
+        '<div class="row total"><span>Total</span><span>' + NOMA.fmt(sub + fees) + '</span></div>' +
+        '<p class="note" style="margin-top:14px">Demo estimate. Production totals calculated by Cloudbeds incl. exact taxes; payable in EGP or USD.</p>';
+    }
+
+    function pickRoom(id) {
+      var p = PROPS[sel.prop];
+      sel.room = p.rooms.find(function (r) { return r.id === id; });
+      sel.nights = nights();
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+      setStep(2);
+      document.getElementById('sum2').innerHTML = summary();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goStep3(e) {
+      e.preventDefault();
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('step3').style.display = 'block';
+      setStep(3);
+      document.getElementById('sum3').innerHTML = summary();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return false;
+    }
+
+    function selPay(e, btn) {
+      e.preventDefault();
+      document.querySelectorAll('.pay-chip').forEach(function (b) { b.classList.remove('sel'); });
+      btn.classList.add('sel');
+    }
+
+    function confirmBooking(e) {
+      e.preventDefault();
+      document.getElementById('step3').style.display = 'none';
+      document.getElementById('step4').style.display = 'block';
+      setStep(4);
+      var p = PROPS[sel.prop];
+      var name = document.getElementById('fname').value || 'Guest';
+      document.getElementById('confText').textContent =
+        'Thank you, ' + name + '. A confirmation email is on its way with your booking details for ' + p.name + ', ' + p.loc + '. Our team will WhatsApp you before arrival with check-in instructions.';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return false;
+    }
+
+    function setStep(n) {
+      ['s1', 's2', 's3', 's4'].forEach(function (id, i) {
+        var el = document.getElementById(id);
+        el.classList.remove('active', 'done');
+        if (i + 1 < n) el.classList.add('done');
+        if (i + 1 === n) el.classList.add('active');
+      });
+    }
+
+    /* init: dates + URL params */
+    (function () {
+      var fmt = function (d) { return d.toISOString().slice(0, 10); };
+      var a = new Date(); a.setDate(a.getDate() + 7);
+      var b = new Date(); b.setDate(b.getDate() + 10);
+      var ci = document.getElementById('checkin'), co = document.getElementById('checkout');
+      ci.value = fmt(a); co.value = fmt(b); ci.min = fmt(new Date()); co.min = fmt(a);
+      var q = new URLSearchParams(location.search);
+      if (q.get('property') && PROPS[q.get('property')]) document.getElementById('prop').value = q.get('property');
+      if (q.get('guests')) document.getElementById('guests').value = q.get('guests');
+      refreshRooms();
+    })();
+  </script>
+</body>
+</html>

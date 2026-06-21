@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Partner With Us — nōma Stays | HAAM Management</title>
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+  /* "How it works" — editorial stepper: big deco numerals on a hairline, no boxes */
+  .howit { display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; position: relative; }
+  .howit::before { content: ""; position: absolute; top: 36px; left: 0; right: 0; height: 1px; background: var(--line); }
+  .hstep { position: relative; padding-top: 0; }
+  .hstep .num { font-family: var(--font-display); font-size: var(--text-3xl); line-height: 72px; color: var(--text-strong); display: inline-block; background: var(--surface-page); position: relative; z-index: 1; padding-right: 20px; }
+  .hstep .num::after { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--terracotta-500); margin-left: 14px; vertical-align: middle; }
+  .hstep h3 { display: flex; align-items: center; gap: 10px; font-size: var(--text-md); font-weight: var(--fw-medium); margin: 16px 0 10px; }
+  .hstep h3 [data-lucide] { width: 19px; height: 19px; stroke-width: 1.6; color: var(--terracotta-500); flex: none; }
+  .hstep p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0; max-width: 30ch; }
+  @media (max-width: 980px) {
+    .howit { grid-template-columns: 1fr; gap: 30px; padding-left: 26px; }
+    .howit::before { top: 0; bottom: 0; left: 0; right: auto; width: 1px; height: auto; }
+    .hstep .num { line-height: 1.1; padding: 6px 0; }
+    .hstep .num::after { display: none; }
+    .hstep::before { content: ""; position: absolute; left: -30px; top: 14px; width: 9px; height: 9px; border-radius: 50%; background: var(--terracotta-500); }
+    .hstep p { max-width: 56ch; }
+  }
+
+  .profiles { display: grid; gap: 18px; }
+  .profile { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 26px 28px; background: var(--surface-card); }
+  .profile.beit { background: var(--maroon-800); border-color: var(--maroon-800); color: var(--eggshell-200); }
+  .profile.beit h3 { color: var(--eggshell-100); font-family: var(--font-serif); font-style: italic; }
+  .profile h3 { margin: 0 0 8px; font-size: var(--text-lg); }
+  .profile p { margin: 0; font-size: var(--text-sm); line-height: var(--leading-relaxed); }
+  .profile.beit p { color: var(--text-on-dark-muted); }
+</style>
+</head>
+<body data-page="partner">
+
+  <!-- HERO -->
+  <section class="hero page-hero">
+    <div class="hero-photo">
+      <img src="assets/photo-palms.jpg" alt="" />
+      <img src="assets/photo-balcony.jpg" alt="" />
+    </div>
+    <div class="hero-veil noma-grain"></div>
+    <div class="wrap" style="width:100%">
+      <span class="eyebrow">For property owners &amp; investors</span>
+      <h1>Got a property with potential? Let's talk.</h1>
+      <p class="lede">A building, a villa, a place with a story — we'll tell you honestly what it could earn as a nōma or a BEIT, and then we'll run the whole thing for you.</p>
+    </div>
+  </section>
+
+  <!-- WHAT WE BRING -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">How it works</span>
+        <h2 class="title-lg" style="margin-top:14px">You bring the property. We do the rest.</h2>
+      </div>
+      <div class="howit">
+        <div class="hstep"><span class="num">01</span><h3><i data-lucide="ruler"></i>We size it up</h3><p>Walk us through your property and we'll tell you straight: what it could be, what it could earn, and which brand fits — nōma or BEIT.</p></div>
+        <div class="hstep"><span class="num">02</span><h3><i data-lucide="hard-hat"></i>We get it ready</h3><p>Design, refurbishment and furnishing — we manage the dust and the details so you don't have to, right up to opening day.</p></div>
+        <div class="hstep"><span class="num">03</span><h3><i data-lucide="settings"></i>We run the show</h3><p>Housekeeping, security, maintenance, guest care — our own people on the ground, every day, to one standard.</p></div>
+        <div class="hstep"><span class="num">04</span><h3><i data-lucide="trending-up"></i>You watch it earn</h3><p>We keep the rooms full at the right rate — OTAs, direct bookings, smart pricing — and send you a clear report every month.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILES + FORM -->
+  <section class="section tight" style="border-top:1px solid var(--line)">
+    <div class="wrap two-col">
+      <div>
+        <span class="eyebrow muted">What we're looking for</span>
+        <h2 class="title-lg" style="margin:14px 0 22px">Does your property fit?</h2>
+        <div class="profiles">
+          <div class="profile">
+            <h3>nōma</h3>
+            <p>Buildings of 25+ rooms (or convertible to it) in strong city locations — New Cairo, Sheikh Zayed, central Cairo and beyond. Operated as smart serviced apartments.</p>
+          </div>
+          <div class="profile beit">
+            <h3>Beit</h3>
+            <p>Smaller, characterful properties — under 12 rooms — villas and homes with soul near Egypt's cultural landmarks. Operated as boutique hospitality.</p>
+          </div>
+        </div>
+      </div>
+      <div class="prop-cta">
+        <span class="eyebrow">Let's talk!</span>
+        <form onsubmit="event.preventDefault();this.innerHTML='<strong>✓ Thank you — we\'ll be in touch within 2 business days.</strong>'" style="display:flex;flex-direction:column;gap:14px">
+          <div class="field-group"><label>Name</label><input required /></div>
+          <div class="field-group"><label>Email</label><input type="email" required /></div>
+          <div class="field-group"><label>Phone</label><input /></div>
+          <div class="field-group"><label>Property location &amp; size</label><textarea rows="3" placeholder="e.g. 30-room building in Maadi"></textarea></div>
+          <button class="btn btn-primary" type="submit">Tell us about it</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="chrome.js"></script>
+</body>
+</html>

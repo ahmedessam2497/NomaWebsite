@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Our Story — NōMA Stays | HAAM Management</title>
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="site.css" />
+<style>
+  .story-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+  .story-grid .ph { aspect-ratio: 3/4; border-radius: var(--radius-md); overflow: hidden; background: var(--maroon-700); }
+  .story-grid .ph img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.04); display: block; }
+  .mv { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .mv .card, .core .card { border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface-card); padding: 32px 30px; }
+  .mv .card h3, .core .card h3 { font-size: var(--text-lg); margin: 10px 0 10px; }
+  .mv .card p, .core .card p { font-size: var(--text-sm); color: var(--text-muted); line-height: var(--leading-relaxed); margin: 0; }
+  .core { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 28px; }
+  .core .ar { font-family: var(--font-arabic); font-size: var(--text-lg); color: var(--accent); direction: rtl; float: right; }
+  .principles { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 44px; }
+  .principles .p-card { border: 1px solid var(--line-on-dark); border-radius: var(--radius-md); padding: 34px 32px; background: rgba(232,226,202,.05); }
+  .principles .p-card .num { font-family: var(--font-serif); font-style: italic; color: var(--terracotta-300); }
+  .principles .p-card h3 { color: var(--eggshell-100); font-size: var(--text-lg); margin: 12px 0 10px; }
+  .principles .p-card p { color: var(--text-on-dark-muted); font-size: var(--text-sm); line-height: var(--leading-relaxed); margin: 0; }
+  .people-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .people-grid .ph { aspect-ratio: 3/4; border-radius: var(--radius-sm); overflow: hidden; position: relative; background: var(--maroon-700); }
+  .people-grid .ph img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); display: block; }
+  .people-grid .cap { position: absolute; bottom: 10px; left: 12px; right: 12px; font-size: var(--text-2xs); letter-spacing: var(--tracking-wider); text-transform: uppercase; color: var(--eggshell-100); text-shadow: 0 1px 6px rgba(0,0,0,.5); }
+  @media (max-width: 980px) { .story-grid, .mv, .core, .principles { grid-template-columns: 1fr; } .people-grid { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body data-page="about">
+
+  <!-- HERO -->
+  <section class="hero page-hero">
+    <div class="hero-photo">
+      <img src="assets/photo-balcony.jpg" alt="" />
+      <img src="assets/photo-crowd.jpg" alt="" />
+    </div>
+    <div class="hero-veil noma-grain"></div>
+    <div class="wrap" style="width:100%">
+      <span class="eyebrow">Our story</span>
+      <h1>Born from the heart of Egypt.</h1>
+      <p class="lede">NōMA Stays is the guest platform of HAAM Management — an Egyptian hospitality company built on one belief: Um el Dunya deserves better stays.</p>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="section">
+    <div class="wrap story-grid">
+      <div>
+        <span class="eyebrow muted">The beginning</span>
+        <h2 class="title-lg" style="margin:14px 0 18px">Um el Dunya deserves better stays.</h2>
+        <p class="lede" style="margin-bottom:16px">Egypt — <em>Um el Dunya</em>, Mother of the World — is rising again as a top global destination. The Grand Egyptian Museum, a booming visitor economy, and a new generation of travellers who want more than sightseeing: personal, authentic stays that feel like home.</p>
+        <p class="lede" style="margin-bottom:16px">But Cairo's mid-market accommodation hasn't kept up. Between aging hotels and inconsistent short-lets there was a gap: professionally managed stays with the space of a home and the reliability of a hotel.</p>
+        <p class="lede">HAAM was founded to close that gap — sourcing properties, overseeing refurbishment and furnishing, then operating them with our own on-ground teams. NōMA and BEIT are the result.</p>
+      </div>
+      <div class="ph"><img src="assets/photo-woman-reading.jpg" alt="" /></div>
+    </div>
+  </section>
+
+  <!-- MISSION / VISION / VALUES -->
+  <section class="section tight" style="border-top:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">What guides us</span>
+        <h2 class="title-lg" style="margin-top:14px">Mission, vision and core values</h2>
+      </div>
+      <div class="mv">
+        <div class="card">
+          <span class="eyebrow muted">Mission</span>
+          <h3>The art of staying.</h3>
+          <p>To deliver comfortable, authentic and accessible stay experiences for a diverse global community of travellers — rooted in Egyptian hospitality.</p>
+        </div>
+        <div class="card">
+          <span class="eyebrow muted">Vision</span>
+          <h3>Egypt's leading name in modern hospitality.</h3>
+          <p>To redefine what comfort, authenticity and cultural connection mean for the modern traveller — and become Egypt's leading hospitality management company doing it.</p>
+        </div>
+      </div>
+      <div class="core">
+        <div class="card"><span class="eyebrow muted">01</span><h3>Authentic</h3><p>True to the spirit of Egyptian culture and hospitality in every stay.</p></div>
+        <div class="card"><span class="eyebrow muted">02</span><h3>Comfortable</h3><p>Thoughtfully designed spaces that feel like home.</p></div>
+        <div class="card"><span class="eyebrow muted">03</span><h3>Curated</h3><p>Every experience, guide and service tailored with care.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="band noma-grain" id="principles" style="padding:clamp(64px,8vw,110px) 0">
+    <div class="wrap">
+      <span class="eyebrow on-dark">How we run this business</span>
+      <p class="band-quote" style="margin-top:22px">Two principles. No exceptions.</p>
+      <div class="principles">
+        <div class="p-card">
+          <span class="num">(01)</span>
+          <h3>The guest is at the centre of everything we do.</h3>
+          <p>Every decision — how we design a room, set a rate, schedule a cleaning, answer a message — starts with one question: does this make the stay better? If it doesn't, we don't do it.</p>
+        </div>
+        <div class="p-card">
+          <span class="num">(02)</span>
+          <h3>Our people are our most important asset.</h3>
+          <p>Take care of your people, and they will take care of our guests. We hire carefully, train continuously and build careers — because the warmth you feel at check-in starts long before you arrive.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEOPLE -->
+  <section class="section" id="people">
+    <div class="wrap">
+      <div class="sec-head row">
+        <div>
+          <span class="eyebrow">Our people</span>
+          <h2 class="title-lg" style="margin-top:14px">The hands behind the hospitality</h2>
+        </div>
+        <p class="lede" style="max-width:40ch">From housekeeping to front desk, every team member is HAAM-trained — in service standards, guest care and the small details that make a stay feel effortless.</p>
+      </div>
+      <div class="people-grid">
+        <div class="ph"><img src="assets/photo-phones.jpg" alt="" /><span class="cap">Housekeeping in training</span></div>
+        <div class="ph"><img src="assets/photo-woman-reading.jpg" alt="" /><span class="cap">Front desk &amp; guest care</span></div>
+        <div class="ph"><img src="assets/photo-crowd.jpg" alt="" /><span class="cap">On-site operations</span></div>
+        <div class="ph"><img src="assets/photo-balcony.jpg" alt="" /><span class="cap">Service standards workshop</span></div>
+      </div>
+      <p class="note" style="margin-top:14px">Team and training photography to be added — vintage imagery and captions are placeholders.</p>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Where we're going</span>
+        <h2 class="title-lg" style="margin-top:14px">The road to 150 rooms</h2>
+      </div>
+      <div class="timeline">
+        <div class="t-item"><span class="when">June 2026</span><h3>NōMA Arabella opens — 40 rooms, New Cairo</h3><p>Our flagship serviced building welcomes its first guests.</p></div>
+        <div class="t-item"><span class="when">September 2026</span><h3>Beit Hend opens — 5 rooms, Garrana</h3><p>The first BEIT: a boutique stay minutes from the Grand Egyptian Museum and the pyramids.</p></div>
+        <div class="t-item"><span class="when">Q1 2027</span><h3>NōMA District 9 opens — 32 rooms, Sheikh Zayed</h3><p>The NōMA standard arrives in West Cairo, taking the portfolio to 77 operating keys.</p></div>
+        <div class="t-item"><span class="when">End of 2027</span><h3>150 rooms under management</h3><p>Scaling NōMA and growing the BEIT collection — across Cairo, and toward Egypt's coasts.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <script src="chrome.js"></script>
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
