@@ -243,38 +243,61 @@
 
     window.NOMA_LB = { open: open };
 
-    /* ----- Live Cloudbeds content (graceful: keeps local images on failure) ----- */
-    if (!document.querySelector('.rt[data-cb-room], .prop-gallery[data-cb-gallery]')) return;
-    function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
-    function match(map, key) {
-      if (map[key]) return map[key];
-      var f = Object.keys(map).filter(function (n) { return n.indexOf(key) >= 0 || key.indexOf(n) >= 0; })
-        .sort(function (a, b) { return b.length - a.length; })[0];
-      return f ? map[f] : null;
+    /* ----- Live Cloudbeds content -----
+       Rebuilds [data-cb-roomtypes] from the real Cloudbeds room types
+       (name, description, photos) and fills [data-cb-gallery] with all
+       property photos. On failure the static markup is left untouched. */
+    if (!document.querySelector('[data-cb-roomtypes], .prop-gallery[data-cb-gallery]')) return;
+
+    function cbCard(rm) {
+      var n = (rm.photos && rm.photos.length) || 0;
+      var spec = rm.maxGuests ? ('sleeps ' + rm.maxGuests) : '';
+      var card = document.createElement('div');
+      card.className = 'rt' + (n ? '' : ' rt-empty');
+      card.innerHTML =
+        '<div class="rt-top"><h4></h4></div>' +
+        (spec ? '<span class="rt-spec"></span>' : '') +
+        '<p></p>' +
+        '<span class="rt-photos"><i data-lucide="camera"></i> <span class="rt-photos-n"></span></span>';
+      card.querySelector('h4').textContent = rm.name || '';
+      if (spec) card.querySelector('.rt-spec').textContent = spec;
+      card.querySelector('p').textContent = rm.description || '';
+      card.querySelector('.rt-photos-n').textContent = n ? (n + (n === 1 ? ' photo' : ' photos')) : 'Photos coming soon';
+      if (n) {
+        card.__cbPhotos = rm.photos;
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.addEventListener('click', function () { open(rm.photos, 0, rm.name); });
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(rm.photos, 0, rm.name); }
+        });
+      }
+      return card;
     }
+
     fetch('/api/rooms', { headers: { Accept: 'application/json' } })
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (!d || !d.ok || !d.rooms || !d.rooms.length) return;
-        var byName = {};
-        d.rooms.forEach(function (rm) { byName[norm(rm.name)] = rm; });
-        document.querySelectorAll('.rt[data-cb-room]').forEach(function (el) {
-          var rm = match(byName, norm(el.getAttribute('data-cb-room')));
-          if (!rm) return;
-          if (rm.photos && rm.photos.length) el.__cbPhotos = rm.photos;
-          if (rm.description) { var p = el.querySelector('p'); if (p) p.textContent = rm.description; }
+
+        document.querySelectorAll('[data-cb-roomtypes]').forEach(function (box) {
+          box.innerHTML = '';
+          d.rooms.forEach(function (rm) { box.appendChild(cbCard(rm)); });
         });
+
         var all = [];
         d.rooms.forEach(function (rm) { (rm.photos || []).forEach(function (u) { all.push(u); }); });
-        if (!all.length) return;
-        document.querySelectorAll('.prop-gallery[data-cb-gallery]').forEach(function (gal) {
-          gal.__cbPhotos = all;
-          Array.prototype.forEach.call(gal.querySelectorAll('.g img'), function (im, i) {
-            if (all[i]) { im.src = all[i]; var g = im.closest('.g'); if (g) g.classList.remove('empty'); }
+        if (all.length) {
+          document.querySelectorAll('.prop-gallery[data-cb-gallery]').forEach(function (gal) {
+            gal.__cbPhotos = all;
+            Array.prototype.forEach.call(gal.querySelectorAll('.g img'), function (im, i) {
+              if (all[i]) { im.src = all[i]; var g = im.closest('.g'); if (g) g.classList.remove('empty'); }
+            });
           });
-        });
+        }
+
+        if (window.lucide) window.lucide.createIcons();
       })
       .catch(function () {});
   })();
-
 })();
