@@ -178,19 +178,9 @@
       document.body.style.overflow = 'hidden';
     }
     function open(list, start, title) {
-      if (!list || !list.length) { openWith([], 0, title); return; }
-      var results = new Array(list.length), checked = 0;
-      list.forEach(function (src, k) {
-        var im = new Image();
-        im.onload = function () { results[k] = src; if (++checked === list.length) finalize(); };
-        im.onerror = function () { results[k] = null; if (++checked === list.length) finalize(); };
-        im.src = src;
-      });
-      function finalize() {
-        var loaded = results.filter(Boolean), s = 0, seen = 0;
-        for (var k = 0; k < results.length; k++) { if (k === start) { s = seen; break; } if (results[k]) seen++; }
-        openWith(loaded, s, title);
-      }
+      /* Open immediately; images load on demand (no blocking preload —
+         remote Cloudbeds galleries can be 30+ images). */
+      openWith((list || []).filter(Boolean), start || 0, title);
     }
     function close() {
       lb.classList.remove('on');
