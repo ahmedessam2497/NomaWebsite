@@ -1,39 +1,17 @@
-/* ============================================================
-   NōMA Stays — shared chrome: header, footer, currency, heroes,
-   cursor, and the booking.com-style photo lightbox.
-   Pages set <body data-page="..." class="brand-noma|brand-beit">.
-   Prices: tag any element <span data-egp="2400"></span> and it
-   re-renders on the EGP/USD toggle.
-   ============================================================ */
+/* NōMA Stays — shared chrome: header, footer, back button, heroes,
+   cursor, photo lightbox, and live Cloudbeds room content (/api/rooms).
+   Pages set <body data-page="..." class="brand-noma|brand-beit">. */
 (function () {
-  var USD_PER_EGP = 1 / 48; /* placeholder FX — production pulls live rate */
 
   var NAV = [
     { id: 'group',   label: 'The Group',      href: 'index.html' },
     { id: 'noma',    label: 'NōMA',           href: 'noma.html', brand: true },
     { id: 'beit',    label: 'BEIT',           href: 'beit.html', brand: true },
     { id: 'about',   label: 'About',          href: 'about.html' },
-    { id: 'partner', label: 'Partner With Us', href: 'partner.html' },
+    { id: 'partner', label: 'Partner With Us', href: 'partner.html' }
   ];
-
-  function cur() { return localStorage.getItem('noma-cur') || 'EGP'; }
-  function fmt(egp, c) {
-    egp = Number(egp);
-    if ((c || cur()) === 'USD') return '$' + Math.round(egp * USD_PER_EGP).toLocaleString('en-US');
-    return 'EGP ' + egp.toLocaleString('en-US');
-  }
-  function updatePrices() {
-    var c = cur();
-    document.querySelectorAll('[data-egp]').forEach(function (el) {
-      el.textContent = fmt(el.getAttribute('data-egp'), c);
-    });
-    document.querySelectorAll('.cur button').forEach(function (b) {
-      b.setAttribute('aria-pressed', b.dataset.cur === c ? 'true' : 'false');
-    });
-  }
-  window.NOMA = { fmt: fmt, cur: cur, updatePrices: updatePrices };
-
   var page = document.body.dataset.page || '';
+  var isHome = (page === 'group');
 
   /* ---------- Header ---------- */
   var head = document.createElement('header');
@@ -41,8 +19,7 @@
   head.innerHTML =
     '<div class="head-in">' +
       '<a class="brandmark" href="index.html">' +
-        '<img src="assets/noma-wordmark-lower-maroon.png" alt="NōMA Stays" />' +
-        '<span class="sub">Stays</span>' +
+        '<img src="assets/noma-wordmark-lower-maroon.png" alt="NōMA Stays" /><span class="sub">Stays</span>' +
       '</a>' +
       '<nav class="mainnav">' +
         NAV.map(function (n) {
@@ -50,90 +27,61 @@
         }).join('') +
       '</nav>' +
       '<div class="head-actions">' +
-        '<div class="cur"><button data-cur="EGP">EGP</button><button data-cur="USD">USD</button></div>' +
+        (isHome ? '' : '<button class="back-link" type="button" aria-label="Go back">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' +
+          '<span>Back</span></button>') +
         '<a class="btn btn-accent" href="book.html">Book a stay</a>' +
       '</div>' +
     '</div>';
   document.body.insertBefore(head, document.body.firstChild);
 
+  /* ---------- Back button: previous in-site page, else homepage ---------- */
+  var backBtn = head.querySelector('.back-link');
+  if (backBtn) {
+    backBtn.addEventListener('click', function () {
+      var sameOrigin = document.referrer && document.referrer.indexOf(location.origin) === 0;
+      if (sameOrigin && history.length > 1) history.back();
+      else location.href = 'index.html';
+    });
+  }
+
   /* ---------- Footer ---------- */
   var foot = document.createElement('footer');
   foot.className = 'site-foot';
   foot.innerHTML =
-    '<div class="wrap-wide">' +
-      '<div class="foot-top">' +
-        '<div>' +
-          '<img class="wm" src="assets/noma-wordmark-lower-cream.png" alt="NōMA Stays" />' +
-          '<p class="blurb">An all-Egyptian hospitality company. Two brands — NōMA serviced buildings and BEIT boutique stays — refurbished and run end-to-end by HAAM Management.</p>' +
-          '<p class="ar">من قلب مصر · القاهرة</p>' +
-        '</div>' +
-        '<div class="foot-col"><h4>NōMA</h4>' +
-          '<a href="noma.html">The brand</a>' +
-          '<a href="noma.html#arabella">NōMA Arabella</a>' +
-          '<a href="noma.html#district9">NōMA District 9</a>' +
-          '<a href="noma.html#services">Serviced living</a>' +
-        '</div>' +
-        '<div class="foot-col"><h4>BEIT</h4>' +
-          '<a href="beit.html">The brand</a>' +
-          '<a href="beit.html#beit-hend">Beit Hend</a>' +
-          '<a href="beit.html#experiences">Experiences</a>' +
-        '</div>' +
-        '<div class="foot-col"><h4>Company</h4>' +
-          '<a href="about.html">Our story</a>' +
-          '<a href="about.html#people">Our people</a>' +
-          '<a href="partner.html">For property owners</a>' +
-          '<a href="mailto:hello@nomastays.com">Contact</a>' +
-        '</div>' +
+    '<div class="wrap-wide"><div class="foot-top">' +
+      '<div>' +
+        '<img class="wm" src="assets/noma-wordmark-lower-cream.png" alt="NōMA Stays" />' +
+        '<p class="blurb">An all-Egyptian hospitality company. Two brands — NōMA serviced buildings and BEIT boutique stays — refurbished and run end-to-end by HAAM Management.</p>' +
+        '<p class="ar">من قلب مصر · القاهرة</p>' +
       '</div>' +
-      '<div class="foot-bottom">' +
-        '<span>© 2026 HAAM Management · Cairo, Egypt</span>' +
-        '<div class="powered"><span>Booking by Cloudbeds</span><span>Payments by Stripe</span></div>' +
-      '</div>' +
-    '</div>';
+      '<div class="foot-col"><h4>NōMA</h4><a href="noma.html">The brand</a><a href="noma.html#arabella">NōMA Arabella</a><a href="noma.html#district9">NōMA District 9</a><a href="noma.html#services">Serviced living</a></div>' +
+      '<div class="foot-col"><h4>BEIT</h4><a href="beit.html">The brand</a><a href="beit.html#beit-hend">Beit Hend</a><a href="beit.html#experiences">Experiences</a></div>' +
+      '<div class="foot-col"><h4>Company</h4><a href="about.html">Our story</a><a href="about.html#people">Our people</a><a href="partner.html">For property owners</a><a href="mailto:hello@nomastays.com">Contact</a></div>' +
+    '</div>' +
+    '<div class="foot-bottom"><span>© 2026 HAAM Management · Cairo, Egypt</span>' +
+      '<div class="powered"><span>Booking by Cloudbeds</span><span>Payments by Stripe</span></div></div></div>';
   document.body.appendChild(foot);
 
-  /* ---------- Currency wiring ---------- */
-  head.querySelectorAll('.cur button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      localStorage.setItem('noma-cur', b.dataset.cur);
-      updatePrices();
-    });
-  });
-  updatePrices();
-
-  /* ---------- Rotating hero photos ----------
-     Images live in assets/hero-main/, assets/hero-noma/, assets/hero-beit/
-     named 1.jpg, 2.jpg, 3.jpg …
-     Just drop images in the folder and push — no config needed. */
-  var HERO_FOLDERS = {
-    'group': 'assets/hero-main/',
-    'noma':  'assets/hero-noma/',
-    'beit':  'assets/hero-beit/'
-  };
+  /* ---------- Rotating hero photos (assets/hero-<page>/1.jpg, 2.jpg…; also .jpeg/.png/.webp) ---------- */
+  var HERO_FOLDERS = { group: 'assets/hero-main/', noma: 'assets/hero-noma/', beit: 'assets/hero-beit/' };
+  var HERO_EXTS = ['jpg', 'jpeg', 'png', 'webp'];
 
   document.querySelectorAll('.hero-photo').forEach(function (box) {
     var folder = HERO_FOLDERS[page];
     if (!folder) { startRotation(box); return; }
-
+    if (box.querySelector('video')) return;
     box.innerHTML = '';
-    var n = 1;
-
-    function loadNext() {
+    (function tryLoad(num, ext) {
       var img = document.createElement('img');
       img.alt = '';
-      img.onload = function () {
-        box.appendChild(img);
-        n++;
-        loadNext();
-      };
+      img.onload = function () { box.appendChild(img); tryLoad(num + 1, 0); };
       img.onerror = function () {
-        // No more images — start rotation with what loaded
-        startRotation(box);
+        if (ext + 1 < HERO_EXTS.length) tryLoad(num, ext + 1);
+        else startRotation(box);
       };
-      img.src = folder + n + '.jpg';
-    }
-
-    loadNext();
+      img.src = folder + num + '.' + HERO_EXTS[ext];
+    })(1, 0);
   });
 
   function startRotation(box) {
@@ -151,10 +99,10 @@
 
   if (window.lucide) window.lucide.createIcons();
 
-  /* ---------- Ō cursor (site-wide) ---------- */
+  /* ---------- Ō cursor ---------- */
   (function () {
     if (window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches) return;
-    if (document.getElementById('o-cursor')) return; /* avoid duplicates */
+    if (document.getElementById('o-cursor')) return;
     var c = document.createElement('div');
     c.id = 'o-cursor';
     c.innerHTML = '<span class="bar"></span><span class="ring"></span>';
@@ -163,19 +111,12 @@
       document.body.classList.add('o-cursor-on');
       c.style.left = e.clientX + 'px';
       c.style.top = e.clientY + 'px';
-      var t = e.target.closest('a, button, select, input, textarea, [role="button"], label, .g, .rt');
-      c.classList.toggle('lift', !!t);
+      c.classList.toggle('lift', !!e.target.closest('a, button, select, input, textarea, [role="button"], label, .g, .rt'));
     });
     document.addEventListener('mouseleave', function () { document.body.classList.remove('o-cursor-on'); });
   })();
 
-  /* ---------- Photo lightbox (booking.com style) ----------
-     Property galleries:  <div class="prop-gallery" data-prefix="arabella"
-                                data-count="10" data-gallery-title="NōMA Arabella"> ... </div>
-     Room types:          <div class="rt" data-prefix="arabella-studio"
-                                data-count="5" data-title="Studio · NōMA Arabella"> ... </div>
-     Photos are expected at assets/rooms/<prefix>-<n>.jpg (n = 1..count).
-     Missing files are skipped automatically, so partial sets are fine. */
+  /* ---------- Photo lightbox + live Cloudbeds photos ---------- */
   (function () {
     function buildList(prefix, count) {
       var out = [];
@@ -191,23 +132,15 @@
       '<button class="lb-x" aria-label="Close">&times;</button>' +
       '<button class="lb-nav lb-prev" aria-label="Previous">&#8249;</button>' +
       '<button class="lb-nav lb-next" aria-label="Next">&#8250;</button>' +
-      '<div class="lb-stage">' +
-        '<div class="lb-title"></div>' +
-        '<img class="lb-img" alt="" />' +
-        '<div class="lb-empty">Photos coming soon</div>' +
-        '<div class="lb-count"></div>' +
-      '</div>' +
+      '<div class="lb-stage"><div class="lb-title"></div><img class="lb-img" alt="" />' +
+      '<div class="lb-empty">Photos coming soon</div><div class="lb-count"></div></div>' +
       '<div class="lb-thumbs"></div>';
     document.body.appendChild(lb);
 
-    var imgEl = lb.querySelector('.lb-img'),
-        countEl = lb.querySelector('.lb-count'),
-        titleEl = lb.querySelector('.lb-title'),
-        thumbsEl = lb.querySelector('.lb-thumbs'),
-        emptyEl = lb.querySelector('.lb-empty'),
-        navPrev = lb.querySelector('.lb-prev'),
+    var imgEl = lb.querySelector('.lb-img'), countEl = lb.querySelector('.lb-count'),
+        titleEl = lb.querySelector('.lb-title'), thumbsEl = lb.querySelector('.lb-thumbs'),
+        emptyEl = lb.querySelector('.lb-empty'), navPrev = lb.querySelector('.lb-prev'),
         navNext = lb.querySelector('.lb-next');
-
     var photos = [], idx = 0;
 
     function render() {
@@ -220,8 +153,8 @@
       imgEl.src = photos[idx];
       countEl.textContent = (idx + 1) + ' / ' + photos.length;
       Array.prototype.forEach.call(thumbsEl.children, function (t, k) { t.classList.toggle('on', k === idx); });
-      var onThumb = thumbsEl.children[idx];
-      if (onThumb && onThumb.scrollIntoView) onThumb.scrollIntoView({ inline: 'center', block: 'nearest' });
+      var on = thumbsEl.children[idx];
+      if (on && on.scrollIntoView) on.scrollIntoView({ inline: 'center', block: 'nearest' });
     }
     function buildThumbs() {
       thumbsEl.innerHTML = '';
@@ -237,11 +170,9 @@
     }
     function go(d) { idx += d; render(); }
     function openWith(loaded, start, title) {
-      photos = loaded;
-      idx = start || 0;
+      photos = loaded; idx = start || 0;
       titleEl.textContent = title || '';
-      buildThumbs();
-      render();
+      buildThumbs(); render();
       lb.classList.add('on');
       lb.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -256,9 +187,7 @@
         im.src = src;
       });
       function finalize() {
-        var loaded = results.filter(Boolean);
-        // map requested start index onto the filtered list
-        var s = 0, seen = 0;
+        var loaded = results.filter(Boolean), s = 0, seen = 0;
         for (var k = 0; k < results.length; k++) { if (k === start) { s = seen; break; } if (results[k]) seen++; }
         openWith(loaded, s, title);
       }
@@ -281,38 +210,71 @@
       else if (e.key === 'ArrowRight') go(1);
     });
 
-    /* Wire property galleries */
+    function listFor(el, local) { return (el.__cbPhotos && el.__cbPhotos.length) ? el.__cbPhotos : local; }
+
     document.querySelectorAll('.prop-gallery[data-prefix]').forEach(function (gal) {
-      var prefix = gal.getAttribute('data-prefix');
-      var count = parseInt(gal.getAttribute('data-count'), 10) || 0;
+      var list = buildList(gal.getAttribute('data-prefix'), parseInt(gal.getAttribute('data-count'), 10) || 0);
       var title = gal.getAttribute('data-gallery-title') || '';
-      var list = buildList(prefix, count);
       Array.prototype.forEach.call(gal.querySelectorAll('.g'), function (tile) {
         var start = parseInt(tile.getAttribute('data-i'), 10) || 0;
         tile.setAttribute('role', 'button');
         tile.setAttribute('tabindex', '0');
-        tile.addEventListener('click', function () { open(list, start, title); });
-        tile.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(list, start, title); } });
+        tile.addEventListener('click', function () { open(listFor(gal, list), start, title); });
+        tile.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(listFor(gal, list), start, title); }
+        });
       });
-      /* placeholder state for tiles whose image is missing */
       Array.prototype.forEach.call(gal.querySelectorAll('.g img'), function (im) {
         im.addEventListener('error', function () { im.closest('.g').classList.add('empty'); });
         if (im.complete && im.naturalWidth === 0) im.closest('.g').classList.add('empty');
       });
     });
 
-    /* Wire room-type cards */
     document.querySelectorAll('.rt[data-prefix]').forEach(function (el) {
-      var prefix = el.getAttribute('data-prefix');
-      var count = parseInt(el.getAttribute('data-count'), 10) || 0;
+      var list = buildList(el.getAttribute('data-prefix'), parseInt(el.getAttribute('data-count'), 10) || 0);
       var title = el.getAttribute('data-title') || '';
-      var list = buildList(prefix, count);
       el.setAttribute('role', 'button');
       el.setAttribute('tabindex', '0');
-      el.addEventListener('click', function () { open(list, 0, title); });
-      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(list, 0, title); } });
+      el.addEventListener('click', function () { open(listFor(el, list), 0, title); });
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(listFor(el, list), 0, title); }
+      });
     });
 
     window.NOMA_LB = { open: open };
+
+    /* ----- Live Cloudbeds content (graceful: keeps local images on failure) ----- */
+    if (!document.querySelector('.rt[data-cb-room], .prop-gallery[data-cb-gallery]')) return;
+    function norm(s) { return String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
+    function match(map, key) {
+      if (map[key]) return map[key];
+      var f = Object.keys(map).filter(function (n) { return n.indexOf(key) >= 0 || key.indexOf(n) >= 0; })
+        .sort(function (a, b) { return b.length - a.length; })[0];
+      return f ? map[f] : null;
+    }
+    fetch('/api/rooms', { headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d || !d.ok || !d.rooms || !d.rooms.length) return;
+        var byName = {};
+        d.rooms.forEach(function (rm) { byName[norm(rm.name)] = rm; });
+        document.querySelectorAll('.rt[data-cb-room]').forEach(function (el) {
+          var rm = match(byName, norm(el.getAttribute('data-cb-room')));
+          if (!rm) return;
+          if (rm.photos && rm.photos.length) el.__cbPhotos = rm.photos;
+          if (rm.description) { var p = el.querySelector('p'); if (p) p.textContent = rm.description; }
+        });
+        var all = [];
+        d.rooms.forEach(function (rm) { (rm.photos || []).forEach(function (u) { all.push(u); }); });
+        if (!all.length) return;
+        document.querySelectorAll('.prop-gallery[data-cb-gallery]').forEach(function (gal) {
+          gal.__cbPhotos = all;
+          Array.prototype.forEach.call(gal.querySelectorAll('.g img'), function (im, i) {
+            if (all[i]) { im.src = all[i]; var g = im.closest('.g'); if (g) g.classList.remove('empty'); }
+          });
+        });
+      })
+      .catch(function () {});
   })();
+
 })();

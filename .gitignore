@@ -1,0 +1,11 @@
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.fuse_hidden*
+
+# Node / Vercel
+node_modules/
+.vercel/
+.env
+.env.*
+npm-debug.log*
