@@ -101,8 +101,42 @@
   });
   updatePrices();
 
-  /* ---------- Rotating hero photos ---------- */
+  /* ---------- Rotating hero photos ----------
+     Images live in assets/hero-main/, assets/hero-noma/, assets/hero-beit/
+     named 1.jpg, 2.jpg, 3.jpg …
+     Just drop images in the folder and push — no config needed. */
+  var HERO_FOLDERS = {
+    'group': 'assets/hero-main/',
+    'noma':  'assets/hero-noma/',
+    'beit':  'assets/hero-beit/'
+  };
+
   document.querySelectorAll('.hero-photo').forEach(function (box) {
+    var folder = HERO_FOLDERS[page];
+    if (!folder) { startRotation(box); return; }
+
+    box.innerHTML = '';
+    var n = 1;
+
+    function loadNext() {
+      var img = document.createElement('img');
+      img.alt = '';
+      img.onload = function () {
+        box.appendChild(img);
+        n++;
+        loadNext();
+      };
+      img.onerror = function () {
+        // No more images — start rotation with what loaded
+        startRotation(box);
+      };
+      img.src = folder + n + '.jpg';
+    }
+
+    loadNext();
+  });
+
+  function startRotation(box) {
     var imgs = box.querySelectorAll('img');
     if (!imgs.length) return;
     var i = 0;
@@ -113,7 +147,7 @@
       i = (i + 1) % imgs.length;
       imgs[i].classList.add('on');
     }, 6500);
-  });
+  }
 
   if (window.lucide) window.lucide.createIcons();
 
