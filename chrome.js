@@ -1,6 +1,5 @@
 /* NōMA Stays — shared chrome: header, footer, back button, heroes,
-   cursor, photo lightbox, and live Cloudbeds room content (/api/rooms).
-   Pages set <body data-page="..." class="brand-noma|brand-beit">. */
+   cursor, photo lightbox, and live Cloudbeds room content (/api/rooms). */
 (function () {
 
   var NAV = [
@@ -13,7 +12,7 @@
   var page = document.body.dataset.page || '';
   var isHome = (page === 'group');
 
-  /* ---------- Header ---------- */
+  /* Header */
   var head = document.createElement('header');
   head.className = 'site-head';
   head.innerHTML =
@@ -35,7 +34,6 @@
     '</div>';
   document.body.insertBefore(head, document.body.firstChild);
 
-  /* ---------- Back button: previous in-site page, else homepage ---------- */
   var backBtn = head.querySelector('.back-link');
   if (backBtn) {
     backBtn.addEventListener('click', function () {
@@ -45,7 +43,7 @@
     });
   }
 
-  /* ---------- Footer ---------- */
+  /* Footer */
   var foot = document.createElement('footer');
   foot.className = 'site-foot';
   foot.innerHTML =
@@ -63,7 +61,7 @@
       '<div class="powered"><span>Booking by Cloudbeds</span><span>Payments by Stripe</span></div></div></div>';
   document.body.appendChild(foot);
 
-  /* ---------- Rotating hero photos (assets/hero-<page>/1.jpg, 2.jpg…; also .jpeg/.png/.webp) ---------- */
+  /* Rotating hero photos: assets/hero-<page>/1.jpg, 2.jpg … (.jpg/.jpeg/.png/.webp) */
   var HERO_FOLDERS = { group: 'assets/hero-main/', noma: 'assets/hero-noma/', beit: 'assets/hero-beit/' };
   var HERO_EXTS = ['jpg', 'jpeg', 'png', 'webp'];
 
@@ -72,34 +70,42 @@
     if (!folder) { startRotation(box); return; }
     if (box.querySelector('video')) return;
     box.innerHTML = '';
+    var shown = 0;
     (function tryLoad(num, ext) {
       var img = document.createElement('img');
       img.alt = '';
-      img.onload = function () { box.appendChild(img); tryLoad(num + 1, 0); };
+      img.onload = function () {
+        box.appendChild(img);
+        shown++;
+        if (shown === 1) img.classList.add('on');
+        if (shown === 2) startRotation(box);
+        tryLoad(num + 1, 0);
+      };
       img.onerror = function () {
         if (ext + 1 < HERO_EXTS.length) tryLoad(num, ext + 1);
-        else startRotation(box);
       };
       img.src = folder + num + '.' + HERO_EXTS[ext];
     })(1, 0);
   });
 
   function startRotation(box) {
-    var imgs = box.querySelectorAll('img');
-    if (!imgs.length) return;
-    var i = 0;
-    imgs[0].classList.add('on');
-    if (imgs.length < 2) return;
+    if (box.__rotating) return;
+    box.__rotating = true;
+    var first = box.querySelectorAll('img');
+    if (first.length && !box.querySelector('img.on')) first[0].classList.add('on');
     setInterval(function () {
-      imgs[i].classList.remove('on');
-      i = (i + 1) % imgs.length;
-      imgs[i].classList.add('on');
+      var imgs = box.querySelectorAll('img');
+      if (imgs.length < 2) return;
+      var cur = box.querySelector('img.on');
+      var idx = cur ? Array.prototype.indexOf.call(imgs, cur) : -1;
+      if (cur) cur.classList.remove('on');
+      imgs[(idx + 1) % imgs.length].classList.add('on');
     }, 6500);
   }
 
   if (window.lucide) window.lucide.createIcons();
 
-  /* ---------- Ō cursor ---------- */
+  /* Ō cursor */
   (function () {
     if (window.matchMedia('(hover: none)').matches || window.matchMedia('(pointer: coarse)').matches) return;
     if (document.getElementById('o-cursor')) return;
@@ -116,7 +122,7 @@
     document.addEventListener('mouseleave', function () { document.body.classList.remove('o-cursor-on'); });
   })();
 
-  /* ---------- Photo lightbox + live Cloudbeds photos ---------- */
+  /* Photo lightbox + live Cloudbeds photos */
   (function () {
     function buildList(prefix, count) {
       var out = [];
@@ -178,8 +184,6 @@
       document.body.style.overflow = 'hidden';
     }
     function open(list, start, title) {
-      /* Open immediately; images load on demand (no blocking preload —
-         remote Cloudbeds galleries can be 30+ images). */
       openWith((list || []).filter(Boolean), start || 0, title);
     }
     function close() {
@@ -233,10 +237,7 @@
 
     window.NOMA_LB = { open: open };
 
-    /* ----- Live Cloudbeds content -----
-       Rebuilds [data-cb-roomtypes] from the real Cloudbeds room types
-       (name, description, photos) and fills [data-cb-gallery] with all
-       property photos. On failure the static markup is left untouched. */
+    /* Live Cloudbeds content: rebuild [data-cb-roomtypes], fill [data-cb-gallery]. */
     if (!document.querySelector('[data-cb-roomtypes], .prop-gallery[data-cb-gallery]')) return;
 
     function cbCard(rm) {
@@ -269,12 +270,10 @@
       .then(function (r) { return r.json(); })
       .then(function (d) {
         if (!d || !d.ok || !d.rooms || !d.rooms.length) return;
-
         document.querySelectorAll('[data-cb-roomtypes]').forEach(function (box) {
           box.innerHTML = '';
           d.rooms.forEach(function (rm) { box.appendChild(cbCard(rm)); });
         });
-
         var all = [];
         d.rooms.forEach(function (rm) { (rm.photos || []).forEach(function (u) { all.push(u); }); });
         if (all.length) {
@@ -285,9 +284,9 @@
             });
           });
         }
-
         if (window.lucide) window.lucide.createIcons();
       })
       .catch(function () {});
   })();
+
 })();
