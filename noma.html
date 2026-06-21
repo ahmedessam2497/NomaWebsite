@@ -6,6 +6,7 @@
 <title>NōMA — Smart serviced stays | NōMA Stays</title>
 <link rel="stylesheet" href="tokens.css" />
 <link rel="stylesheet" href="site.css" />
+<script type="text/javascript" src="https://static1.cloudbeds.com/booking-engine/latest/static/js/immersive-experience/cb-immersive-experience.js"></script>
 <style>
   .seg { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
   .seg .item { background: var(--surface-card); padding: 28px 26px; }
@@ -47,7 +48,7 @@
         <div>2 buildings · 72 rooms</div>
         <div>From <b><span data-egp="2400"></span></b> / night</div>
         <div class="note">Studios &amp; one-bedrooms · long-stay friendly · on every OTA, cheapest here</div>
-        <a class="btn btn-accent" href="book.html?property=arabella">Check availability</a>
+        <cb-book-now-button property-code="q3dbO7" label="Check availability" class-name="btn btn-accent" height="90vh" width="min(900px,95vw)"></cb-book-now-button>
       </div>
     </div>
   </section>
@@ -97,7 +98,7 @@
           <span class="eyebrow">New Cairo · opening June 2026</span>
           <h2 class="title-xl" style="margin-top:12px">NōMA Arabella</h2>
         </div>
-        <a class="btn btn-accent" href="book.html?property=arabella">Check availability</a>
+        <cb-book-now-button property-code="q3dbO7" label="Check availability" class-name="btn btn-accent" height="90vh" width="min(900px,95vw)"></cb-book-now-button>
       </div>
 
       <!-- PROPERTY GALLERY (click any photo to open the lightbox) -->
@@ -136,7 +137,7 @@
           <span class="eyebrow">Book your stay</span>
           <div class="price"><span data-egp="2400"></span> <small>– <span data-egp="5300"></span> / night</small></div>
           <p class="note">Indicative range by unit type and season. Final rates at checkout via Cloudbeds — payable in EGP or USD.</p>
-          <a class="btn btn-accent" href="book.html?property=arabella">Check availability</a>
+          <cb-book-now-button property-code="q3dbO7" label="Check availability" class-name="btn btn-accent" height="90vh" width="min(900px,95vw)"></cb-book-now-button>
           <p class="note">Long stay (28+ nights)? Ask about monthly rates — hello@nomastays.com</p>
         </div>
       </div>
@@ -255,10 +256,4 @@
         <p class="band-quote" style="margin-top:16px">150 rooms by the end of 2027.</p>
       </div>
       <a class="btn btn-ghost on-dark" href="partner.html">Own a building? Let's talk <i data-lucide="arrow-right"></i></a>
-    </div>
-  </section>
-
-  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
-  <script src="chrome.js"></script>
-</body>
-</html>
+  
