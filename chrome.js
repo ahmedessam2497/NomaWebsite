@@ -323,3 +323,94 @@
   })();
 
 })();
+
+/* ===== Waitlist modal (not-yet-open properties) ===== */
+(function () {
+  var ENDPOINT = '/api/waitlist';
+  var modal, form, statusEl, propInput;
+
+  function build() {
+    modal = document.createElement('div');
+    modal.className = 'wl';
+    modal.id = 'wl';
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML =
+      '<div class="wl-panel" role="dialog" aria-modal="true" aria-label="Join the waitlist">' +
+        '<button class="wl-x" type="button" aria-label="Close">&times;</button>' +
+        '<div class="wl-head"><span class="eyebrow">Join the waitlist</span>' +
+        '<h3 class="wl-title">Be first to know</h3>' +
+        '<p class="wl-sub">Leave your details and we will reach out as soon as this property opens for booking.</p></div>' +
+        '<form class="wl-form">' +
+          '<label>Full name<input name="name" type="text" autocomplete="name" required></label>' +
+          '<label>Email<input name="email" type="email" autocomplete="email" required></label>' +
+          '<label>Phone (WhatsApp)<input name="phone" type="tel" autocomplete="tel"></label>' +
+          '<input name="property" type="hidden">' +
+          '<button class="btn btn-accent wl-submit" type="submit">Join the waitlist</button>' +
+          '<p class="wl-status" role="status"></p>' +
+        '</form>' +
+      '</div>';
+    document.body.appendChild(modal);
+    form = modal.querySelector('.wl-form');
+    statusEl = modal.querySelector('.wl-status');
+    propInput = modal.querySelector('[name=property]');
+    modal.querySelector('.wl-x').addEventListener('click', close);
+    modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('on')) close(); });
+    form.addEventListener('submit', submit);
+  }
+
+  function open(property, label) {
+    if (!modal) build();
+    propInput.value = property || '';
+    if (label) modal.querySelector('.wl-title').textContent = label;
+    else modal.querySelector('.wl-title').textContent = 'Be first to know';
+    statusEl.textContent = ''; statusEl.className = 'wl-status';
+    form.reset(); propInput.value = property || '';
+    form.querySelector('.wl-submit').disabled = false;
+    modal.classList.add('on'); modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    var first = form.querySelector('input'); if (first) first.focus();
+  }
+  function close() {
+    modal.classList.remove('on'); modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function submit(e) {
+    e.preventDefault();
+    var data = {
+      name: form.name.value.trim(), email: form.email.value.trim(),
+      phone: form.phone.value.trim(), property: propInput.value, source: location.pathname
+    };
+    if (!data.email) return;
+    var btn = form.querySelector('.wl-submit'); btn.disabled = true;
+    statusEl.className = 'wl-status'; statusEl.textContent = 'Sending…';
+    fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
+      .then(function (res) {
+        if (res && res.ok) {
+          statusEl.className = 'wl-status ok';
+          statusEl.textContent = 'You are on the list — we will be in touch.';
+          form.reset();
+        } else {
+          statusEl.className = 'wl-status err';
+          statusEl.textContent = (res && res.configured === false)
+            ? 'Waitlist is not connected yet — please email hello@nomastays.com.'
+            : 'Something went wrong. Please try again, or email hello@nomastays.com.';
+          btn.disabled = false;
+        }
+      })
+      .catch(function () {
+        statusEl.className = 'wl-status err';
+        statusEl.textContent = 'Network error. Please email hello@nomastays.com.';
+        btn.disabled = false;
+      });
+  }
+
+  window.NOMA_WAITLIST = open;
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('[data-waitlist]');
+    if (!t) return;
+    e.preventDefault();
+    open(t.getAttribute('data-waitlist'), t.getAttribute('data-waitlist-title') || null);
+  });
+})();

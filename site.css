@@ -383,3 +383,19 @@ cb-book-now-button { display: inline-block; }
   .back-link span { display: none; }
   .back-link { padding: 9px; }
 }
+
+/* ===== Waitlist modal ===== */
+.wl { position: fixed; inset: 0; z-index: 1000; background: rgba(20,8,7,.6); display: none; align-items: center; justify-content: center; padding: 20px; }
+.wl.on { display: flex; }
+.wl-panel { position: relative; width: min(460px, 100%); background: var(--surface-page); border-radius: var(--radius-md); padding: 34px 30px 28px; box-shadow: var(--shadow-lg); max-height: 90vh; overflow: auto; }
+.wl-x { position: absolute; top: 12px; right: 14px; background: transparent; border: 0; font-size: 28px; line-height: 1; color: var(--text-muted); cursor: pointer; }
+.wl-title { font-family: var(--heading-font); font-size: var(--text-xl); color: var(--text-strong); margin: 8px 0 6px; }
+.wl-sub { font-family: var(--font-serif); color: var(--text-muted); font-size: var(--text-sm); margin: 0 0 18px; line-height: var(--leading-relaxed); }
+.wl-form { display: flex; flex-direction: column; gap: 12px; }
+.wl-form label { display: flex; flex-direction: column; gap: 5px; font-size: var(--text-2xs); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--text-muted); }
+.wl-form input { font-family: var(--font-serif); font-size: var(--text-md); padding: 11px 13px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface-card); color: var(--text-strong); }
+.wl-form input:focus { outline: none; border-color: var(--accent); }
+.wl-submit { justify-content: center; margin-top: 6px; }
+.wl-status { font-family: var(--font-serif); font-size: var(--text-sm); margin: 4px 0 0; min-height: 1.1em; }
+.wl-status.ok { color: var(--accent); }
+.wl-status.err { color: var(--terracotta-500); }
