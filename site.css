@@ -402,3 +402,8 @@ cb-book-now-button { display: inline-block; }
 
 /* NōMA wordmark used inside headlines (logo, not text); paragraphs keep plain text */
 .noma-wm { height: 0.78em; width: auto; display: inline-block; vertical-align: baseline; margin-right: .04em; }
+
+/* NōMA wordmark in header nav + footer (scaled up for small text contexts) */
+.mainnav a .noma-wm { height: 1.5em; vertical-align: middle; margin: 0; }
+.site-foot .foot-col h4 .noma-wm { height: 2em; vertical-align: middle; }
+.site-foot .foot-col a .noma-wm { height: 1.3em; vertical-align: -0.3em; }
