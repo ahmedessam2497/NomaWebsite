@@ -18,7 +18,7 @@
   head.innerHTML =
     '<div class="head-in">' +
       '<a class="brandmark" href="index.html">' +
-        '<img src="assets/noma-wordmark-lower-maroon.png" alt="NōMA Stays" /><span class="sub">Stays</span>' +
+        '<img src="assets/noma-wordmark-maroon.png" alt="NōMA Stays" /><span class="sub">Stays</span>' +
       '</a>' +
       '<nav class="mainnav">' +
         NAV.map(function (n) {
@@ -86,7 +86,7 @@
         '<p class="blurb">An all-Egyptian hospitality company. Two brands — NōMA serviced buildings and BEIT boutique stays — refurbished and run end-to-end by HAAM Management.</p>' +
         '<p class="ar">من قلب مصر · القاهرة</p>' +
       '</div>' +
-      '<div class="foot-col"><h4><img class="noma-wm" src="assets/noma-wordmark-cream.png" alt="NōMA" /></h4><a href="noma.html">The brand</a><a href="noma.html#arabella"><img class="noma-wm" src="assets/noma-wordmark-cream.png" alt="NōMA" /> Arabella</a><a href="noma.html#district9"><img class="noma-wm" src="assets/noma-wordmark-cream.png" alt="NōMA" /> District 9</a><a href="noma.html#services">Serviced living</a></div>' +
+      '<div class="foot-col"><h4><img class="noma-wm" src="assets/noma-wordmark-cream.png" alt="NōMA" /></h4><a href="noma.html">The brand</a><a href="noma.html#arabella">Arabella</a><a href="noma.html#district9">District 9</a><a href="noma.html#services">Serviced living</a></div>' +
       '<div class="foot-col"><h4>BEIT</h4><a href="beit.html">The brand</a><a href="beit.html#beit-hend">Beit Hend</a><a href="beit.html#experiences">Experiences</a></div>' +
       '<div class="foot-col"><h4>Company</h4><a href="about.html">Our story</a><a href="about.html#people">Our people</a><a href="partner.html">For property owners</a><a href="mailto:hello@nomastays.com">Contact</a></div>' +
     '</div>' +
