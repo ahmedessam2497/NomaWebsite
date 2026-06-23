@@ -19,9 +19,11 @@
 
   .diptych { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--line); transition: grid-template-columns .55s var(--ease-out); }
   /* hover takeover — hovered brand expands, the other dims */
-  .diptych:has(.bpanel.noma:hover) { grid-template-columns: 1.55fr 1fr; }
-  .diptych:has(.bpanel.beit:hover) { grid-template-columns: 1fr 1.55fr; }
-  .diptych:hover .bpanel:not(:hover) { filter: brightness(.72) saturate(.9); }
+  @media (hover: hover) and (pointer: fine) {
+    .diptych:has(.bpanel.noma:hover) { grid-template-columns: 1.55fr 1fr; }
+    .diptych:has(.bpanel.beit:hover) { grid-template-columns: 1fr 1.55fr; }
+    .diptych:hover .bpanel:not(:hover) { filter: brightness(.72) saturate(.9); }
+    }
   .bpanel { transition: filter .45s var(--ease-out); }
   .bpanel { position: relative; min-height: 540px; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(34px, 4vw, 56px); color: var(--eggshell-100); text-decoration: none; }
   .bpanel img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); z-index: -2; transition: transform var(--dur-slow) var(--ease-out); }

@@ -26,6 +26,7 @@
         }).join('') +
       '</nav>' +
       '<div class="head-actions">' +
+        '<button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>' +
         (isHome ? '' : '<button class="back-link" type="button" aria-label="Go back">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' +
           '<span>Back</span></button>') +
@@ -40,6 +41,21 @@
       var sameOrigin = document.referrer && document.referrer.indexOf(location.origin) === 0;
       if (sameOrigin && history.length > 1) history.back();
       else location.href = 'index.html';
+    });
+  }
+
+  /* Mobile hamburger menu */
+  var navToggle = head.querySelector('.nav-toggle');
+  if (navToggle) {
+    navToggle.addEventListener('click', function () {
+      var open = head.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    head.querySelectorAll('.mainnav a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        head.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
     });
   }
 
