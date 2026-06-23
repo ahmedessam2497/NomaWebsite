@@ -178,7 +178,7 @@
       p.set('adults', guests);
       if (checkin) p.set('checkin', checkin);
       if (checkout) p.set('checkout', checkout);
-      window.location.href = 'book.html?' + p.toString();
+      if (window.NOMA_BOOK) { window.NOMA_BOOK(Object.fromEntries(p)); } else { window.location.href = 'book.html?' + p.toString(); }
       return false;
     }
   </script>

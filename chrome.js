@@ -29,7 +29,7 @@
         (isHome ? '' : '<button class="back-link" type="button" aria-label="Go back">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' +
           '<span>Back</span></button>') +
-        '<a class="btn btn-accent" href="book.html">Book a stay</a>' +
+        '<cb-book-now-button property-code="q3dbO7" label="Book a stay" class-name="btn btn-accent" height="90vh" width="min(900px,95vw)"></cb-book-now-button>' +
       '</div>' +
     '</div>';
   document.body.insertBefore(head, document.body.firstChild);
@@ -42,6 +42,23 @@
       else location.href = 'index.html';
     });
   }
+
+  /* Open the Cloudbeds booking overlay from anywhere (header, homepage search).
+     Optional params (checkin/checkout/adults/kids) are written to the URL first,
+     because the booking engine reads search params when the overlay first opens. */
+  window.NOMA_BOOK = function (params) {
+    try {
+      if (params && Object.keys(params).length) {
+        var qs = new URLSearchParams(params).toString();
+        history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+      }
+    } catch (e) {}
+    var el = document.querySelector('cb-book-now-button');
+    if (!el) { location.href = 'book.html'; return; }
+    var root = el.shadowRoot || el;
+    var inner = root.querySelector('button, a, [role="button"]');
+    (inner || el).click();
+  };
 
   /* Footer */
   var foot = document.createElement('footer');

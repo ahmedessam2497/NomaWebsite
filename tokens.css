@@ -326,3 +326,13 @@ p { text-wrap: pretty; }
 
 /* Hairline divider in brand line colour */
 .noma-rule { border: 0; border-top: 1px solid var(--line); }
+
+/* ===== DecoType Naskh (Arabic) — self-hosted exact brand font ===== */
+@font-face {
+  font-family: 'DecoType Naskh';
+  src: url('assets/fonts/DecoType-Naskh.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+:root { --font-arabic: 'DecoType Naskh', 'Amiri', 'Times New Roman', serif; }
