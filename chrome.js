@@ -82,7 +82,7 @@
   foot.innerHTML =
     '<div class="wrap-wide"><div class="foot-top">' +
       '<div>' +
-        '<img class="wm" src="assets/noma-wordmark-lower-cream.png" alt="NōMA Stays" />' +
+        '<img class="wm" src="assets/noma-wordmark-cream.png" alt="NōMA Stays" />' +
         '<p class="blurb">An all-Egyptian hospitality company. Two brands — NōMA serviced buildings and BEIT boutique stays — refurbished and run end-to-end by HAAM Management.</p>' +
         '<p class="ar">من قلب مصر · القاهرة</p>' +
       '</div>' +
