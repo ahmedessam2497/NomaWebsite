@@ -314,7 +314,8 @@ p{margin:0 0 1em}
 }
 
 /* mobile top bar: keep the EN/عربي switch fully visible */
-@media (max-width:760px){.topbar-contact{gap:14px;flex-wrap:nowrap;font-size:13px}.topbar-contact a[href^="mailto"]{display:none}.lang-switch{flex:none}}
+@media (max-width:760px){.topbar-contact{gap:14px;flex-wrap:nowrap;font-size:13px}.topbar-contact a[href^="mailto"]{display:none}.lang-switch{flex:none}.topbar-contact a{white-space:nowrap}}
+@media (max-width:400px){.topbar-contact{gap:12px;font-size:12.5px}.topbar-contact a[href^="https://wa.me"] .label{display:none}}
 /* Cloudbeds live photos */
 .type-card{position:relative}
 .cb-photos[hidden]{display:none!important}
@@ -351,6 +352,8 @@ p{margin:0 0 1em}
     "addressLocality": "New Cairo",
     "addressCountry": "EG"
   },
+  "geo": {"@type": "GeoCoordinates", "latitude": 29.9880527, "longitude": 31.4303714},
+  "hasMap": "https://maps.google.com/?cid=15635143835366761898",
   "checkinTime": "14:00",
   "checkoutTime": "12:00",
   "numberOfRooms": 40,
@@ -735,12 +738,12 @@ p{margin:0 0 1em}
           <tr><td><span data-i18n="loc.airport">Cairo International Airport</span></td><td data-i18n="loc.t20">About 20 min</td></tr>
         </tbody>
       </table>
-      <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=204+Arabella+New+Cairo+Egypt" target="_blank" rel="noopener"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="cta.directions">Get directions</span></a>
+      <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=29.9880527,31.4303714" target="_blank" rel="noopener"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="cta.directions">Get directions</span></a>
     </div>
     <div>
       <div class="map-box">
         <iframe title="Map showing NōMA at 204 Arabella, New Cairo" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=204%20Arabella%2C%20New%20Cairo%2C%20Egypt&amp;z=15&amp;output=embed"></iframe>
+          src="https://maps.google.com/maps?q=29.9880527,31.4303714&amp;z=16&amp;output=embed"></iframe>
       </div>
     </div>
   </div>
@@ -843,7 +846,7 @@ p{margin:0 0 1em}
         <ul>
           <li><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="address.full">204 Arabella, New Cairo, Egypt</span></li>
           <li><svg class="icon"><use href="#i-clock"/></svg><span data-i18n="footer.times">Check-in from 2:00 pm · Check-out by 12:00 noon</span></li>
-          <li><a class="link-arrow" href="https://www.google.com/maps/dir/?api=1&amp;destination=204+Arabella+New+Cairo+Egypt" target="_blank" rel="noopener" data-i18n="cta.directions">Get directions</a></li>
+          <li><a class="link-arrow" href="https://www.google.com/maps/dir/?api=1&amp;destination=29.9880527,31.4303714" target="_blank" rel="noopener" data-i18n="cta.directions">Get directions</a></li>
         </ul>
       </div>
       <div class="footer-col">
