@@ -386,13 +386,13 @@
         '<button class="wl-x" type="button" aria-label="Close">&times;</button>' +
         '<div class="wl-head"><span class="eyebrow">Join the waitlist</span>' +
         '<h3 class="wl-title">Be first to know</h3>' +
-        '<p class="wl-sub">Leave your details and we will reach out as soon as this property opens for booking.</p></div>' +
+        '<p class="wl-sub">Leave your details and our team will reach out with the full opportunity and next steps.</p></div>' +
         '<div class="wl-info-slot"></div>' +
         '<form class="wl-form">' +
           '<label>Full name<input name="name" type="text" autocomplete="name" required></label>' +
           '<label>Email<input name="email" type="email" autocomplete="email" required></label>' +
           '<label>Phone (WhatsApp)<input name="phone" type="tel" autocomplete="tel"></label>' +
-          '<label>What are you looking for? <span class="wl-opt">(optional)</span><textarea name="note" rows="3" maxlength="600" placeholder="e.g. dates, number of guests, a long stay or a special occasion"></textarea></label>' +
+          '<label>How would you like to partner with us? <span class="wl-opt">(optional)</span><textarea name="note" rows="3" maxlength="600" placeholder="e.g. investment range, timeline, your company, or any questions about the opportunity"></textarea></label>' +
           '<input name="property" type="hidden">' +
           '<button class="btn btn-accent wl-submit" type="submit">Join the waitlist</button>' +
           '<p class="wl-status" role="status"></p>' +
