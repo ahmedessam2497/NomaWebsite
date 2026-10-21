@@ -10,8 +10,8 @@ You need to do three short things once.
 ## 1. Create the Sheet
 Make a new Google Sheet (e.g. "NōMA Waitlist"). Optionally add a header row:
 
-| Timestamp | Name | Email | Phone | Property | Source |
-|---|---|---|---|---|---|
+| Timestamp | Name | Email | Phone | Property | Source | Notes |
+|---|---|---|---|---|---|---|
 
 ## 2. Add the Apps Script
 In that Sheet: **Extensions → Apps Script**, delete the sample, paste this, and Save:
@@ -22,7 +22,7 @@ function doPost(e) {
   var sheet = ss.getSheetByName('Waitlist') || ss.getActiveSheet();
   var d = {};
   try { d = JSON.parse(e.postData.contents); } catch (err) {}
-  sheet.appendRow([ new Date(), d.name || '', d.email || '', d.phone || '', d.property || '', d.source || '' ]);
+  sheet.appendRow([ new Date(), d.name || '', d.email || '', d.phone || '', d.property || '', d.source || '', d.note || '' ]);
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);

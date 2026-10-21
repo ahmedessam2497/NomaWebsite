@@ -40,6 +40,7 @@ module.exports = async function handler(req, res) {
     name: (data.name || '').toString().slice(0, 200),
     email: (data.email || '').toString().slice(0, 200),
     phone: (data.phone || '').toString().slice(0, 60),
+    note: (data.note || '').toString().replace(/\s+/g, ' ').trim().slice(0, 600),
     property: (data.property || '').toString().slice(0, 80),
     source: (data.source || '').toString().slice(0, 200),
     ts: new Date().toISOString()

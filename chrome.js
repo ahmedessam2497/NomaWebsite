@@ -355,14 +355,6 @@
   /* Opportunity summary shown in the modal for each not-yet-open property.
      Keys match the data-waitlist="..." attribute on the buttons. */
   var INFO = {
-    'beit-hend': {
-      brand: 'BEIT · boutique stay',
-      status: 'Opening September 2026',
-      facts: [['Rooms', '5, individually designed'], ['Location', 'Garrana, Giza'], ['Nearby', 'GEM 5 min · pyramids 10 min']],
-      summary: 'Five rooms only, each one different. A pool to come back to after the plateau, breakfast in the garden, evenings at the bar, and hosts who remember how you take your coffee.',
-      highlights: ['Breakfast & culinary concept included', 'Pool, garden & bar', 'Yoga & pilates studio', 'Daily housekeeping, concierge & curated guides'],
-      note: 'Final rates and availability are published at launch.'
-    },
     'district9': {
       brand: 'NōMA · serviced apartments',
       status: 'Opening Q1 2027 · under construction',
@@ -400,6 +392,7 @@
           '<label>Full name<input name="name" type="text" autocomplete="name" required></label>' +
           '<label>Email<input name="email" type="email" autocomplete="email" required></label>' +
           '<label>Phone (WhatsApp)<input name="phone" type="tel" autocomplete="tel"></label>' +
+          '<label>What are you looking for? <span class="wl-opt">(optional)</span><textarea name="note" rows="3" maxlength="600" placeholder="e.g. dates, number of guests, a long stay or a special occasion"></textarea></label>' +
           '<input name="property" type="hidden">' +
           '<button class="btn btn-accent wl-submit" type="submit">Join the waitlist</button>' +
           '<p class="wl-status" role="status"></p>' +
@@ -436,7 +429,8 @@
     e.preventDefault();
     var data = {
       name: form.name.value.trim(), email: form.email.value.trim(),
-      phone: form.phone.value.trim(), property: propInput.value, source: location.pathname
+      phone: form.phone.value.trim(), note: (form.note ? form.note.value.trim() : ''),
+      property: propInput.value, source: location.pathname
     };
     if (!data.email) return;
     var btn = form.querySelector('.wl-submit'); btn.disabled = true;
