@@ -2,12 +2,14 @@
    cursor, photo lightbox, and live Cloudbeds room content (/api/rooms). */
 (function () {
 
+  /* Same menu as the homepage (index.html) and corporate.html */
   var NAV = [
-    { id: 'group',   label: 'The Group',      href: 'index.html' },
-    { id: 'noma',    label: 'NōMA',           href: 'noma.html', brand: true },
-    { id: 'beit',    label: 'BEIT',           href: 'beit.html', brand: true },
-    { id: 'about',   label: 'About',          href: 'about.html' },
-    { id: 'partner', label: 'Partner With Us', href: 'partner.html' }
+    { id: 'apartments', label: 'Apartments', href: 'index.html#apartments' },
+    { id: 'services',   label: 'Services',   href: 'index.html#services' },
+    { id: 'location',   label: 'Location',   href: 'index.html#location' },
+    { id: 'corporate',  label: 'Corporate',  href: 'corporate.html' },
+    { id: 'beit',       label: 'BEIT',       href: 'beit.html' },
+    { id: 'contact',    label: 'Contact',    href: 'index.html#contact' }
   ];
   var page = document.body.dataset.page || '';
   var isHome = (page === 'group');
@@ -18,7 +20,7 @@
   head.innerHTML =
     '<div class="head-in">' +
       '<a class="brandmark" href="index.html">' +
-        '<img src="assets/noma-wordmark-maroon.png" alt="NōMA Stays" /><span class="sub">Stays</span>' +
+        '<img src="assets/noma-wordmark-maroon.png" alt="NōMA Stays" />' +
       '</a>' +
       '<nav class="mainnav">' +
         NAV.map(function (n) {
@@ -30,10 +32,31 @@
         (isHome ? '' : '<button class="back-link" type="button" aria-label="Go back">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>' +
           '<span>Back</span></button>') +
-        '<cb-book-now-button property-code="q3dbO7" label="Book a stay" class-name="btn btn-accent" height="90vh" width="min(900px,95vw)"></cb-book-now-button>' +
+        '<cb-book-now-button property-code="q3dbO7" label="Check rates and book" class-name="btn btn-book" height="90vh" width="min(900px,95vw)"></cb-book-now-button>' +
       '</div>' +
     '</div>';
   document.body.insertBefore(head, document.body.firstChild);
+
+  /* Top contact bar + fonts, matching the homepage */
+  if (!document.querySelector('link[data-nm-fonts]')) {
+    var fl = document.createElement('link');
+    fl.rel = 'stylesheet'; fl.setAttribute('data-nm-fonts', '');
+    fl.href = 'https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500;600;700&display=swap';
+    document.head.appendChild(fl);
+  }
+  var ICON = {
+    phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
+    wa: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5zm0 1.8a7.7 7.7 0 1 1-3.9 14.3l-.3-.2-2.8.8.8-2.7-.2-.3A7.7 7.7 0 0 1 12 4.3zM8.9 7.6c-.2 0-.5 0-.7.3-.3.3-1 1-1 2.3s1 2.7 1.1 2.9c.2.2 2 3.1 4.9 4.2 2.4.9 2.9.8 3.4.7.5 0 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4l-.4-.3-1.9-.9c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1a6.3 6.3 0 0 1-3.1-2.7c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.9-2.1c-.2-.5-.4-.5-.6-.5h-.5z"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
+  };
+  var topbar = document.createElement('div');
+  topbar.className = 'nm-topbar';
+  topbar.innerHTML = '<div class="nm-topbar-in">' +
+    '<a href="tel:+201011222600">' + ICON.phone + '<span dir="ltr">+20 101 122 2600</span></a>' +
+    '<a href="https://wa.me/201011222600?text=' + encodeURIComponent("Hi, I'd like to ask about NōMA.") + '" target="_blank" rel="noopener">' + ICON.wa + '<span class="nm-wa-label">WhatsApp</span></a>' +
+    '<a class="nm-mail" href="mailto:operations@noma-stays.com">' + ICON.mail + '<span>operations@noma-stays.com</span></a>' +
+    '</div>';
+  document.body.insertBefore(topbar, head);
 
   var backBtn = head.querySelector('.back-link');
   if (backBtn) {
@@ -83,15 +106,15 @@
     '<div class="wrap-wide"><div class="foot-top">' +
       '<div>' +
         '<img class="wm" src="assets/noma-wordmark-cream.png" alt="NōMA Stays" />' +
-        '<p class="blurb">An all-Egyptian hospitality company. Two brands — NōMA serviced buildings and BEIT boutique stays — refurbished and run end-to-end by HAAM Management.</p>' +
-        '<p class="ar">من قلب مصر · القاهرة</p>' +
+        '<p class="blurb">Serviced apartments in New Cairo, with the standards of a hotel.</p>' +
+        '<p class="blurb"><em>Come as a guest, leave as a local.</em></p>' +
       '</div>' +
-      '<div class="foot-col"><h4><img class="noma-wm" src="assets/noma-wordmark-cream.png" alt="NōMA" /></h4><a href="noma.html">The brand</a><a href="noma.html#arabella">Arabella</a><a href="noma.html#district9">District 9</a><a href="noma.html#services">Serviced living</a></div>' +
-      '<div class="foot-col"><h4>BEIT</h4><a href="beit.html">The brand</a><a href="beit.html#beit-hend">Beit Hend</a><a href="beit.html#experiences">Experiences</a></div>' +
-      '<div class="foot-col"><h4>Company</h4><a href="about.html">Our story</a><a href="about.html#people">Our people</a><a href="partner.html">For property owners</a><a href="mailto:hello@nomastays.com">Contact</a></div>' +
+      '<div class="foot-col"><h4>Visit</h4><span class="foot-txt">204 Arabella, New Cairo, Egypt</span><span class="foot-txt">Check-in from 2:00 pm · Check-out by 12:00 noon</span><a href="https://www.google.com/maps/dir/?api=1&amp;destination=29.9880527,31.4303714" target="_blank" rel="noopener">Get directions →</a></div>' +
+      '<div class="foot-col"><h4>Contact</h4><a href="tel:+201011222600" dir="ltr">+20 101 122 2600</a><a href="https://wa.me/201011222600" target="_blank" rel="noopener">WhatsApp</a><a href="mailto:operations@noma-stays.com">operations@noma-stays.com</a></div>' +
+      '<div class="foot-col"><h4>Explore</h4><a href="index.html#apartments">NōMA Arabella</a><a href="noma.html#district9">NōMA District 9</a><a href="beit.html">BEIT بيت</a><a href="corporate.html">Stays for teams</a><a href="about.html">Our story, values &amp; team</a><a href="partner.html">Partner with us</a></div>' +
     '</div>' +
-    '<div class="foot-bottom"><span>© 2026 HAAM Management · Cairo, Egypt</span>' +
-      '<div class="powered"><span>Booking by Cloudbeds</span><span>Payments by Stripe</span></div></div></div>';
+    '<div class="foot-bottom"><span>© 2026 NōMA · Operated by HAAM Management</span>' +
+      '<div class="powered"><span>Booking by Cloudbeds</span></div></div></div>';
   document.body.appendChild(foot);
 
   /* Rotating hero photos: assets/hero-<page>/1.jpg, 2.jpg … (.jpg/.jpeg/.png/.webp) */
@@ -329,6 +352,38 @@
   var ENDPOINT = '/api/waitlist';
   var modal, form, statusEl, propInput;
 
+  /* Opportunity summary shown in the modal for each not-yet-open property.
+     Keys match the data-waitlist="..." attribute on the buttons. */
+  var INFO = {
+    'beit-hend': {
+      brand: 'BEIT · boutique stay',
+      status: 'Opening September 2026',
+      facts: [['Rooms', '5, individually designed'], ['Location', 'Garrana, Giza'], ['Nearby', 'GEM 5 min · pyramids 10 min']],
+      summary: 'Five rooms only, each one different. A pool to come back to after the plateau, breakfast in the garden, evenings at the bar, and hosts who remember how you take your coffee.',
+      highlights: ['Breakfast & culinary concept included', 'Pool, garden & bar', 'Yoga & pilates studio', 'Daily housekeeping, concierge & curated guides'],
+      note: 'Final rates and availability are published at launch.'
+    },
+    'district9': {
+      brand: 'NōMA · serviced apartments',
+      status: 'Opening Q1 2027 · under construction',
+      facts: [['Apartments', '32 studios & one-bedrooms'], ['Layouts', '6, about 28 to 60 m²'], ['Location', 'District 9, Sheikh Zayed'], ['Nearby', 'Arkan Plaza 6 min']],
+      summary: 'The NōMA standard moves west: serviced apartments within easy reach of West Cairo\'s business hubs, schools and landmarks, with kitchenettes, housekeeping, 24/7 security and long-stay rates.',
+      highlights: ['Kitchenette in every apartment', 'Housekeeping & 24/7 security', 'Long-stay and monthly rates'],
+      note: 'Opening rates are announced closer to launch.'
+    }
+  };
+  function esc(t) { return String(t || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function infoHtml(d) {
+    if (!d) return '';
+    return '<div class="wl-info">' +
+      '<div class="wl-info-top"><span class="wl-brand">' + esc(d.brand) + '</span><span class="wl-status-tag">' + esc(d.status) + '</span></div>' +
+      '<p class="wl-summary">' + esc(d.summary) + '</p>' +
+      '<dl class="wl-facts">' + d.facts.map(function (f) { return '<div><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join('') + '</dl>' +
+      (d.highlights && d.highlights.length ? '<ul class="wl-hl">' + d.highlights.map(function (h) { return '<li>' + esc(h) + '</li>'; }).join('') + '</ul>' : '') +
+      (d.note ? '<p class="wl-note">' + esc(d.note) + '</p>' : '') +
+    '</div>';
+  }
+
   function build() {
     modal = document.createElement('div');
     modal.className = 'wl';
@@ -340,6 +395,7 @@
         '<div class="wl-head"><span class="eyebrow">Join the waitlist</span>' +
         '<h3 class="wl-title">Be first to know</h3>' +
         '<p class="wl-sub">Leave your details and we will reach out as soon as this property opens for booking.</p></div>' +
+        '<div class="wl-info-slot"></div>' +
         '<form class="wl-form">' +
           '<label>Full name<input name="name" type="text" autocomplete="name" required></label>' +
           '<label>Email<input name="email" type="email" autocomplete="email" required></label>' +
@@ -364,6 +420,7 @@
     propInput.value = property || '';
     if (label) modal.querySelector('.wl-title').textContent = label;
     else modal.querySelector('.wl-title').textContent = 'Be first to know';
+    modal.querySelector('.wl-info-slot').innerHTML = infoHtml(INFO[property]);
     statusEl.textContent = ''; statusEl.className = 'wl-status';
     form.reset(); propInput.value = property || '';
     form.querySelector('.wl-submit').disabled = false;

@@ -33,7 +33,7 @@ bytes** — this has corrupted these files before. To stay safe:
 4. Never commit a file you haven't verified opens/parses.
 
 ## File map
-- `index.html` homepage · `noma.html` · `beit.html` · `about.html` · `partner.html`
+- `index.html` homepage (NōMA Arabella serviced apartments, EN/AR, self-contained CSS/JS — does not use chrome.js) · `noma.html` · `beit.html` · `about.html` · `partner.html`
 - `book.html` — full-page Cloudbeds booking (fallback only; CTAs use the overlay)
 - `chrome.js` — shared on every page: header, footer, mobile hamburger nav, back
   button, rotating hero photos, photo lightbox, **booking-overlay launcher**
@@ -42,6 +42,8 @@ bytes** — this has corrupted these files before. To stay safe:
 - `site.css` — all component styles.
 - `api/rooms.js` — returns live Cloudbeds room types/photos/descriptions.
 - `api/waitlist.js` — forwards waitlist leads to a Google Sheet.
+- `api/reviews.js` — live Google rating + reviews for the homepage (`GOOGLE_PLACES_API_KEY`). See `GOOGLE_REVIEWS_SETUP.md`.
+- `corporate.html` — stays for teams and relocations. `assets/home/` — homepage photos.
 - `assets/hero-main|hero-noma|hero-beit/` — hero photos `1.jpg,2.jpg…` (auto-detected,
   also accepts .jpeg/.png/.webp; numbering must be consecutive from 1).
 - `assets/rooms/` — local fallback room photos (live ones come from Cloudbeds).
@@ -64,7 +66,7 @@ bytes** — this has corrupted these files before. To stay safe:
   Details + Apps Script code: `WAITLIST_SETUP.md`.
 - **Booking engine colors** are set in the Cloudbeds dashboard, not the code.
 
-Vercel env vars: `CLOUDBEDS_API_KEY`, `WAITLIST_SHEET_URL`. They apply only to
+Vercel env vars: `CLOUDBEDS_API_KEY`, `WAITLIST_SHEET_URL`, `GOOGLE_PLACES_API_KEY` (+ optional `GOOGLE_PLACE_ID`). They apply only to
 deployments created after they're added (redeploy after changing).
 
 ## Brand rules
@@ -84,6 +86,8 @@ deployments created after they're added (redeploy after changing).
 - "Our people" photos → drop named files in `assets/people/` (see its README), push.
 
 ## Open items
+- Add `GOOGLE_PLACES_API_KEY` in Vercel (see `GOOGLE_REVIEWS_SETUP.md`).
+- Replace the 7 AI-generated photos on the Cloudbeds room type "One-Bedroom Apt. W Balcony - Double" (the site skips them).
 - Whitelist `noma-stays.com` (+ `www.`) and the Vercel domain in Cloudbeds.
 - Confirm `CLOUDBEDS_API_KEY` and `WAITLIST_SHEET_URL` are set in Vercel.
 - Finish the waitlist Google Sheet (Apps Script) — see `WAITLIST_SETUP.md`.

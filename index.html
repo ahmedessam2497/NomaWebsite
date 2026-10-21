@@ -334,6 +334,19 @@ p{margin:0 0 1em}
 .cb-lb .prev{left:12px;top:50%;transform:translateY(-50%)}
 .cb-lb .next{right:12px;top:50%;transform:translateY(-50%)}
 @media (max-width:760px){.cb-lb .prev,.cb-lb .next{top:auto;bottom:18px;transform:none}}
+
+/* Google reviews (live from /api/reviews) */
+.review-scores{display:flex;gap:14px 34px;flex-wrap:wrap;margin-bottom:26px}
+.review-scores .review-score{margin-bottom:0}
+.g-score{text-decoration:none;color:inherit}
+.g-score[hidden],.g-attr[hidden]{display:none!important}
+.g-badge{display:flex;align-items:baseline;gap:4px;background:#fff;color:var(--maroon);border:1.5px solid var(--line)}
+.g-star{font-size:24px;color:#e8a33d}
+.g-quote .g-stars{color:#e8a33d;letter-spacing:2px;font-size:15px;margin-bottom:8px}
+.g-quote p{display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.g-quote footer a{color:var(--maroon);font-weight:600;text-decoration:none}
+.g-attr{margin:16px 0 0;font-size:14px;color:var(--muted)}
+.g-attr a{color:var(--maroon);font-weight:600}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
 </style>
@@ -707,15 +720,22 @@ p{margin:0 0 1em}
       <span class="eyebrow" data-i18n="rev.eyebrow">Guest reviews</span>
       <h2 id="rev-title" data-i18n="rev.title">What our guests say</h2>
     </div>
-    <div class="review-score">
-      <div class="score-badge">9.7</div>
-      <p style="margin:0" data-i18n-html="rev.summary">Rated 9.7 out of 10 on Booking.com from 53 reviews.</p>
+    <div class="review-scores">
+      <div class="review-score">
+        <div class="score-badge">9.7</div>
+        <p style="margin:0" data-i18n-html="rev.summary">Rated 9.7 out of 10 on Booking.com from 53 reviews.</p>
+      </div>
+      <a class="review-score g-score" id="g-score" href="https://maps.google.com/?cid=15635143835366761898" target="_blank" rel="noopener" hidden>
+        <div class="score-badge g-badge"><span class="g-rating"></span><span class="g-star" aria-hidden="true">★</span></div>
+        <p class="g-summary" style="margin:0"></p>
+      </a>
     </div>
-    <div class="quotes">
+    <div class="quotes" id="quotes">
       <blockquote class="quote"><p>“Everything was perfect, modern and new… Home away from home!”</p><footer>Carolina · Expedia · August 2026</footer></blockquote>
       <blockquote class="quote"><p>“The staff were incredibly kind, welcoming, and always happy to help, which made my stay even better.”</p><footer>Abdalla · Expedia · July 2026</footer></blockquote>
       <blockquote class="quote"><p>“Excellent place! Everything is brand new, very clean, and the service was truly five-star. I highly recommend it.”</p><footer>Bader · Airbnb · September 2026</footer></blockquote>
     </div>
+    <p class="g-attr" id="g-attr" hidden><span class="g-attr-txt">Reviews from Google</span> · <a id="g-all" href="https://maps.google.com/?cid=15635143835366761898" target="_blank" rel="noopener">See all reviews on Google</a></p>
   </div>
 </section>
 
@@ -1147,6 +1167,47 @@ if(ef)ef.addEventListener('submit',function(e){
       btn.addEventListener('click',function(){open(items)});
     });
   }).catch(function(){});
+})();
+</script>
+
+<script>
+/* Live Google rating + reviews through /api/reviews (Places API, key kept on the server).
+   If the feed is unavailable the reviews already on the page stay as they are. */
+(function(){
+  var data=null;
+  function esc(t){return String(t||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function ar(){return document.documentElement.lang==='ar'}
+  function render(){
+    if(!data)return;
+    var gs=document.getElementById('g-score');
+    if(gs&&data.rating){
+      gs.href=data.url;
+      gs.querySelector('.g-rating').textContent=Number(data.rating).toFixed(1);
+      gs.querySelector('.g-summary').textContent=ar()
+        ?('التقييم '+Number(data.rating).toFixed(1)+' من 5 على Google من '+data.count+' تقييمًا.')
+        :('Rated '+Number(data.rating).toFixed(1)+' out of 5 on Google from '+data.count+' reviews.');
+      gs.hidden=false;
+    }
+    var revs=(data.reviews||[]).slice(0,3), box=document.getElementById('quotes');
+    if(box&&revs.length){
+      box.innerHTML=revs.map(function(r){
+        var stars=r.rating?new Array(Math.round(r.rating)+1).join('★'):'';
+        var who=r.authorUrl?'<a href="'+esc(r.authorUrl)+'" target="_blank" rel="noopener">'+esc(r.author)+'</a>':esc(r.author);
+        return '<blockquote class="quote g-quote" dir="auto"><div class="g-stars" aria-label="'+(r.rating||'')+' out of 5">'+stars+'</div>'+
+          '<p>“'+esc(r.text)+'”</p><footer>'+who+' · Google'+(r.when?' · '+esc(r.when):'')+'</footer></blockquote>';
+      }).join('');
+      var at=document.getElementById('g-attr');
+      if(at){
+        at.querySelector('.g-attr-txt').textContent=ar()?'آراء من Google':'Reviews from Google';
+        var all=document.getElementById('g-all');all.href=data.url;all.textContent=ar()?'شاهد كل التقييمات على Google':'See all reviews on Google';
+        at.hidden=false;
+      }
+    }
+  }
+  fetch('/api/reviews',{headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(d){
+    if(d&&d.ok){data=d;render();}
+  }).catch(function(){});
+  document.querySelectorAll('.lang-switch button').forEach(function(b){b.addEventListener('click',function(){setTimeout(render,0)})});
 })();
 </script>
 </body>
