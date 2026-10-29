@@ -101,7 +101,13 @@ p{margin:0 0 1em}
 
 /* hero */
 .hero{position:relative;color:#fff;background:var(--maroon-d);overflow:hidden}
-.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:opacity 1.2s ease}
+.hero-img.off{opacity:0}
+.hero-dots{position:absolute;z-index:3;bottom:76px;inset-inline-end:max(20px,calc((100% - 1160px)/2 + 20px));display:flex;gap:8px}
+.hero-dots button{width:10px;height:10px;padding:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);background:transparent;cursor:pointer}
+.hero-dots button[aria-current="true"]{background:#fff}
+.hero-address .lbl{transition:opacity .4s}
+@media (max-width:760px){.hero-dots{bottom:70px}}
 .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(40,8,10,.86) 0%,rgba(40,8,10,.62) 48%,rgba(40,8,10,.12) 100%)}
 [dir="rtl"] .hero::after{background:linear-gradient(270deg,rgba(40,8,10,.86) 0%,rgba(40,8,10,.62) 48%,rgba(40,8,10,.12) 100%)}
 .hero-inner{position:relative;z-index:2;padding-top:64px;padding-bottom:96px;max-width:1160px}
@@ -513,9 +519,9 @@ p{margin:0 0 1em}
 
 <!-- ============ 1. HERO ============ -->
 <section class="hero" aria-labelledby="hero-title">
-  <img class="hero-img" src="assets/home/hero.jpg" alt="NōMA building at dusk with private balconies, 204 Arabella, New Cairo" fetchpriority="high">
+  <img class="hero-img" data-slide="0" src="assets/home/hero.jpg" alt="NōMA building at dusk with private balconies, 204 Arabella, New Cairo" fetchpriority="high">
   <div class="container hero-inner">
-    <a class="hero-address" href="#locations"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="hero.locs">New Cairo · Mohandessin</span></a>
+    <a class="hero-address" id="hero-pill" href="#locations"><svg class="icon"><use href="#i-pin"/></svg><span class="lbl">NōMA New Cairo · 204 Arabella</span></a>
     <h1 id="hero-title" data-i18n="hero.title">Serviced apartments in Cairo, with the standards of a hotel.</h1>
     <p class="hero-sub" data-i18n="hero.sub3">Studios to two-bedroom apartments in NōMA buildings across Cairo, now in New Cairo and Mohandessin, with more on the way. Nightly, monthly, or for your whole team.</p>
     <div class="hero-ctas">
@@ -1396,6 +1402,55 @@ if(ef)ef.addEventListener('submit',function(e){
     if(!d||!d.ok||!d.rooms)return;data=d;cover();cards();
   }).catch(function(){});
   document.querySelectorAll('.lang-switch button').forEach(function(b){b.addEventListener('click',function(){setTimeout(function(){if(data)cards()},0)})});
+})();
+</script>
+
+<script>
+/* Hero slideshow: one slide per NōMA building. The address pill follows the slide.
+   To add a building: add an entry to SLIDES (img = local photo, or cb = a /api/rooms location
+   whose first real Cloudbeds photo is used). Auto-rotation is off for reduced-motion users. */
+(function(){
+  var SLIDES=[
+    {img:'assets/home/hero.jpg',href:'#apartments',en:'NōMA New Cairo · 204 Arabella',ar:'نوما القاهرة الجديدة · 204 أرابيلا',alt:'NōMA New Cairo building at dusk'},
+    {cb:'mohandessin',href:'mohandessin.html',en:'NōMA Mohandessin · 8 Abou Al Karamat Sq.',ar:'نوما المهندسين · 8 ميدان أبو الكرامات',alt:'Apartment at NōMA Mohandessin'}
+  ];
+  var hero=document.querySelector('.hero'),pill=document.getElementById('hero-pill');
+  if(!hero||!pill)return;
+  var lbl=pill.querySelector('.lbl'),first=hero.querySelector('.hero-img');
+  var AI=/chatgpt|dall-?e|midjourney|gemini|ai[-_]?generated/i;
+  var ready=[{s:SLIDES[0],el:first}],cur=0,timer=null,dots=null;
+  var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function ar(){return document.documentElement.lang==='ar'}
+  function label(){var s=ready[cur].s;lbl.textContent=ar()?s.ar:s.en;pill.href=s.href}
+  function show(i){
+    cur=(i+ready.length)%ready.length;
+    ready.forEach(function(r,k){r.el.classList.toggle('off',k!==cur)});
+    lbl.style.opacity=0;setTimeout(function(){label();lbl.style.opacity=1},250);
+    if(dots)[].forEach.call(dots.children,function(b,k){b.setAttribute('aria-current',k===cur?'true':'false')});
+  }
+  function start(){stop();if(!still&&ready.length>1)timer=setInterval(function(){if(!document.hidden)show(cur+1)},6500)}
+  function stop(){if(timer)clearInterval(timer);timer=null}
+  function buildDots(){
+    if(ready.length<2)return;if(dots)dots.remove();
+    dots=document.createElement('div');dots.className='hero-dots';dots.setAttribute('aria-label','Buildings');
+    ready.forEach(function(r,k){var b=document.createElement('button');b.type='button';b.setAttribute('aria-label',r.s.en);b.onclick=function(){show(k);start()};dots.appendChild(b)});
+    hero.appendChild(dots);show(cur);
+  }
+  function add(s,src){
+    var im=document.createElement('img');im.className='hero-img off';im.alt=s.alt;im.decoding='async';
+    im.onload=function(){ready.push({s:s,el:im});buildDots();start()};
+    first.parentNode.insertBefore(im,first.nextSibling);im.src=src;
+  }
+  label();
+  SLIDES.slice(1).forEach(function(s){
+    if(s.img){add(s,s.img);return}
+    fetch('/api/rooms?location='+encodeURIComponent(s.cb),{headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(d){
+      if(!d||!d.ok||!d.rooms)return;var url=null;
+      d.rooms.some(function(rm){return (rm.photos||[]).some(function(u){if(!AI.test(u)){url=u;return true}})});
+      if(url)add(s,url);
+    }).catch(function(){});
+  });
+  document.querySelectorAll('.lang-switch button').forEach(function(b){b.addEventListener('click',function(){setTimeout(label,0)})});
 })();
 </script>
 
