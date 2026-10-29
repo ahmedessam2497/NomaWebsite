@@ -330,7 +330,7 @@ p{margin:0 0 1em}
 .cb-more-wrap{margin:18px 0 0}
 .cb-lb{position:fixed;inset:0;z-index:200;background:rgba(18,4,5,.94);display:none;flex-direction:column;align-items:center;justify-content:center;padding:56px 12px 24px}
 .cb-lb.on{display:flex}
-.cb-lb img{max-width:min(1100px,100%);max-height:calc(100vh - 140px);object-fit:contain;border-radius:8px;background:#2a0b0d}
+.cb-lb img{max-width:min(1100px,100%);max-height:calc(100vh - 230px);object-fit:contain;border-radius:8px;background:#2a0b0d}
 .cb-lb-title{position:absolute;top:16px;inset-inline-start:18px;color:#f3e9de;font:500 20px var(--serif);max-width:70%}
 .cb-lb-count{color:#d9c6b8;font-size:14px;margin-top:12px}
 .cb-lb button{position:absolute;border:0;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;width:48px;height:48px;border-radius:50%;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center}
@@ -338,7 +338,17 @@ p{margin:0 0 1em}
 .cb-lb .x{top:10px;inset-inline-end:12px}
 .cb-lb .prev{left:12px;top:50%;transform:translateY(-50%)}
 .cb-lb .next{right:12px;top:50%;transform:translateY(-50%)}
-@media (max-width:760px){.cb-lb .prev,.cb-lb .next{top:auto;bottom:18px;transform:none}}
+/* thumbnail strip under the photo */
+.cb-lb .cb-lb-thumbs{display:flex;gap:8px;overflow-x:auto;max-width:min(1100px,100%);margin-top:14px;padding:4px 2px 8px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.3) transparent}
+.cb-lb .cb-lb-thumbs button{position:static;flex:0 0 auto;width:84px;height:60px;padding:0;border-radius:6px;overflow:hidden;border:2px solid transparent;background:#2a0b0d;opacity:.55;transform:none;transition:opacity .15s,border-color .15s}
+.cb-lb .cb-lb-thumbs button:hover{opacity:.9;background:#2a0b0d}
+.cb-lb .cb-lb-thumbs button.on{opacity:1;border-color:#f1d9a8}
+.cb-lb .cb-lb-thumbs img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;border-radius:0}
+@media (max-width:760px){
+  .cb-lb img{max-height:calc(100vh - 200px)}
+  .cb-lb .prev,.cb-lb .next{top:42%;transform:none;width:40px;height:40px}
+  .cb-lb .cb-lb-thumbs button{width:64px;height:46px}
+}
 
 /* Google reviews (live from /api/reviews) */
 .review-scores{display:flex;gap:14px 34px;flex-wrap:wrap;margin-bottom:26px}
@@ -666,7 +676,7 @@ p{margin:0 0 1em}
 <section class="closing">
   <div class="container narrow">
     <p class="tagline" data-i18n="tagline">Come as a guest, leave as a local.</p>
-    <p class="about-line" data-i18n-html="about.line2">NōMA is operated by HAAM Management. NōMA New Cairo opened in June 2026; NōMA Mohandessin is our newest building.</p>
+    <p class="about-line" data-i18n-html="about.line3">NōMA is operated by HAAM Management. Our first building opened in New Cairo in June 2026, followed by Mohandessin, with more to come.</p>
   </div>
 </section>
 
@@ -676,7 +686,7 @@ p{margin:0 0 1em}
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="https://noma-stays.com/assets/noma-wordmark-cream.png" alt="NōMA" width="117" height="36" style="height:36px;width:auto" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-text',textContent:'NōMA',style:'color:#f6ede2'}))">
-        <p data-i18n="footer.blurb2">Serviced apartments in New Cairo and Mohandessin, with the standards of a hotel.</p>
+        <p data-i18n="footer.blurb3">Serviced apartments across Cairo, with the standards of a hotel.</p>
         <p><em data-i18n="tagline">Come as a guest, leave as a local.</em></p>
       </div>
       <div class="footer-col">
@@ -893,7 +903,7 @@ Object.assign(AR,{
 'm.smokingVal':'التدخين مسموح فقط في الأماكن المخصصة له.',
 'm.ncTitle':'تفضّل الإقامة في القاهرة الجديدة؟','m.ncText':'نوما القاهرة الجديدة: 40 شقة في 204 أرابيلا، على بُعد دقائق من الجامعة الأمريكية والجامعة الألمانية.','m.ncCta':'شاهد نوما القاهرة الجديدة',
 'm.contactTitle':'لديك سؤال عن المهندسين؟','m.contactLead':'إقامة لشهر أو أكثر، أو قادمون كمجموعة؟ أرسل لنا مواعيدك وسنعود إليك بسعر مناسب.',
-'m.guests':'الحد الأقصى للضيوف','m.photos':'شاهد الصور','m.rates':'اعرف الأسعار',
+'m.guests':'الحد الأقصى للضيوف','about.line3':'تُدار نوما بواسطة HAAM Management. افتُتح أول مبانينا في القاهرة الجديدة في يونيو 2026، ثم المهندسين، والمزيد قادم.','footer.blurb3':'شقق فندقية في أنحاء القاهرة، بمعايير الفنادق.','m.photos':'شاهد الصور','m.rates':'اعرف الأسعار',
 'm.sub2':'11 شقة بغرفة أو غرفتي نوم، بمساحة تصل إلى 150 م²، لكل منها مطبخ خاص. على بُعد نحو ست دقائق بالسيارة من ميدان التحرير والمتحف المصري، مع استقبال على مدار الساعة وموقف سيارات مجاني.',
 'm.p24':'استقبال على مدار الساعة',
 'm.aptLead2':'إحدى عشرة شقة مفروشة، معظمها بغرفتي نوم، بمساحات من نحو 80 إلى 150 م². في كل شقة منطقة معيشة وطعام ومطبخ خاص، لتستقر فيها لليلة أو لشهر.',
@@ -1036,7 +1046,7 @@ if(ef)ef.addEventListener('submit',function(e){
   function esc(t){return String(t||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function build(){
     lb=document.createElement('div');lb.className='cb-lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');
-    lb.innerHTML='<div class="cb-lb-title"></div><button class="x" type="button" aria-label="Close">&times;</button><button class="prev" type="button" aria-label="Previous">&#8249;</button><img alt=""><button class="next" type="button" aria-label="Next">&#8250;</button><div class="cb-lb-count"></div>';
+    lb.innerHTML='<div class="cb-lb-title"></div><button class="x" type="button" aria-label="Close">&times;</button><button class="prev" type="button" aria-label="Previous">&#8249;</button><img alt=""><button class="next" type="button" aria-label="Next">&#8250;</button><div class="cb-lb-count"></div><div class="cb-lb-thumbs" role="tablist" aria-label="Photos"></div>';
     document.body.appendChild(lb);img=lb.querySelector('img');title=lb.querySelector('.cb-lb-title');count=lb.querySelector('.cb-lb-count');
     lb.querySelector('.x').onclick=close;lb.querySelector('.prev').onclick=function(){go(-1)};lb.querySelector('.next').onclick=function(){go(1)};
     lb.addEventListener('click',function(e){if(e.target===lb)close()});
@@ -1044,9 +1054,11 @@ if(ef)ef.addEventListener('submit',function(e){
     var x0=null;lb.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
     lb.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(dx<0?1:-1);x0=null});
   }
-  function show(){img.src=list[pos].url;img.alt=list[pos].name;title.textContent=list[pos].name;count.textContent=(pos+1)+' / '+list.length}
+  function show(){img.src=list[pos].url;img.alt=list[pos].name;title.textContent=list[pos].name;count.textContent=(pos+1)+' / '+list.length;
+    var tb=lb.querySelectorAll('.cb-lb-thumbs button');for(var i=0;i<tb.length;i++){var on=i===pos;tb[i].className=on?'on':'';tb[i].setAttribute('aria-selected',on?'true':'false');if(on&&tb[i].scrollIntoView)tb[i].scrollIntoView({block:'nearest',inline:'center'})}}
+  function thumbs(){var box=lb.querySelector('.cb-lb-thumbs');box.innerHTML='';list.forEach(function(it,i){var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.setAttribute('aria-label','Photo '+(i+1));var t=document.createElement('img');t.src=it.url;t.alt='';t.loading='lazy';t.decoding='async';b.appendChild(t);b.onclick=function(){pos=i;show()};box.appendChild(b)});box.hidden=list.length<2}
   function go(d){pos=(pos+d+list.length)%list.length;show()}
-  function open(items){if(!items.length)return;if(!lb)build();list=items;pos=0;show();lb.classList.add('on');document.body.style.overflow='hidden';lb.querySelector('.x').focus()}
+  function open(items){if(!items.length)return;if(!lb)build();list=items;pos=0;thumbs();show();lb.classList.add('on');document.body.style.overflow='hidden';lb.querySelector('.x').focus()}
   function close(){lb.classList.remove('on');document.body.style.overflow=''}
   function photos(rm){var seen={};return (rm.photos||[]).filter(function(u){if(AI.test(u)||seen[u])return false;seen[u]=1;return true}).map(function(u){return {url:u,name:rm.name}})}
   function render(){

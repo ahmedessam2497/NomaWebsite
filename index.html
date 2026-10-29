@@ -330,7 +330,7 @@ p{margin:0 0 1em}
 .cb-more-wrap{margin:18px 0 0}
 .cb-lb{position:fixed;inset:0;z-index:200;background:rgba(18,4,5,.94);display:none;flex-direction:column;align-items:center;justify-content:center;padding:56px 12px 24px}
 .cb-lb.on{display:flex}
-.cb-lb img{max-width:min(1100px,100%);max-height:calc(100vh - 140px);object-fit:contain;border-radius:8px;background:#2a0b0d}
+.cb-lb img{max-width:min(1100px,100%);max-height:calc(100vh - 230px);object-fit:contain;border-radius:8px;background:#2a0b0d}
 .cb-lb-title{position:absolute;top:16px;inset-inline-start:18px;color:#f3e9de;font:500 20px var(--serif);max-width:70%}
 .cb-lb-count{color:#d9c6b8;font-size:14px;margin-top:12px}
 .cb-lb button{position:absolute;border:0;background:rgba(255,255,255,.12);color:#fff;cursor:pointer;width:48px;height:48px;border-radius:50%;font-size:26px;line-height:1;display:flex;align-items:center;justify-content:center}
@@ -338,7 +338,17 @@ p{margin:0 0 1em}
 .cb-lb .x{top:10px;inset-inline-end:12px}
 .cb-lb .prev{left:12px;top:50%;transform:translateY(-50%)}
 .cb-lb .next{right:12px;top:50%;transform:translateY(-50%)}
-@media (max-width:760px){.cb-lb .prev,.cb-lb .next{top:auto;bottom:18px;transform:none}}
+/* thumbnail strip under the photo */
+.cb-lb .cb-lb-thumbs{display:flex;gap:8px;overflow-x:auto;max-width:min(1100px,100%);margin-top:14px;padding:4px 2px 8px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.3) transparent}
+.cb-lb .cb-lb-thumbs button{position:static;flex:0 0 auto;width:84px;height:60px;padding:0;border-radius:6px;overflow:hidden;border:2px solid transparent;background:#2a0b0d;opacity:.55;transform:none;transition:opacity .15s,border-color .15s}
+.cb-lb .cb-lb-thumbs button:hover{opacity:.9;background:#2a0b0d}
+.cb-lb .cb-lb-thumbs button.on{opacity:1;border-color:#f1d9a8}
+.cb-lb .cb-lb-thumbs img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;border-radius:0}
+@media (max-width:760px){
+  .cb-lb img{max-height:calc(100vh - 200px)}
+  .cb-lb .prev,.cb-lb .next{top:42%;transform:none;width:40px;height:40px}
+  .cb-lb .cb-lb-thumbs button{width:64px;height:46px}
+}
 
 /* Google reviews (live from /api/reviews) */
 .review-scores{display:flex;gap:14px 34px;flex-wrap:wrap;margin-bottom:26px}
@@ -362,6 +372,22 @@ p{margin:0 0 1em}
 .brand-body .loc-actions .btn{margin-top:0}
 .policy-mini li[hidden]{display:none}
 .other-loc{margin:22px 0 0;font-size:15.5px}
+/* apartments: location tabs */
+.loc-tabs{display:inline-flex;gap:6px;padding:6px;background:var(--sand);border:1px solid var(--line);border-radius:16px;margin:0 0 30px;max-width:100%}
+.loc-tabs button{display:flex;flex-direction:column;align-items:flex-start;gap:3px;border:0;background:transparent;padding:11px 22px;border-radius:11px;cursor:pointer;font:500 22px/1.1 var(--serif);color:var(--maroon);text-align:start}
+[dir="rtl"] .loc-tabs button{font-family:"Amiri",var(--serif)}
+.loc-tabs button small{font:600 12.5px/1.2 var(--sans);color:var(--muted)}
+[dir="rtl"] .loc-tabs button small{font-family:"Cairo",var(--sans)}
+.loc-tabs button:hover{background:rgba(255,255,255,.55)}
+.loc-tabs button[aria-selected="true"]{background:var(--paper);box-shadow:0 2px 10px rgba(60,20,20,.12)}
+.loc-panel[hidden]{display:none}
+.loc-panel>.lead:first-child{margin-top:0}
+.moh-fallback{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:26px;display:flex;gap:16px 24px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.moh-fallback p{margin:0;font-size:17px}
+.moh-fallback[hidden]{display:none}
+.moh-links{display:flex;gap:14px 24px;align-items:center;flex-wrap:wrap}
+.type-card .type-note.clamp{display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-width:760px){.loc-tabs{display:flex}.loc-tabs button{flex:1 1 0;padding:10px 14px;font-size:19px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
 </style>
@@ -491,7 +517,7 @@ p{margin:0 0 1em}
   <div class="container hero-inner">
     <a class="hero-address" href="#locations"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="hero.locs">New Cairo · Mohandessin</span></a>
     <h1 id="hero-title" data-i18n="hero.title">Serviced apartments in Cairo, with the standards of a hotel.</h1>
-    <p class="hero-sub" data-i18n="hero.sub">Two NōMA buildings: 40 apartments in New Cairo, minutes from AUC and GUC, and 11 in Mohandessin, a short drive from Tahrir Square. Nightly, monthly, or for your whole team.</p>
+    <p class="hero-sub" data-i18n="hero.sub3">Studios to two-bedroom apartments in NōMA buildings across Cairo, now in New Cairo and Mohandessin, with more on the way. Nightly, monthly, or for your whole team.</p>
     <div class="hero-ctas">
       <a class="btn btn-light" href="#book" data-i18n="cta.book">Check rates and book</a>
       <a class="btn btn-outline-light" href="https://wa.me/201011222600" data-wa target="_blank" rel="noopener"><svg class="icon fill"><use href="#i-wa"/></svg><span data-i18n="cta.whatsapp">WhatsApp us</span></a>
@@ -567,13 +593,45 @@ p{margin:0 0 1em}
   </div>
 </section>
 
+<!-- ============ BRAND CARDS ============ -->
+<section class="section" id="stays" aria-labelledby="stays-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="stays.eyebrow">Two ways to stay</span>
+      <h2 id="stays-title" data-i18n="stays.title">Choose your stay</h2>
+    </div>
+    <div class="brand-grid">
+      <article class="brand-card">
+        <img class="photo" src="assets/home/noma-card.jpg" loading="lazy" decoding="async" alt="NōMA building with private balconies, New Cairo" style="object-position:center 30%">
+        <div class="brand-body">
+          <h3 class="brand-name">NōMA</h3>
+          <p class="brand-meaning" data-i18n="stays.nomaWhat3">Serviced apartment buildings across Cairo</p>
+          <p class="brand-suits" data-i18n="stays.nomaSuits2">Studios to two-bedroom apartments in New Cairo and Mohandessin, with more buildings to come. Suits business travellers, visiting teams, relocations and longer stays.</p>
+          <p class="from-price" data-i18n-html="stays.nomaFrom2">New Cairo from <strong>$70</strong> per night</p>
+          <a class="btn btn-primary" href="#locations" data-i18n="stays.nomaCta2">See NōMA locations</a>
+        </div>
+      </article>
+      <article class="brand-card">
+        <img class="photo" src="https://noma-stays.com/assets/hero-beit/1.jpg" alt="Arched wooden doorway of a BEIT boutique property" loading="lazy" onerror="this.outerHTML='<div class=&quot;beit-fallback&quot; style=&quot;display:block&quot;></div>'">
+        <div class="brand-body">
+          <h3 class="brand-name">BEIT <span class="ar-word" lang="ar">بيت</span></h3>
+          <p class="brand-meaning" data-i18n="stays.beitMeaning">BEIT (بيت) means "home" in Arabic.</p>
+          <p class="brand-suits"><span data-i18n="stays.beitWhat">Boutique properties, 5 to 12 rooms.</span> <span data-i18n="stays.beitSuits">Suits guests who want a stay that feels like a private home, with Egyptian character and personal hosting.</span></p>
+          <p class="from-price" data-i18n-html="stays.beitSoon"><strong>Coming soon</strong></p>
+          <a class="btn btn-outline" href="https://wa.me/201011222600" data-wa="beit" target="_blank" rel="noopener" data-i18n="stays.beitCta">Ask about BEIT</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ============ LOCATIONS ============ -->
-<section class="section" id="locations" aria-labelledby="locs-title">
+<section class="section alt" id="locations" aria-labelledby="locs-title">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow" data-i18n="locs.eyebrow">Our locations</span>
-      <h2 id="locs-title" data-i18n="locs.title">Two NōMA buildings, two sides of Cairo</h2>
-      <p class="lead" data-i18n="locs.lead">The same NōMA welcome in both. Pick the neighbourhood that suits your trip.</p>
+      <h2 id="locs-title" data-i18n="locs.title2">NōMA across Cairo</h2>
+      <p class="lead" data-i18n="locs.lead2">Each building has its own neighbourhood and character, with the same NōMA welcome. Pick the one that suits your trip. More buildings are on the way.</p>
     </div>
     <div class="brand-grid">
       <article class="brand-card">
@@ -604,50 +662,26 @@ p{margin:0 0 1em}
   </div>
 </section>
 
-<!-- ============ BRAND CARDS ============ -->
-<section class="section alt" id="stays" aria-labelledby="stays-title">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow" data-i18n="stays.eyebrow">Two ways to stay</span>
-      <h2 id="stays-title" data-i18n="stays.title">Choose your stay</h2>
-    </div>
-    <div class="brand-grid">
-      <article class="brand-card">
-        <img class="photo" src="assets/home/noma-card.jpg" loading="lazy" decoding="async" alt="NōMA building with private balconies, New Cairo" style="object-position:center 30%">
-        <div class="brand-body">
-          <h3 class="brand-name">NōMA</h3>
-          <p class="brand-meaning" data-i18n="stays.nomaWhat2">51 serviced apartments · New Cairo and Mohandessin</p>
-          <p class="brand-suits" data-i18n="stays.nomaSuits">Suits business travellers, visiting teams, relocations and longer stays.</p>
-          <p class="from-price" data-i18n-html="stays.nomaFrom2">New Cairo from <strong>$70</strong> per night</p>
-          <a class="btn btn-primary" href="#locations" data-i18n="stays.nomaCta2">See NōMA locations</a>
-        </div>
-      </article>
-      <article class="brand-card">
-        <img class="photo" src="https://noma-stays.com/assets/hero-beit/1.jpg" alt="Arched wooden doorway of a BEIT boutique property" loading="lazy" onerror="this.outerHTML='<div class=&quot;beit-fallback&quot; style=&quot;display:block&quot;></div>'">
-        <div class="brand-body">
-          <h3 class="brand-name">BEIT <span class="ar-word" lang="ar">بيت</span></h3>
-          <p class="brand-meaning" data-i18n="stays.beitMeaning">BEIT (بيت) means "home" in Arabic.</p>
-          <p class="brand-suits"><span data-i18n="stays.beitWhat">Boutique properties, 5 to 12 rooms.</span> <span data-i18n="stays.beitSuits">Suits guests who want a stay that feels like a private home, with Egyptian character and personal hosting.</span></p>
-          <p class="from-price" data-i18n-html="stays.beitSoon"><strong>Coming soon</strong></p>
-          <a class="btn btn-outline" href="https://wa.me/201011222600" data-wa="beit" target="_blank" rel="noopener" data-i18n="stays.beitCta">Ask about BEIT</a>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
 <!-- ============ 3. NōMA ============ -->
 <section class="section" id="apartments" aria-labelledby="apt-title">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow" data-i18n="apt.eyebrow">NōMA · New Cairo</span>
+      <span class="eyebrow" data-i18n="apt.eyebrow2">NōMA apartments</span>
       <h2 id="apt-title" data-i18n="apt.title">Apartments and rates</h2>
+      <p class="lead" data-i18n="apt.lead2">From studios to two-bedroom apartments. Choose a building to see its apartments.</p>
+    </div>
+    <div class="loc-tabs" role="tablist" aria-label="Location">
+      <button type="button" role="tab" id="tab-nc" aria-controls="panel-nc" aria-selected="true" data-tab="nc"><span data-i18n="locs.nc">New Cairo</span><small data-i18n="tab.ncSub">40 apartments · Arabella</small></button>
+      <button type="button" role="tab" id="tab-moh" aria-controls="panel-moh" aria-selected="false" tabindex="-1" data-tab="moh"><span data-i18n="locs.moh">Mohandessin</span><small data-i18n="tab.mohSub">11 apartments · New</small></button>
+    </div>
+
+    <!-- New Cairo (Arabella) -->
+    <div class="loc-panel" id="panel-nc" role="tabpanel" aria-labelledby="tab-nc">
       <p class="lead" data-i18n="apt.intro">NōMA is an upscale residence of 40 serviced apartments in New Cairo. Studios and one-bedroom apartments from 30 to 70 m², with twin or double beds, a kitchenette and, in some units, a private balcony. One all-inclusive rate: electricity, water, internet and all utilities are included.</p>
       <div class="price-row">
         <span class="price-chip" data-i18n-html="apt.fromNight">From <strong>$70</strong> per night</span>
         <span class="price-chip" data-i18n="apt.monthAsk">Monthly stays: ask us for a rate</span>
       </div>
-    </div>
 
     <h3 class="subhead" data-i18n="apt.typesTitle">Choose your apartment</h3>
     <div class="type-grid">
@@ -759,6 +793,22 @@ p{margin:0 0 1em}
       <figure><img class="photo" src="assets/home/bathroom.jpg" loading="lazy" decoding="async" alt="Bathroom with walk-in rain shower at NōMA"><figcaption data-i18n="g.bathroom">Bathroom</figcaption></figure>
     </div>
     <p class="cb-more-wrap"><button type="button" class="btn btn-outline cb-photos cb-all" data-cb-match="." hidden><svg class="icon"><use href="#i-camera"/></svg><span data-i18n="cb.all">See all apartment photos</span> <span class="cb-n"></span></button></p>
+    </div>
+
+    <!-- Mohandessin (live from Cloudbeds) -->
+    <div class="loc-panel" id="panel-moh" role="tabpanel" aria-labelledby="tab-moh" hidden>
+      <p class="lead" data-i18n="m.aptLead2">Eleven furnished apartments, most with two bedrooms, from about 80 to 150 m². Each has a living and dining area and its own kitchen, so you can settle in for a night or a month.</p>
+      <div class="price-row">
+        <span class="price-chip" data-i18n="apt.monthAsk">Monthly stays: ask us for a rate</span>
+      </div>
+      <h3 class="subhead" data-i18n="apt.typesTitle">Choose your apartment</h3>
+      <div class="type-grid" id="home-moh-rooms" aria-live="polite"></div>
+      <div class="moh-fallback" id="home-moh-fallback">
+        <p data-i18n="m.fallback">See every apartment, its photos and today's prices in our booking window.</p>
+        <a class="btn btn-primary" href="#book" data-property="mohandessin" data-i18n="m.fallbackCta">See apartments and prices</a>
+      </div>
+      <p class="cb-more-wrap moh-links"><button type="button" class="btn btn-outline cb-photos" id="home-moh-all" hidden><svg class="icon"><use href="#i-camera"/></svg><span data-i18n="cb.all">See all apartment photos</span> <span class="cb-n"></span></button><a class="link-arrow" href="mohandessin.html" data-i18n="m.mohPage">Everything about NōMA Mohandessin</a></p>
+    </div>
   </div>
 </section>
 
@@ -914,7 +964,7 @@ p{margin:0 0 1em}
 <section class="closing">
   <div class="container narrow">
     <p class="tagline" data-i18n="tagline">Come as a guest, leave as a local.</p>
-    <p class="about-line" data-i18n-html="about.line2">NōMA is operated by HAAM Management. NōMA New Cairo opened in June 2026; NōMA Mohandessin is our newest building.</p>
+    <p class="about-line" data-i18n-html="about.line3">NōMA is operated by HAAM Management. Our first building opened in New Cairo in June 2026, followed by Mohandessin, with more to come.</p>
   </div>
 </section>
 
@@ -932,7 +982,7 @@ p{margin:0 0 1em}
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="https://noma-stays.com/assets/noma-wordmark-cream.png" alt="NōMA" width="117" height="36" style="height:36px;width:auto" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-text',textContent:'NōMA',style:'color:#f6ede2'}))">
-        <p data-i18n="footer.blurb2">Serviced apartments in New Cairo and Mohandessin, with the standards of a hotel.</p>
+        <p data-i18n="footer.blurb3">Serviced apartments across Cairo, with the standards of a hotel.</p>
         <p><em data-i18n="tagline">Come as a guest, leave as a local.</em></p>
       </div>
       <div class="footer-col">
@@ -1121,7 +1171,19 @@ Object.assign(AR,{
 'about.line2':'تُدار نوما بواسطة HAAM Management. افتُتحت نوما القاهرة الجديدة في يونيو 2026، ونوما المهندسين هي أحدث مبانينا.',
 'footer.blurb2':'شقق فندقية في القاهرة الجديدة والمهندسين، بمعايير الفنادق.',
 'address.moh':'8 ميدان أبو الكرامات، المهندسين، الجيزة','footer.checkin':'تسجيل الوصول من 2:00 ظهرًا',
-'footer.nc':'نوما القاهرة الجديدة','footer.moh':'نوما المهندسين'
+'footer.nc':'نوما القاهرة الجديدة','footer.moh':'نوما المهندسين',
+'apt.eyebrow2':'شقق نوما','tab.ncSub':'40 شقة · أرابيلا','tab.mohSub':'11 شقة · جديد',
+'m.aptLead2':'إحدى عشرة شقة مفروشة، معظمها بغرفتي نوم، بمساحات من نحو 80 إلى 150 م². في كل شقة منطقة معيشة وطعام ومطبخ خاص، لتستقر فيها لليلة أو لشهر.',
+'m.fallback':'شاهد كل الشقق وصورها وأسعار اليوم في نافذة الحجز.','m.fallbackCta':'شاهد الشقق والأسعار',
+'m.mohPage':'كل ما يخص نوما المهندسين',
+'hero.sub3':'استوديوهات وشقق بغرفتي نوم في مباني نوما في أنحاء القاهرة، الآن في القاهرة الجديدة والمهندسين، ومبانٍ أخرى في الطريق. إقامة يومية أو شهرية أو لفريق عملك بالكامل.',
+'locs.title2':'نوما في أنحاء القاهرة',
+'locs.lead2':'لكل مبنى حيّه وطابعه، مع نفس ترحيب نوما. اختر ما يناسب رحلتك. ومبانٍ أخرى في الطريق.',
+'stays.nomaWhat3':'مبانٍ للشقق الفندقية في أنحاء القاهرة',
+'stays.nomaSuits2':'استوديوهات وشقق بغرفتي نوم في القاهرة الجديدة والمهندسين، ومبانٍ أخرى قادمة. مناسبة لرجال الأعمال والفرق الزائرة والانتقال للعمل والإقامات الطويلة.',
+'apt.lead2':'من الاستوديو إلى الشقة بغرفتي نوم. اختر المبنى لتشاهد شققه.',
+'about.line3':'تُدار نوما بواسطة HAAM Management. افتُتح أول مبانينا في القاهرة الجديدة في يونيو 2026، ثم المهندسين، والمزيد قادم.',
+'footer.blurb3':'شقق فندقية في أنحاء القاهرة، بمعايير الفنادق.'
 });
 var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
@@ -1247,7 +1309,7 @@ if(ef)ef.addEventListener('submit',function(e){
   var lb,img,title,count,list=[],pos=0;
   function build(){
     lb=document.createElement('div');lb.className='cb-lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-modal','true');
-    lb.innerHTML='<div class="cb-lb-title"></div><button class="x" type="button" aria-label="Close">&times;</button><button class="prev" type="button" aria-label="Previous">&#8249;</button><img alt=""><button class="next" type="button" aria-label="Next">&#8250;</button><div class="cb-lb-count"></div>';
+    lb.innerHTML='<div class="cb-lb-title"></div><button class="x" type="button" aria-label="Close">&times;</button><button class="prev" type="button" aria-label="Previous">&#8249;</button><img alt=""><button class="next" type="button" aria-label="Next">&#8250;</button><div class="cb-lb-count"></div><div class="cb-lb-thumbs" role="tablist" aria-label="Photos"></div>';
     document.body.appendChild(lb);img=lb.querySelector('img');title=lb.querySelector('.cb-lb-title');count=lb.querySelector('.cb-lb-count');
     lb.querySelector('.x').onclick=close;lb.querySelector('.prev').onclick=function(){go(-1)};lb.querySelector('.next').onclick=function(){go(1)};
     lb.addEventListener('click',function(e){if(e.target===lb)close()});
@@ -1255,10 +1317,13 @@ if(ef)ef.addEventListener('submit',function(e){
     var x0=null;lb.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
     lb.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(dx<0?1:-1);x0=null});
   }
-  function show(){img.src=list[pos].url;img.alt=list[pos].name;title.textContent=list[pos].name;count.textContent=(pos+1)+' / '+list.length}
+  function show(){img.src=list[pos].url;img.alt=list[pos].name;title.textContent=list[pos].name;count.textContent=(pos+1)+' / '+list.length;
+    var tb=lb.querySelectorAll('.cb-lb-thumbs button');for(var i=0;i<tb.length;i++){var on=i===pos;tb[i].className=on?'on':'';tb[i].setAttribute('aria-selected',on?'true':'false');if(on&&tb[i].scrollIntoView)tb[i].scrollIntoView({block:'nearest',inline:'center'})}}
+  function thumbs(){var box=lb.querySelector('.cb-lb-thumbs');box.innerHTML='';list.forEach(function(it,i){var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.setAttribute('aria-label','Photo '+(i+1));var t=document.createElement('img');t.src=it.url;t.alt='';t.loading='lazy';t.decoding='async';b.appendChild(t);b.onclick=function(){pos=i;show()};box.appendChild(b)});box.hidden=list.length<2}
   function go(d){pos=(pos+d+list.length)%list.length;show()}
-  function open(items){if(!lb)build();list=items;pos=0;show();lb.classList.add('on');document.body.style.overflow='hidden';lb.querySelector('.x').focus()}
+  function open(items){if(!lb)build();list=items;pos=0;thumbs();show();lb.classList.add('on');document.body.style.overflow='hidden';lb.querySelector('.x').focus()}
   function close(){lb.classList.remove('on');document.body.style.overflow=''}
+  window.NOMA_LB=open;
   fetch('/api/rooms',{headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(d){
     if(!d||!d.ok||!d.rooms)return;
     document.querySelectorAll('.cb-photos[data-cb-match]').forEach(function(btn){
@@ -1277,17 +1342,62 @@ if(ef)ef.addEventListener('submit',function(e){
 </script>
 
 <script>
-/* Mohandessin card photo: first real room photo from Cloudbeds (/api/rooms?location=mohandessin).
-   Until that key is set in Vercel, the card keeps its maroon cover. */
+/* Apartments tabs (New Cairo / Mohandessin) + Mohandessin live content from Cloudbeds
+   (/api/rooms?location=mohandessin): the locations-card photo and the Mohandessin apartment cards.
+   Photos whose file name marks them as AI-generated are skipped. */
 (function(){
-  var box=document.querySelector('[data-cb-cover="mohandessin"]');if(!box)return;
-  var AI=/chatgpt|dall-?e|midjourney|gemini|ai[-_]?generated/i;
-  fetch('/api/rooms?location=mohandessin',{headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(d){
-    if(!d||!d.ok||!d.rooms)return;
-    var url=null;d.rooms.some(function(rm){return (rm.photos||[]).some(function(u){if(!AI.test(u)){url=u;return true}})});
+  var tabs=[].slice.call(document.querySelectorAll('.loc-tabs [role="tab"]'));
+  function select(id,focus){
+    tabs.forEach(function(t){var on=t.getAttribute('data-tab')===id;t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=!on;if(on&&focus)t.focus()});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){select(t.getAttribute('data-tab'))});
+    t.addEventListener('keydown',function(e){var k=e.key,d=k==='ArrowRight'?1:k==='ArrowLeft'?-1:0;if(!d)return;if(document.documentElement.dir==='rtl')d=-d;e.preventDefault();select(tabs[(i+d+tabs.length)%tabs.length].getAttribute('data-tab'),true)});
+  });
+  function fromHash(){if(/mohandessin/i.test(location.hash))select('moh');else if(location.hash==='#apartments')select('nc')}
+  fromHash();window.addEventListener('hashchange',fromHash);
+  var bk=document.getElementById('bk-property');
+  if(bk)bk.addEventListener('change',function(){select(bk.value==='mohandessin'?'moh':'nc')});
+
+  var AI=/chatgpt|dall-?e|midjourney|gemini|ai[-_]?generated/i,data=null;
+  var grid=document.getElementById('home-moh-rooms'),fb=document.getElementById('home-moh-fallback'),allBtn=document.getElementById('home-moh-all');
+  function ar(){return document.documentElement.lang==='ar'}
+  function esc(t){return String(t||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function photos(rm){var seen={};return (rm.photos||[]).filter(function(u){if(AI.test(u)||seen[u])return false;seen[u]=1;return true}).map(function(u){return {url:u,name:rm.name}})}
+  function cover(){
+    var box=document.querySelector('[data-cb-cover="mohandessin"]');if(!box||box.querySelector('img'))return;
+    var url=null;data.rooms.some(function(rm){var ph=photos(rm);if(ph.length){url=ph[0].url;return true}});
     if(!url)return;
     var im=new Image();im.alt='NōMA Mohandessin apartment';im.loading='lazy';im.onload=function(){box.insertBefore(im,box.firstChild);var t=box.querySelector('.loc-cover-txt');if(t)t.remove()};im.src=url;
+  }
+  function cards(){
+    if(!grid)return;
+    var rooms=data.rooms.filter(function(r){return r.name}).sort(function(a,b){return (photos(b).length?1:0)-(photos(a).length?1:0)});
+    if(!rooms.length)return;
+    var all=[];
+    grid.innerHTML=rooms.map(function(rm,i){
+      var ph=photos(rm);all=all.concat(ph);
+      var pic=ph.length?'<img class="photo" src="'+esc(ph[0].url)+'" loading="lazy" decoding="async" alt="'+esc(rm.name)+'">':'<div class="ph-photo" style="border:0;border-radius:0">'+(ar()?'الصور قريبًا':'Photos coming soon')+'</div>';
+      var btn=ph.length>1?'<button type="button" class="cb-photos" data-i="'+i+'"><svg class="icon"><use href="#i-camera"/></svg><span>'+(ar()?'شاهد الصور':'See photos')+'</span> <span class="cb-n">('+ph.length+')</span></button>':'';
+      var n=String(rm.name).toLowerCase(),beds=/two|2/.test(n)?2:(/one|1/.test(n)?1:0),rows=[];
+      if(beds)rows.push([ar()?'غرف النوم':'Bedrooms',beds]);
+      if(rm.maxGuests)rows.push([ar()?'الحد الأقصى للضيوف':'Max guests',rm.maxGuests]);
+      if(/balcon/.test(n))rows.push([ar()?'شرفة':'Balcony',ar()?'نعم':'Yes']);
+      var specs=rows.length?'<ul class="specs">'+rows.map(function(r){return '<li><span>'+r[0]+'</span><b>'+esc(r[1])+'</b></li>'}).join('')+'</ul>':'';
+      var real=rm.description&&rm.description.replace(/[^a-z\u0600-\u06ff]/gi,'').length>=20;
+      var desc='<p class="type-note clamp" dir="auto">'+(real?esc(rm.description):(ar()?'منطقة معيشة وطعام ومطبخ خاص.':'A living and dining area and its own kitchen.'))+'</p>';
+      return '<article class="type-card cb-card">'+pic+btn+'<div class="type-body"><h4 dir="auto">'+esc(rm.name)+'</h4>'+specs+desc+
+        '<a class="btn btn-primary" href="#book" data-property="mohandessin">'+(ar()?'اعرف الأسعار':'Check rates')+'</a></div></article>';
+    }).join('');
+    grid.querySelectorAll('.cb-photos').forEach(function(b){b.addEventListener('click',function(){if(window.NOMA_LB)window.NOMA_LB(photos(rooms[+b.getAttribute('data-i')]))})});
+    grid.querySelectorAll('[data-property]').forEach(function(a){a.addEventListener('click',function(){if(bk){bk.value='mohandessin';bk.dispatchEvent(new Event('change'))}})});
+    if(fb)fb.hidden=true;
+    if(allBtn&&all.length){allBtn.querySelector('.cb-n').textContent='('+all.length+')';allBtn.hidden=false;allBtn.onclick=function(){if(window.NOMA_LB)window.NOMA_LB(all)}}
+  }
+  fetch('/api/rooms?location=mohandessin',{headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(d){
+    if(!d||!d.ok||!d.rooms)return;data=d;cover();cards();
   }).catch(function(){});
+  document.querySelectorAll('.lang-switch button').forEach(function(b){b.addEventListener('click',function(){setTimeout(function(){if(data)cards()},0)})});
 })();
 </script>
 
