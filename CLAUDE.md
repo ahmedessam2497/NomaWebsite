@@ -54,6 +54,7 @@ bytes** — this has corrupted these files before. To stay safe:
 
 ## Integrations
 - **Booking overlay** — Cloudbeds Immersive Experience 2.0. Property codes: New Cairo `q3dbO7`, Mohandessin `Av8AgC` (the booking-box "Property" choice picks which one opens; both need the site domains whitelisted in their own Booking Engine settings).
+  Mohandessin currently opens the full Cloudbeds booking page in a new tab (`OVERLAY.mohandessin=false` in index.html and mohandessin.html) because its Booking Engine doesn't allow the site's domains yet (CORS error). Once it does: set it to `true` in both files and add `<cb-book-now-button property-code="Av8AgC" …>` next to the q3dbO7 one at the bottom of each page.
   Every booking CTA opens the same slide-in overlay via the `<cb-book-now-button>`
   web component / `window.NOMA_BOOK(params)`. The Cloudbeds script is in each page's
   `<head>`. The site's live + preview domains must be **whitelisted in Cloudbeds**

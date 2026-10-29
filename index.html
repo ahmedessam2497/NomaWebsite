@@ -523,7 +523,7 @@ p{margin:0 0 1em}
       <a class="btn btn-outline-light" href="https://wa.me/201011222600" data-wa target="_blank" rel="noopener"><svg class="icon fill"><use href="#i-wa"/></svg><span data-i18n="cta.whatsapp">WhatsApp us</span></a>
     </div>
     <ul class="proof">
-      <li data-i18n="proof.score2">9.7/10 on Booking.com (New Cairo)</li>
+      <li id="proof-g" data-i18n="proof.g">Highly rated on Google</li>
       <li data-i18n="proof.kitchen">A kitchen in every apartment</li>
       <li data-i18n="proof.wifi">Free Wi-Fi</li>
       <li data-i18n="proof.parking">Free parking</li>
@@ -836,26 +836,19 @@ p{margin:0 0 1em}
 </section>
 
 <!-- ============ 6a. REVIEWS ============ -->
-<section class="section" id="reviews" aria-labelledby="rev-title">
+<section class="section" id="reviews" aria-labelledby="rev-title" hidden>
   <div class="container">
     <div class="section-head">
       <span class="eyebrow" data-i18n="rev.eyebrow2">Guest reviews · New Cairo</span>
       <h2 id="rev-title" data-i18n="rev.title">What our guests say</h2>
     </div>
     <div class="review-scores">
-      <div class="review-score">
-        <div class="score-badge">9.7</div>
-        <p style="margin:0" data-i18n-html="rev.summary">Rated 9.7 out of 10 on Booking.com from 53 reviews.</p>
-      </div>
       <a class="review-score g-score" id="g-score" href="https://maps.google.com/?cid=15635143835366761898" target="_blank" rel="noopener" hidden>
         <div class="score-badge g-badge"><span class="g-rating"></span><span class="g-star" aria-hidden="true">★</span></div>
         <p class="g-summary" style="margin:0"></p>
       </a>
     </div>
     <div class="quotes" id="quotes">
-      <blockquote class="quote"><p>“Everything was perfect, modern and new… Home away from home!”</p><footer>Carolina · Expedia · August 2026</footer></blockquote>
-      <blockquote class="quote"><p>“The staff were incredibly kind, welcoming, and always happy to help, which made my stay even better.”</p><footer>Abdalla · Expedia · July 2026</footer></blockquote>
-      <blockquote class="quote"><p>“Excellent place! Everything is brand new, very clean, and the service was truly five-star. I highly recommend it.”</p><footer>Bader · Airbnb · September 2026</footer></blockquote>
     </div>
     <p class="g-attr" id="g-attr" hidden><span class="g-attr-txt">Reviews from Google</span> · <a id="g-all" href="https://maps.google.com/?cid=15635143835366761898" target="_blank" rel="noopener">See all reviews on Google</a></p>
   </div>
@@ -1031,6 +1024,9 @@ p{margin:0 0 1em}
 'use strict';
 var WA='201011222600';
 var CODES={noma:'q3dbO7',mohandessin:'Av8AgC'};
+/* Slide-in booking window per location. Mohandessin stays false until its Cloudbeds
+   Booking Engine allows this site's domains; until then it opens the Cloudbeds booking page in a new tab. */
+var OVERLAY={noma:true,mohandessin:false};
 function cbUrl(code){return 'https://us2.cloudbeds.com/en/reservation/'+code+'/'}
 var PH_TIME='<span class="ph">[TIME]</span>';
 var EGP='<span class="ph">[EGP ___]</span>';
@@ -1152,7 +1148,7 @@ Object.assign(AR,{
 'hero.locs':'القاهرة الجديدة · المهندسين',
 'hero.title':'شقق فندقية في القاهرة، بمعايير الفنادق.',
 'hero.sub':'مبنيان من نوما: 40 شقة في القاهرة الجديدة على بُعد دقائق من الجامعة الأمريكية والجامعة الألمانية، و11 شقة في المهندسين على مسافة قصيرة بالسيارة من ميدان التحرير. إقامة يومية أو شهرية أو لفريق عملك بالكامل.',
-'proof.score2':'9.7/10 على Booking.com (القاهرة الجديدة)','proof.kitchen':'مطبخ في كل شقة','proof.wifi':'واي فاي مجاني',
+'proof.g':'تقييم مرتفع على Google','proof.kitchen':'مطبخ في كل شقة','proof.wifi':'واي فاي مجاني',
 'book.optMoh':'نوما · المهندسين',
 'pol.cancelPay':'الإلغاء والدفع','pol.mohMini':'تظهر الشروط قبل تأكيد الحجز.','pol.allMoh':'سياسات المهندسين',
 'locs.eyebrow':'مواقعنا','locs.title':'مبنيان من نوما، في جانبين من القاهرة',
@@ -1259,7 +1255,7 @@ if(bf)bf.addEventListener('submit',function(e){
   var u=cbUrl(code)+'?currency=egp&checkin='+ci+'&checkout='+co+'&adults='+g;
   if(promo)u+='&promo='+encodeURIComponent(promo);
   /* Open the Cloudbeds overlay like the rest of the site; fall back to the booking page in a new tab */
-  var cbEl=document.querySelector('cb-book-now-button[property-code="'+code+'"]');
+  var cbEl=OVERLAY[prop]?document.querySelector('cb-book-now-button[property-code="'+code+'"]'):null;
   if(cbEl&&window.customElements&&customElements.get('cb-book-now-button')){
     try{var q=new URLSearchParams({checkin:ci,checkout:co,adults:g});if(promo)q.set('promo',promo);history.replaceState(null,'',location.pathname+'?'+q.toString()+'#book')}catch(err){}
     var root=cbEl.shadowRoot||cbEl;var inner=root.querySelector('button, a, [role="button"]');(inner||cbEl).click();
@@ -1297,7 +1293,7 @@ if(ef)ef.addEventListener('submit',function(e){
 </script>
 
 <!-- Cloudbeds booking overlays (Immersive Experience): New Cairo q3dbO7, Mohandessin Av8AgC -->
-<div class="sr-only" aria-hidden="true"><cb-book-now-button property-code="q3dbO7" label="Book a stay" height="90vh" width="min(900px,95vw)"></cb-book-now-button><cb-book-now-button property-code="Av8AgC" label="Book a stay" height="90vh" width="min(900px,95vw)"></cb-book-now-button></div>
+<div class="sr-only" aria-hidden="true"><cb-book-now-button property-code="q3dbO7" label="Book a stay" height="90vh" width="min(900px,95vw)"></cb-book-now-button></div>
 <script type="text/javascript" src="https://static1.cloudbeds.com/booking-engine/latest/static/js/immersive-experience/cb-immersive-experience.js"></script>
 
 <script>
@@ -1368,7 +1364,9 @@ if(ef)ef.addEventListener('submit',function(e){
     var box=document.querySelector('[data-cb-cover="mohandessin"]');if(!box||box.querySelector('img'))return;
     var url=null;data.rooms.some(function(rm){var ph=photos(rm);if(ph.length){url=ph[0].url;return true}});
     if(!url)return;
-    var im=new Image();im.alt='NōMA Mohandessin apartment';im.loading='lazy';im.onload=function(){box.insertBefore(im,box.firstChild);var t=box.querySelector('.loc-cover-txt');if(t)t.remove()};im.src=url;
+    var im=document.createElement('img');im.alt='NōMA Mohandessin apartment';im.decoding='async';im.style.opacity='0';im.style.transition='opacity .3s';
+    im.onload=function(){im.style.opacity='1';var t=box.querySelector('.loc-cover-txt');if(t)t.remove()};
+    box.insertBefore(im,box.firstChild);im.src=url;
   }
   function cards(){
     if(!grid)return;
@@ -1410,6 +1408,8 @@ if(ef)ef.addEventListener('submit',function(e){
   function ar(){return document.documentElement.lang==='ar'}
   function render(){
     if(!data)return;
+    var pg=document.getElementById('proof-g');
+    if(pg&&data.rating)pg.textContent=ar()?(Number(data.rating).toFixed(1)+'/5 على Google (القاهرة الجديدة)'):(Number(data.rating).toFixed(1)+'/5 on Google (New Cairo)');
     var gs=document.getElementById('g-score');
     if(gs&&data.rating){
       gs.href=data.url;
@@ -1436,7 +1436,7 @@ if(ef)ef.addEventListener('submit',function(e){
     }
   }
   fetch('/api/reviews',{headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(d){
-    if(d&&d.ok){data=d;render();}
+    if(d&&d.ok&&d.rating){data=d;render();var sec=document.getElementById('reviews');if(sec)sec.hidden=false;}
   }).catch(function(){});
   document.querySelectorAll('.lang-switch button').forEach(function(b){b.addEventListener('click',function(){setTimeout(render,0)})});
 })();
