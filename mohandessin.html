@@ -735,9 +735,9 @@ p{margin:0 0 1em}
 'use strict';
 var WA='201011222600';
 var CODES={noma:'q3dbO7',mohandessin:'Av8AgC'};
-/* Slide-in booking window per location. Mohandessin stays false until its Cloudbeds
-   Booking Engine allows this site's domains; until then it opens the Cloudbeds booking page in a new tab. */
-var OVERLAY={noma:true,mohandessin:false};
+/* Slide-in booking window per location (false = open the Cloudbeds booking page in a new tab).
+   Each location's Cloudbeds Booking Engine > Embeds > Whitelisted domains must list this site. */
+var OVERLAY={noma:true,mohandessin:true};
 function cbUrl(code){return 'https://us2.cloudbeds.com/en/reservation/'+code+'/'}
 var PH_TIME='<span class="ph">[TIME]</span>';
 var EGP='<span class="ph">[EGP ___]</span>';
@@ -1033,7 +1033,7 @@ if(ef)ef.addEventListener('submit',function(e){
 </script>
 
 <!-- Cloudbeds booking overlays (Immersive Experience): Mohandessin Av8AgC, New Cairo q3dbO7 -->
-<div class="sr-only" aria-hidden="true"><cb-book-now-button property-code="q3dbO7" label="Book a stay" height="90vh" width="min(900px,95vw)"></cb-book-now-button></div>
+<div class="sr-only" aria-hidden="true"><cb-book-now-button property-code="q3dbO7" label="Book a stay" height="90vh" width="min(900px,95vw)"></cb-book-now-button><cb-book-now-button property-code="Av8AgC" label="Book a stay" height="90vh" width="min(900px,95vw)"></cb-book-now-button></div>
 <script type="text/javascript" src="https://static1.cloudbeds.com/booking-engine/latest/static/js/immersive-experience/cb-immersive-experience.js"></script>
 
 <script>
