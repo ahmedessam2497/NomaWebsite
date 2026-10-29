@@ -4,9 +4,9 @@
 
   /* Same menu as the homepage (index.html) and corporate.html */
   var NAV = [
-    { id: 'apartments', label: 'Apartments', href: 'index.html#apartments' },
-    { id: 'services',   label: 'Services',   href: 'index.html#services' },
-    { id: 'location',   label: 'Location',   href: 'index.html#location' },
+    { id: 'locations',  label: 'Locations',  href: 'index.html#locations' },
+    { id: 'apartments', label: 'New Cairo',  href: 'index.html#apartments' },
+    { id: 'mohandessin', label: 'Mohandessin', href: 'mohandessin.html' },
     { id: 'corporate',  label: 'Corporate',  href: 'corporate.html' },
     { id: 'beit',       label: 'BEIT',       href: 'beit.html' },
     { id: 'contact',    label: 'Contact',    href: 'index.html#contact' }
@@ -111,7 +111,7 @@
       '</div>' +
       '<div class="foot-col"><h4>Visit</h4><span class="foot-txt">204 Arabella, New Cairo, Egypt</span><span class="foot-txt">Check-in from 2:00 pm · Check-out by 12:00 noon</span><a href="https://www.google.com/maps/dir/?api=1&amp;destination=29.9880527,31.4303714" target="_blank" rel="noopener">Get directions →</a></div>' +
       '<div class="foot-col"><h4>Contact</h4><a href="tel:+201011222600" dir="ltr">+20 101 122 2600</a><a href="https://wa.me/201011222600" target="_blank" rel="noopener">WhatsApp</a><a href="mailto:operations@noma-stays.com">operations@noma-stays.com</a></div>' +
-      '<div class="foot-col"><h4>Explore</h4><a href="index.html#apartments">NōMA Arabella</a><a href="noma.html#district9">NōMA District 9</a><a href="beit.html">BEIT بيت</a><a href="corporate.html">Stays for teams</a><a href="about.html">Our story, values &amp; team</a><a href="partner.html">Partner with us</a></div>' +
+      '<div class="foot-col"><h4>Explore</h4><a href="index.html#apartments">NōMA Arabella, New Cairo</a><a href="mohandessin.html">NōMA Mohandessin</a><a href="noma.html#district9">NōMA District 9</a><a href="beit.html">BEIT بيت</a><a href="corporate.html">Stays for teams</a><a href="about.html">Our story, values &amp; team</a><a href="partner.html">Partner with us</a></div>' +
     '</div>' +
     '<div class="foot-bottom"><span>© 2026 NōMA · Operated by HAAM Management</span>' +
       '<div class="powered"><span>Booking by Cloudbeds</span></div></div></div>';

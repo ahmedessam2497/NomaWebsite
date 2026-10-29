@@ -9,8 +9,8 @@
 <link rel="manifest" href="/site.webmanifest">
 <!-- No maximum-scale / user-scalable=no: pinch-to-zoom stays enabled -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NōMA Stays | Serviced apartments in New Cairo</title>
-<meta name="description" content="40 serviced apartments in New Cairo. Studios and one-bedrooms with daily housekeeping, laundry and airport transfers. Book direct for the best rate.">
+<title>NōMA Stays | Serviced apartments in New Cairo and Mohandessin</title>
+<meta name="description" content="Serviced apartments in two Cairo neighbourhoods: 40 in New Cairo and 11 in Mohandessin. Kitchens, free Wi-Fi and free parking. Book direct for the best rate.">
 <meta name="theme-color" content="#4a1514">
 <link rel="canonical" href="https://noma-stays.com/">
 <!-- When the Arabic pages go live at their own URLs, add:
@@ -18,8 +18,8 @@
 <link rel="alternate" hreflang="ar" href="https://noma-stays.com/ar/"> -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NōMA Stays">
-<meta property="og:title" content="NōMA Stays | Serviced apartments in New Cairo">
-<meta property="og:description" content="40 serviced apartments in New Cairo. Studios and one-bedrooms with daily housekeeping, laundry and airport transfers. Book direct for the best rate.">
+<meta property="og:title" content="NōMA Stays | Serviced apartments in New Cairo and Mohandessin">
+<meta property="og:description" content="Serviced apartments in two Cairo neighbourhoods: 40 in New Cairo and 11 in Mohandessin. Kitchens, free Wi-Fi and free parking. Book direct for the best rate.">
 <meta property="og:url" content="https://noma-stays.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -352,6 +352,16 @@ p{margin:0 0 1em}
 .g-quote footer a{color:var(--maroon);font-weight:600;text-decoration:none}
 .g-attr{margin:16px 0 0;font-size:14px;color:var(--muted)}
 .g-attr a{color:var(--maroon);font-weight:600}
+/* two locations */
+.loc-cover{position:relative;aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,var(--maroon-d),var(--maroon-2));display:flex;align-items:flex-end;padding:24px 26px;color:#f6ede2}
+.loc-cover .loc-cover-txt{position:relative;font:400 30px/1.05 var(--serif)}
+.loc-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.new-tag{position:absolute;top:16px;inset-inline-start:16px;z-index:1;background:var(--gold);color:#fff;font:700 12px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;padding:8px 13px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+[dir="rtl"] .new-tag{letter-spacing:0}
+.loc-actions{display:flex;gap:14px 22px;align-items:center;flex-wrap:wrap;margin-top:auto}
+.brand-body .loc-actions .btn{margin-top:0}
+.policy-mini li[hidden]{display:none}
+.other-loc{margin:22px 0 0;font-size:15.5px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
 
 </style>
@@ -383,6 +393,22 @@ p{margin:0 0 1em}
     {"@type": "LocationFeatureSpecification", "name": "Kitchenette", "value": true},
     {"@type": "LocationFeatureSpecification", "name": "Air conditioning", "value": true}
   ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LodgingBusiness",
+  "name": "NōMA Mohandessin",
+  "description": "11 serviced apartments in Mohandessin, Giza, each with a kitchen. Free Wi-Fi and free on-site parking.",
+  "url": "https://noma-stays.com/mohandessin.html",
+  "telephone": "+201011222600",
+  "email": "operations@noma-stays.com",
+  "address": {"@type": "PostalAddress", "streetAddress": "8 Abou Al Karamat Square", "addressLocality": "Mohandessin, Giza", "addressCountry": "EG"},
+  "geo": {"@type": "GeoCoordinates", "latitude": 30.0551506, "longitude": 31.2079251},
+  "checkinTime": "14:00",
+  "numberOfRooms": 11,
+  "petsAllowed": false
 }
 </script>
 </head>
@@ -433,9 +459,9 @@ p{margin:0 0 1em}
       <img src="https://noma-stays.com/assets/noma-wordmark-maroon.png" alt="NōMA" width="91" height="28" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-text',textContent:'NōMA'}))">
     </a>
     <nav class="main-nav" aria-label="Main">
-      <a href="#apartments" data-nav="apartments" data-i18n="nav.apartments">Apartments</a>
-      <a href="#services" data-nav="services" data-i18n="nav.services">Services</a>
-      <a href="#location" data-nav="location" data-i18n="nav.location">Location</a>
+      <a href="#locations" data-nav="locations" data-i18n="nav.locations">Locations</a>
+      <a href="#apartments" data-nav="apartments" data-i18n="nav.newcairo">New Cairo</a>
+      <a href="mohandessin.html" data-nav="mohandessin" data-i18n="nav.mohandessin">Mohandessin</a>
       <a href="corporate.html" data-nav="corporate" data-i18n="nav.corporate">Corporate</a>
       <a href="https://noma-stays.com/beit.html" data-nav="beit" data-i18n="nav.beit">BEIT</a>
       <a href="#contact" data-nav="contact" data-i18n="nav.contact">Contact</a>
@@ -444,9 +470,10 @@ p{margin:0 0 1em}
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Menu"><svg class="icon"><use href="#i-menu"/></svg></button>
   </div>
   <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-    <a href="#apartments" data-i18n="nav.apartments">Apartments</a>
+    <a href="#locations" data-i18n="nav.locations">Locations</a>
+    <a href="#apartments" data-i18n="nav.newcairo">New Cairo</a>
+    <a href="mohandessin.html" data-i18n="nav.mohandessin">Mohandessin</a>
     <a href="#services" data-i18n="nav.services">Services</a>
-    <a href="#location" data-i18n="nav.location">Location</a>
     <a href="corporate.html" data-i18n="nav.corporate">Corporate</a>
     <a href="https://noma-stays.com/beit.html" data-i18n="nav.beit">BEIT</a>
     <a href="#contact" data-i18n="nav.contact">Contact</a>
@@ -462,18 +489,18 @@ p{margin:0 0 1em}
 <section class="hero" aria-labelledby="hero-title">
   <img class="hero-img" src="assets/home/hero.jpg" alt="NōMA building at dusk with private balconies, 204 Arabella, New Cairo" fetchpriority="high">
   <div class="container hero-inner">
-    <a class="hero-address" href="#location"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="address.short">204 Arabella, New Cairo</span></a>
-    <h1 id="hero-title" data-i18n="hero.title">Serviced apartments in New Cairo, with the standards of a hotel.</h1>
-    <p class="hero-sub" data-i18n="hero.sub">40 studios and one-bedroom apartments, 30 to 70 m², minutes from Arabella Plaza, AUC and GUC. Nightly, monthly, or for your whole team.</p>
+    <a class="hero-address" href="#locations"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="hero.locs">New Cairo · Mohandessin</span></a>
+    <h1 id="hero-title" data-i18n="hero.title">Serviced apartments in Cairo, with the standards of a hotel.</h1>
+    <p class="hero-sub" data-i18n="hero.sub">Two NōMA buildings: 40 apartments in New Cairo, minutes from AUC and GUC, and 11 in Mohandessin, a short drive from Tahrir Square. Nightly, monthly, or for your whole team.</p>
     <div class="hero-ctas">
       <a class="btn btn-light" href="#book" data-i18n="cta.book">Check rates and book</a>
       <a class="btn btn-outline-light" href="https://wa.me/201011222600" data-wa target="_blank" rel="noopener"><svg class="icon fill"><use href="#i-wa"/></svg><span data-i18n="cta.whatsapp">WhatsApp us</span></a>
     </div>
     <ul class="proof">
-      <li data-i18n="proof.score">9.7/10 on Booking.com</li>
-      <li data-i18n="proof.reception">24-hour reception</li>
+      <li data-i18n="proof.score2">9.7/10 on Booking.com (New Cairo)</li>
+      <li data-i18n="proof.kitchen">A kitchen in every apartment</li>
+      <li data-i18n="proof.wifi">Free Wi-Fi</li>
       <li data-i18n="proof.parking">Free parking</li>
-      <li data-i18n="proof.utilities">All utilities included</li>
     </ul>
   </div>
 </section>
@@ -488,6 +515,7 @@ p{margin:0 0 1em}
           <label for="bk-property" data-i18n="book.property">Property</label>
           <select id="bk-property" name="property">
             <option value="noma" data-i18n="book.optNoma">NōMA · New Cairo</option>
+            <option value="mohandessin" data-i18n="book.optMoh">NōMA · Mohandessin</option>
           </select>
         </div>
         <div class="field">
@@ -528,17 +556,56 @@ p{margin:0 0 1em}
 
       <ul class="policy-mini" aria-label="Key policies">
         <li><strong data-i18n="pol.checkin">Check-in</strong><span data-i18n="pol.checkinVal">From 2:00 pm</span></li>
-        <li><strong data-i18n="pol.checkout">Check-out</strong><span data-i18n="pol.checkoutVal">By 12:00 noon</span></li>
-        <li><strong data-i18n="pol.cancel">Cancellation</strong><span data-i18n="pol.cancelMini">Free until 48 hours before arrival.</span></li>
-        <li><strong data-i18n="pol.payment">Payment</strong><span data-i18n="pol.payMini">Full payment at check-in. Card, or cash with approval.</span></li>
-        <li class="all"><a class="link-arrow" href="#policies" data-i18n="pol.all">All policies</a></li>
+        <li data-for="noma"><strong data-i18n="pol.checkout">Check-out</strong><span data-i18n="pol.checkoutVal">By 12:00 noon</span></li>
+        <li data-for="noma"><strong data-i18n="pol.cancel">Cancellation</strong><span data-i18n="pol.cancelMini">Free until 48 hours before arrival.</span></li>
+        <li data-for="noma"><strong data-i18n="pol.payment">Payment</strong><span data-i18n="pol.payMini">Full payment at check-in. Card, or cash with approval.</span></li>
+        <li data-for="mohandessin" hidden><strong data-i18n="pol.cancelPay">Cancellation and payment</strong><span data-i18n="pol.mohMini">Shown before you confirm your booking.</span></li>
+        <li class="all" data-for="noma"><a class="link-arrow" href="#policies" data-i18n="pol.all">All policies</a></li>
+        <li class="all" data-for="mohandessin" hidden><a class="link-arrow" href="mohandessin.html#policies" data-i18n="pol.allMoh">Mohandessin policies</a></li>
       </ul>
     </form>
   </div>
 </section>
 
+<!-- ============ LOCATIONS ============ -->
+<section class="section" id="locations" aria-labelledby="locs-title">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow" data-i18n="locs.eyebrow">Our locations</span>
+      <h2 id="locs-title" data-i18n="locs.title">Two NōMA buildings, two sides of Cairo</h2>
+      <p class="lead" data-i18n="locs.lead">The same NōMA welcome in both. Pick the neighbourhood that suits your trip.</p>
+    </div>
+    <div class="brand-grid">
+      <article class="brand-card">
+        <img class="photo" src="assets/home/noma-card.jpg" loading="lazy" decoding="async" alt="NōMA New Cairo building with private balconies" style="object-position:center 30%">
+        <div class="brand-body">
+          <h3 class="brand-name" data-i18n="locs.nc">New Cairo</h3>
+          <p class="brand-meaning" data-i18n="locs.ncWhat">40 apartments · 204 Arabella</p>
+          <p class="brand-suits" data-i18n="locs.ncTxt">Studios and one-bedrooms, minutes from Arabella Plaza, AUC, GUC and the business districts. 24-hour reception and daily housekeeping.</p>
+          <div class="loc-actions">
+            <a class="btn btn-primary" href="#book" data-property="noma" data-i18n="locs.ncBook">Book New Cairo</a>
+            <a class="link-arrow" href="#apartments" data-i18n="locs.ncMore">See the apartments</a>
+          </div>
+        </div>
+      </article>
+      <article class="brand-card">
+        <div class="loc-cover" data-cb-cover="mohandessin"><span class="loc-cover-txt">NōMA<br>Mohandessin</span><span class="new-tag" data-i18n="locs.new">New</span></div>
+        <div class="brand-body">
+          <h3 class="brand-name" data-i18n="locs.moh">Mohandessin</h3>
+          <p class="brand-meaning" data-i18n="locs.mohWhat">11 apartments · 8 Abou Al Karamat Square</p>
+          <p class="brand-suits" data-i18n="locs.mohTxt">Central Cairo, a short drive from Tahrir Square and the Egyptian Museum. A kitchen in every apartment, free Wi-Fi and free parking.</p>
+          <div class="loc-actions">
+            <a class="btn btn-primary" href="#book" data-property="mohandessin" data-i18n="locs.mohBook">Book Mohandessin</a>
+            <a class="link-arrow" href="mohandessin.html" data-i18n="locs.mohMore">See the building</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ============ BRAND CARDS ============ -->
-<section class="section" id="stays" aria-labelledby="stays-title">
+<section class="section alt" id="stays" aria-labelledby="stays-title">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow" data-i18n="stays.eyebrow">Two ways to stay</span>
@@ -549,10 +616,10 @@ p{margin:0 0 1em}
         <img class="photo" src="assets/home/noma-card.jpg" loading="lazy" decoding="async" alt="NōMA building with private balconies, New Cairo" style="object-position:center 30%">
         <div class="brand-body">
           <h3 class="brand-name">NōMA</h3>
-          <p class="brand-meaning" data-i18n="stays.nomaWhat">40 upscale serviced apartments · New Cairo</p>
+          <p class="brand-meaning" data-i18n="stays.nomaWhat2">51 serviced apartments · New Cairo and Mohandessin</p>
           <p class="brand-suits" data-i18n="stays.nomaSuits">Suits business travellers, visiting teams, relocations and longer stays.</p>
-          <p class="from-price" data-i18n-html="stays.nomaFrom">From <strong>$70</strong> per night</p>
-          <a class="btn btn-primary" href="#apartments" data-property="noma" data-i18n="stays.nomaCta">View NōMA apartments and rates</a>
+          <p class="from-price" data-i18n-html="stays.nomaFrom2">New Cairo from <strong>$70</strong> per night</p>
+          <a class="btn btn-primary" href="#locations" data-i18n="stays.nomaCta2">See NōMA locations</a>
         </div>
       </article>
       <article class="brand-card">
@@ -570,7 +637,7 @@ p{margin:0 0 1em}
 </section>
 
 <!-- ============ 3. NōMA ============ -->
-<section class="section alt" id="apartments" aria-labelledby="apt-title">
+<section class="section" id="apartments" aria-labelledby="apt-title">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow" data-i18n="apt.eyebrow">NōMA · New Cairo</span>
@@ -699,7 +766,7 @@ p{margin:0 0 1em}
 <section class="section dark" id="services" aria-labelledby="svc-title">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow" data-i18n="svc.eyebrow">Services</span>
+      <span class="eyebrow" data-i18n="svc.eyebrow2">Services · New Cairo</span>
       <h2 id="svc-title" data-i18n="svc.title">Hotel standards, in your own apartment.</h2>
     </div>
     <div class="service-grid">
@@ -722,7 +789,7 @@ p{margin:0 0 1em}
 <section class="section" id="reviews" aria-labelledby="rev-title">
   <div class="container">
     <div class="section-head">
-      <span class="eyebrow" data-i18n="rev.eyebrow">Guest reviews</span>
+      <span class="eyebrow" data-i18n="rev.eyebrow2">Guest reviews · New Cairo</span>
       <h2 id="rev-title" data-i18n="rev.title">What our guests say</h2>
     </div>
     <div class="review-scores">
@@ -748,7 +815,7 @@ p{margin:0 0 1em}
 <section class="section alt" id="location" aria-labelledby="loc-title">
   <div class="container loc-grid">
     <div>
-      <span class="eyebrow" data-i18n="loc.eyebrow">Location</span>
+      <span class="eyebrow" data-i18n="loc.eyebrow2">Location · New Cairo</span>
       <h2 id="loc-title" data-i18n="loc.title">Where to find us</h2>
       <p class="address-line"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="address.full">204 Arabella, New Cairo, Egypt</span></p>
       <p class="lead" data-i18n="loc.lead">In the heart of New Cairo, close to the business districts, universities and hospitals.</p>
@@ -764,6 +831,7 @@ p{margin:0 0 1em}
         </tbody>
       </table>
       <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=29.9880527,31.4303714" target="_blank" rel="noopener"><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="cta.directions">Get directions</span></a>
+      <p class="other-loc" data-i18n-html="loc.other">Staying in Mohandessin? <a class="link-arrow" href="mohandessin.html#location">See the Mohandessin location</a></p>
     </div>
     <div>
       <div class="map-box">
@@ -780,6 +848,7 @@ p{margin:0 0 1em}
     <div class="section-head">
       <span class="eyebrow" data-i18n="pol.eyebrow">Good to know</span>
       <h2 id="pol-title" data-i18n="pol.title">Policies</h2>
+      <p class="lead" data-i18n-html="pol.forNC">For NōMA New Cairo. Mohandessin policies are on <a class="link-arrow" href="mohandessin.html#policies">its page</a>.</p>
     </div>
     <dl class="policies">
       <div><dt data-i18n="pol.checkinout">Check-in and check-out</dt><dd data-i18n="pol.checkinoutVal">Check-in from 2:00 pm. Check-out by 12:00 noon. Late check-out is sometimes possible; ask reception.</dd></div>
@@ -845,7 +914,7 @@ p{margin:0 0 1em}
 <section class="closing">
   <div class="container narrow">
     <p class="tagline" data-i18n="tagline">Come as a guest, leave as a local.</p>
-    <p class="about-line" data-i18n-html="about.line">NōMA is operated by HAAM Management and opened in June 2026.</p>
+    <p class="about-line" data-i18n-html="about.line2">NōMA is operated by HAAM Management. NōMA New Cairo opened in June 2026; NōMA Mohandessin is our newest building.</p>
   </div>
 </section>
 
@@ -863,15 +932,15 @@ p{margin:0 0 1em}
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="https://noma-stays.com/assets/noma-wordmark-cream.png" alt="NōMA" width="117" height="36" style="height:36px;width:auto" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-text',textContent:'NōMA',style:'color:#f6ede2'}))">
-        <p data-i18n="footer.blurb">Serviced apartments in New Cairo, with the standards of a hotel.</p>
+        <p data-i18n="footer.blurb2">Serviced apartments in New Cairo and Mohandessin, with the standards of a hotel.</p>
         <p><em data-i18n="tagline">Come as a guest, leave as a local.</em></p>
       </div>
       <div class="footer-col">
         <h3 data-i18n="footer.visit">Visit</h3>
         <ul>
-          <li><svg class="icon"><use href="#i-pin"/></svg><span data-i18n="address.full">204 Arabella, New Cairo, Egypt</span></li>
-          <li><svg class="icon"><use href="#i-clock"/></svg><span data-i18n="footer.times">Check-in from 2:00 pm · Check-out by 12:00 noon</span></li>
-          <li><a class="link-arrow" href="https://www.google.com/maps/dir/?api=1&amp;destination=29.9880527,31.4303714" target="_blank" rel="noopener" data-i18n="cta.directions">Get directions</a></li>
+          <li><svg class="icon"><use href="#i-pin"/></svg><span><span data-i18n="address.full">204 Arabella, New Cairo, Egypt</span><br><a class="link-arrow" href="https://www.google.com/maps/dir/?api=1&amp;destination=29.9880527,31.4303714" target="_blank" rel="noopener" data-i18n="cta.directions">Get directions</a></span></li>
+          <li><svg class="icon"><use href="#i-pin"/></svg><span><span data-i18n="address.moh">8 Abou Al Karamat Square, Mohandessin, Giza</span><br><a class="link-arrow" href="https://maps.app.goo.gl/6wUgR1YDQRNpWF5q8" target="_blank" rel="noopener" data-i18n="cta.directions">Get directions</a></span></li>
+          <li><svg class="icon"><use href="#i-clock"/></svg><span data-i18n="footer.checkin">Check-in from 2:00 pm</span></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -885,7 +954,8 @@ p{margin:0 0 1em}
       <div class="footer-col">
         <h3 data-i18n="footer.explore">Explore</h3>
         <ul>
-          <li><a href="#apartments" data-i18n="nav.apartments">Apartments</a></li>
+          <li><a href="#apartments" data-i18n="footer.nc">NōMA New Cairo</a></li>
+          <li><a href="mohandessin.html" data-i18n="footer.moh">NōMA Mohandessin</a></li>
           <li><a href="#services" data-i18n="nav.services">Services</a></li>
           <li><a href="#policies" data-i18n="footer.policies">Policies</a></li>
           <li><a href="corporate.html" data-i18n="footer.corporate">Stays for teams</a></li>
@@ -910,7 +980,8 @@ p{margin:0 0 1em}
 (function(){
 'use strict';
 var WA='201011222600';
-var CB='https://us2.cloudbeds.com/en/reservation/q3dbO7/';
+var CODES={noma:'q3dbO7',mohandessin:'Av8AgC'};
+function cbUrl(code){return 'https://us2.cloudbeds.com/en/reservation/'+code+'/'}
 var PH_TIME='<span class="ph">[TIME]</span>';
 var EGP='<span class="ph">[EGP ___]</span>';
 
@@ -1026,6 +1097,32 @@ Object.assign(AR,{
 'form.reply':'نرد خلال ساعة واحدة.'
 });
 Object.assign(AR,{'cb.see':'شاهد الصور','cb.all':'شاهد كل صور الشقق'});
+Object.assign(AR,{
+'nav.locations':'مواقعنا','nav.newcairo':'القاهرة الجديدة','nav.mohandessin':'المهندسين',
+'hero.locs':'القاهرة الجديدة · المهندسين',
+'hero.title':'شقق فندقية في القاهرة، بمعايير الفنادق.',
+'hero.sub':'مبنيان من نوما: 40 شقة في القاهرة الجديدة على بُعد دقائق من الجامعة الأمريكية والجامعة الألمانية، و11 شقة في المهندسين على مسافة قصيرة بالسيارة من ميدان التحرير. إقامة يومية أو شهرية أو لفريق عملك بالكامل.',
+'proof.score2':'9.7/10 على Booking.com (القاهرة الجديدة)','proof.kitchen':'مطبخ في كل شقة','proof.wifi':'واي فاي مجاني',
+'book.optMoh':'نوما · المهندسين',
+'pol.cancelPay':'الإلغاء والدفع','pol.mohMini':'تظهر الشروط قبل تأكيد الحجز.','pol.allMoh':'سياسات المهندسين',
+'locs.eyebrow':'مواقعنا','locs.title':'مبنيان من نوما، في جانبين من القاهرة',
+'locs.lead':'نفس ترحيب نوما في المبنيين. اختر الحي الذي يناسب رحلتك.',
+'locs.nc':'القاهرة الجديدة','locs.ncWhat':'40 شقة · 204 أرابيلا',
+'locs.ncTxt':'استوديوهات وشقق بغرفة نوم، على بُعد دقائق من أرابيلا بلازا والجامعة الأمريكية والجامعة الألمانية ومناطق الأعمال. استقبال على مدار الساعة وتنظيف يومي.',
+'locs.ncBook':'احجز في القاهرة الجديدة','locs.ncMore':'شاهد الشقق',
+'locs.new':'جديد','locs.moh':'المهندسين','locs.mohWhat':'11 شقة · 8 ميدان أبو الكرامات',
+'locs.mohTxt':'في قلب القاهرة، على مسافة قصيرة بالسيارة من ميدان التحرير والمتحف المصري. مطبخ في كل شقة، وواي فاي وموقف سيارات مجانًا.',
+'locs.mohBook':'احجز في المهندسين','locs.mohMore':'تعرّف على المبنى',
+'stays.nomaWhat2':'51 شقة فندقية · القاهرة الجديدة والمهندسين',
+'stays.nomaFrom2':'القاهرة الجديدة ابتداءً من <strong>70 دولارًا</strong> لليلة','stays.nomaCta2':'شاهد مواقع نوما',
+'svc.eyebrow2':'الخدمات · القاهرة الجديدة','rev.eyebrow2':'آراء الضيوف · القاهرة الجديدة','loc.eyebrow2':'الموقع · القاهرة الجديدة',
+'loc.other':'تقيم في المهندسين؟ <a class="link-arrow" href="mohandessin.html#location">شاهد موقع المهندسين</a>',
+'pol.forNC':'خاصة بنوما القاهرة الجديدة. سياسات المهندسين في <a class="link-arrow" href="mohandessin.html#policies">صفحتها</a>.',
+'about.line2':'تُدار نوما بواسطة HAAM Management. افتُتحت نوما القاهرة الجديدة في يونيو 2026، ونوما المهندسين هي أحدث مبانينا.',
+'footer.blurb2':'شقق فندقية في القاهرة الجديدة والمهندسين، بمعايير الفنادق.',
+'address.moh':'8 ميدان أبو الكرامات، المهندسين، الجيزة','footer.checkin':'تسجيل الوصول من 2:00 ظهرًا',
+'footer.nc':'نوما القاهرة الجديدة','footer.moh':'نوما المهندسين'
+});
 var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 
@@ -1063,7 +1160,7 @@ if(tog&&mnav){
 /* WhatsApp links */
 function waUrl(text){return 'https://wa.me/'+WA+'?text='+encodeURIComponent(text)}
 $$('[data-wa]').forEach(function(a){
-  var k=a.getAttribute('data-wa');var t=k==='access'?"Hi, I'd like to ask about the accessible apartments at NōMA.":k==='beit'?"Hi, I'd like to ask about BEIT.":"Hi, I'd like to ask about NōMA.";
+  var k=a.getAttribute('data-wa');var t=k==='access'?"Hi, I'd like to ask about the accessible apartments at NōMA.":k==='beit'?"Hi, I'd like to ask about BEIT.":k==='moh'?"Hi, I'd like to ask about NōMA Mohandessin.":"Hi, I'd like to ask about NōMA.";
   a.href=waUrl(t);
 });
 
@@ -1096,10 +1193,11 @@ if(bf)bf.addEventListener('submit',function(e){
     bn.textContent=document.documentElement.lang==='ar'?'اختر تاريخ الوصول وتاريخ المغادرة (بعد تاريخ الوصول).':'Please choose a check-in date and a later check-out date.';
     return;
   }
-  var u=CB+'?currency=egp&checkin='+ci+'&checkout='+co+'&adults='+g;
+  var code=CODES[prop]||CODES.noma;
+  var u=cbUrl(code)+'?currency=egp&checkin='+ci+'&checkout='+co+'&adults='+g;
   if(promo)u+='&promo='+encodeURIComponent(promo);
   /* Open the Cloudbeds overlay like the rest of the site; fall back to the booking page in a new tab */
-  var cbEl=document.querySelector('cb-book-now-button');
+  var cbEl=document.querySelector('cb-book-now-button[property-code="'+code+'"]');
   if(cbEl&&window.customElements&&customElements.get('cb-book-now-button')){
     try{var q=new URLSearchParams({checkin:ci,checkout:co,adults:g});if(promo)q.set('promo',promo);history.replaceState(null,'',location.pathname+'?'+q.toString()+'#book')}catch(err){}
     var root=cbEl.shadowRoot||cbEl;var inner=root.querySelector('button, a, [role="button"]');(inner||cbEl).click();
@@ -1111,7 +1209,10 @@ if(bf)bf.addEventListener('submit',function(e){
 });
 
 /* "Check rates" buttons set property */
-$$('[data-property]').forEach(function(a){a.addEventListener('click',function(){var s=$('#bk-property');if(s)s.value=a.dataset.property})});
+var bkProp=$('#bk-property');
+function syncProp(){var v=bkProp?bkProp.value:'noma';$$('.policy-mini [data-for]').forEach(function(li){li.hidden=li.getAttribute('data-for')!==v})}
+$$('[data-property]').forEach(function(a){a.addEventListener('click',function(){if(bkProp){bkProp.value=a.dataset.property;syncProp()}})});
+if(bkProp){bkProp.addEventListener('change',syncProp);if(/[?&]location=mohand/i.test(location.search)){bkProp.value='mohandessin'}syncProp()}
 
 /* enquiry -> WhatsApp message */
 var ef=$('#enquiry-form');
@@ -1133,8 +1234,8 @@ if(ef)ef.addEventListener('submit',function(e){
 
 </script>
 
-<!-- Cloudbeds booking overlay (Immersive Experience, property q3dbO7) - same as the rest of the site -->
-<div class="sr-only" aria-hidden="true"><cb-book-now-button property-code="q3dbO7" label="Book a stay" height="90vh" width="min(900px,95vw)"></cb-book-now-button></div>
+<!-- Cloudbeds booking overlays (Immersive Experience): New Cairo q3dbO7, Mohandessin Av8AgC -->
+<div class="sr-only" aria-hidden="true"><cb-book-now-button property-code="q3dbO7" label="Book a stay" height="90vh" width="min(900px,95vw)"></cb-book-now-button><cb-book-now-button property-code="Av8AgC" label="Book a stay" height="90vh" width="min(900px,95vw)"></cb-book-now-button></div>
 <script type="text/javascript" src="https://static1.cloudbeds.com/booking-engine/latest/static/js/immersive-experience/cb-immersive-experience.js"></script>
 
 <script>
@@ -1171,6 +1272,21 @@ if(ef)ef.addEventListener('submit',function(e){
       btn.hidden=false;
       btn.addEventListener('click',function(){open(items)});
     });
+  }).catch(function(){});
+})();
+</script>
+
+<script>
+/* Mohandessin card photo: first real room photo from Cloudbeds (/api/rooms?location=mohandessin).
+   Until that key is set in Vercel, the card keeps its maroon cover. */
+(function(){
+  var box=document.querySelector('[data-cb-cover="mohandessin"]');if(!box)return;
+  var AI=/chatgpt|dall-?e|midjourney|gemini|ai[-_]?generated/i;
+  fetch('/api/rooms?location=mohandessin',{headers:{Accept:'application/json'}}).then(function(r){return r.json()}).then(function(d){
+    if(!d||!d.ok||!d.rooms)return;
+    var url=null;d.rooms.some(function(rm){return (rm.photos||[]).some(function(u){if(!AI.test(u)){url=u;return true}})});
+    if(!url)return;
+    var im=new Image();im.alt='NōMA Mohandessin apartment';im.loading='lazy';im.onload=function(){box.insertBefore(im,box.firstChild);var t=box.querySelector('.loc-cover-txt');if(t)t.remove()};im.src=url;
   }).catch(function(){});
 })();
 </script>

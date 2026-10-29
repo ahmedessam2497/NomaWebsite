@@ -8,11 +8,17 @@
    from an environment variable, and returns only safe, public content
    (room names, descriptions, photo URLs) to the browser.
 
-   Required Vercel environment variable:
-     CLOUDBEDS_API_KEY      e.g. cbat_xxxxxxxxxxxxxxxx   (scope: read:room, read:hotel)
+   Two locations, one key each (Cloudbeds keys are per property):
+     GET /api/rooms                        -> NōMA New Cairo  (booking code q3dbO7)
+     GET /api/rooms?location=mohandessin   -> NōMA Mohandessin (booking code Av8AgC)
+
+   Vercel environment variables:
+     CLOUDBEDS_API_KEY              New Cairo key, e.g. cbat_xxxx (scopes read:room, read:hotel)
+     CLOUDBEDS_API_KEY_MOHANDSEEN   Mohandessin key (CLOUDBEDS_API_KEY_MOHANDESSIN also accepted)
    Optional:
-     CLOUDBEDS_PROPERTY_ID  numeric property id, e.g. 312345
-                            (NOT the booking-engine code q3dbO7).
+     CLOUDBEDS_PROPERTY_ID / CLOUDBEDS_PROPERTY_ID_MOHANDSEEN
+                            numeric property id, e.g. 312345
+                            (NOT the booking-engine code).
                             If omitted, the first hotel on the key is used.
 
    The endpoint always responds 200. When it cannot return live data it
@@ -22,7 +28,31 @@
 
 var API_BASE = 'https://hotels.cloudbeds.com/api/v1.2';
 var TTL_MS = 1000 * 60 * 30; // cache live data for 30 minutes
-var cache = { at: 0, data: null };
+var caches = {}; // one cache per location
+
+var LOCATIONS = {
+  newcairo: {
+    key: function () { return process.env.CLOUDBEDS_API_KEY; },
+    propertyID: function () { return process.env.CLOUDBEDS_PROPERTY_ID || ''; },
+    keyName: 'CLOUDBEDS_API_KEY'
+  },
+  mohandessin: {
+    key: function () { return process.env.CLOUDBEDS_API_KEY_MOHANDSEEN || process.env.CLOUDBEDS_API_KEY_MOHANDESSIN; },
+    propertyID: function () { return process.env.CLOUDBEDS_PROPERTY_ID_MOHANDSEEN || process.env.CLOUDBEDS_PROPERTY_ID_MOHANDESSIN || ''; },
+    keyName: 'CLOUDBEDS_API_KEY_MOHANDSEEN'
+  }
+};
+
+function pickLocation(req) {
+  var q = (req.query && req.query.location) || '';
+  if (!q && req.url) {
+    var m = /[?&]location=([^&]*)/.exec(req.url);
+    if (m) q = decodeURIComponent(m[1]);
+  }
+  q = String(q).toLowerCase().replace(/[^a-z]/g, '');
+  if (/^mohand/.test(q)) return 'mohandessin';
+  return 'newcairo';
+}
 
 async function cbGet(method, key) {
   var res = await fetch(API_BASE + '/' + method, {
@@ -55,12 +85,15 @@ function extractPhotos(room) {
 module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
-  var key = process.env.CLOUDBEDS_API_KEY;
+  var loc = pickLocation(req);
+  var conf = LOCATIONS[loc];
+  var key = conf.key();
   if (!key) {
-    res.status(200).json({ ok: false, configured: false, reason: 'CLOUDBEDS_API_KEY not set', rooms: [] });
+    res.status(200).json({ ok: false, configured: false, location: loc, reason: conf.keyName + ' not set', rooms: [] });
     return;
   }
 
+  var cache = caches[loc] || { at: 0, data: null };
   if (cache.data && Date.now() - cache.at < TTL_MS) {
     res.setHeader('Cache-Control', 'public, max-age=300');
     res.status(200).json(cache.data);
@@ -68,7 +101,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    var propertyID = process.env.CLOUDBEDS_PROPERTY_ID || '';
+    var propertyID = conf.propertyID();
     var propertyName = '';
 
     if (!propertyID) {
@@ -91,11 +124,11 @@ module.exports = async function handler(req, res) {
       };
     }).filter(function (r) { return r.name; });
 
-    var out = { ok: true, configured: true, property: { id: propertyID, name: propertyName }, rooms: rooms };
-    cache = { at: Date.now(), data: out };
+    var out = { ok: true, configured: true, location: loc, property: { id: propertyID, name: propertyName }, rooms: rooms };
+    caches[loc] = { at: Date.now(), data: out };
     res.setHeader('Cache-Control', 'public, max-age=300');
     res.status(200).json(out);
   } catch (e) {
-    res.status(200).json({ ok: false, configured: true, reason: String((e && e.message) || e), rooms: [] });
+    res.status(200).json({ ok: false, configured: true, location: loc, reason: String((e && e.message) || e), rooms: [] });
   }
 };

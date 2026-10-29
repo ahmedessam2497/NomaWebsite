@@ -48,3 +48,13 @@ If your Cloudbeds names differ, either rename them in Cloudbeds or change the
 Add your domains to **Cloudbeds → Booking Engine → Whitelisted Domains** so the
 booking overlay renders inline instead of opening a new tab:
 `noma-website-steel.vercel.app` and `noma-stays.com` (and `www.` if used).
+
+## Second location: NōMA Mohandessin
+Mohandessin is a separate Cloudbeds property (booking code `Av8AgC`), so it has its own key.
+
+1. In Cloudbeds, switch to the Mohandessin property and create an API key the same way (scopes `read:room`, `read:hotel`).
+2. Add it in Vercel as **`CLOUDBEDS_API_KEY_MOHANDSEEN`** (optional: `CLOUDBEDS_PROPERTY_ID_MOHANDSEEN`), then redeploy.
+3. In the Mohandessin Booking Engine settings, whitelist the same domains as New Cairo.
+
+`/api/rooms?location=mohandessin` then feeds `mohandessin.html` (apartment cards, hero photo, photo viewer)
+and the Mohandessin card on the homepage. Without the key those spots fall back to a "See apartments and prices" box and a maroon cover.

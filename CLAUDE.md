@@ -33,7 +33,8 @@ bytes** — this has corrupted these files before. To stay safe:
 4. Never commit a file you haven't verified opens/parses.
 
 ## File map
-- `index.html` homepage (NōMA Arabella serviced apartments, EN/AR, self-contained CSS/JS — does not use chrome.js) · `noma.html` · `beit.html` · `about.html` · `partner.html`
+- `index.html` homepage (NōMA's two locations — New Cairo/Arabella and Mohandessin — with New Cairo detail; EN/AR, self-contained CSS/JS — does not use chrome.js)
+- `mohandessin.html` NōMA Mohandessin page (same look as the homepage; apartments, hero photo and photo viewer built live from Cloudbeds) · `noma.html` · `beit.html` · `about.html` · `partner.html`
 - `book.html` — full-page Cloudbeds booking (fallback only; CTAs use the overlay)
 - `chrome.js` — shared on every page: header, footer, mobile hamburger nav, back
   button, rotating hero photos, photo lightbox, **booking-overlay launcher**
@@ -52,13 +53,14 @@ bytes** — this has corrupted these files before. To stay safe:
 - `assets/noma-wordmark-*.png` — brand wordmark logos.
 
 ## Integrations
-- **Booking overlay** — Cloudbeds Immersive Experience 2.0, property code `q3dbO7`.
+- **Booking overlay** — Cloudbeds Immersive Experience 2.0. Property codes: New Cairo `q3dbO7`, Mohandessin `Av8AgC` (the booking-box "Property" choice picks which one opens; both need the site domains whitelisted in their own Booking Engine settings).
   Every booking CTA opens the same slide-in overlay via the `<cb-book-now-button>`
   web component / `window.NOMA_BOOK(params)`. The Cloudbeds script is in each page's
   `<head>`. The site's live + preview domains must be **whitelisted in Cloudbeds**
   (Booking Engine → Allowed Domains) or the overlay opens in a new tab instead.
-- **Live rooms** `/api/rooms` — needs Vercel env `CLOUDBEDS_API_KEY` (scopes
-  `read:room`, `read:hotel`). On `noma.html`, the `[data-cb-roomtypes]` grid and the
+- **Live rooms** `/api/rooms` (New Cairo, Vercel env `CLOUDBEDS_API_KEY`) and
+  `/api/rooms?location=mohandessin` (Vercel env `CLOUDBEDS_API_KEY_MOHANDSEEN`). Keys are per property; scopes
+  `read:room`, `read:hotel`. On `noma.html`, the `[data-cb-roomtypes]` grid and the
   `[data-cb-gallery]` gallery are rebuilt from this. Degrades to local images if absent.
   Details: `CLOUDBEDS_SETUP.md`.
 - **Waitlist → Google Sheet** `/api/waitlist` — needs Vercel env `WAITLIST_SHEET_URL`
@@ -66,7 +68,7 @@ bytes** — this has corrupted these files before. To stay safe:
   Details + Apps Script code: `WAITLIST_SETUP.md`.
 - **Booking engine colors** are set in the Cloudbeds dashboard, not the code.
 
-Vercel env vars: `CLOUDBEDS_API_KEY`, `WAITLIST_SHEET_URL`, `GOOGLE_PLACES_API_KEY` (+ optional `GOOGLE_PLACE_ID`). They apply only to
+Vercel env vars: `CLOUDBEDS_API_KEY`, `CLOUDBEDS_API_KEY_MOHANDSEEN`, `WAITLIST_SHEET_URL`, `GOOGLE_PLACES_API_KEY` (+ optional `GOOGLE_PLACE_ID`). They apply only to
 deployments created after they're added (redeploy after changing).
 
 ## Brand rules
